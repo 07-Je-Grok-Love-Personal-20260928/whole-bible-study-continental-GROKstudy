@@ -1133,3 +1133,11 @@ p.mn .mnx{display:block;margin-top:2px;font-size:13px;font-weight:400;color:var(
  .sbar span.pn>b.l,.sbar span.px>b.l,.sbar span.px>b.r{display:none}.sbar span.pn>b.r{display:block}
 }
 h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
+.bk>header{gap:8px 12px}
+.bk>header>.bhd{display:flex;align-items:center;gap:10px;flex:1 1 100%;min-width:0}
+.bk>header>.bhd>h3.h{flex:1;min-width:0}
+.bk>header h3.h>.sn{display:none}
+.bk>header>.bchips{flex:1 1 100%;gap:5px;margin:0}
+.bchips .chip{padding:1px 8px;font-size:12px;line-height:1.6;white-space:nowrap;gap:3px}
+.bk>header>.one{flex:1 1 100%}
+@media(max-width:600px){.bk .no{width:34px;height:34px;border-radius:10px;font-size:15px}.bk>header{padding:10px 12px}.bchips{gap:4px}.bchips .chip{padding:0 7px;font-size:11.5px}}
