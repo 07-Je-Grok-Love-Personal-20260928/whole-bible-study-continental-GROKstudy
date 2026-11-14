@@ -30,6 +30,10 @@ for _l in open(os.path.join(_D,'books_v2.txt')):
 def qmark(t,auto=True): return rich(t,auto)
 PAL=['#ffcb5c','#ff6fa5','#b78cff','#5cc8ff','#3ee0a1','#ff9f43','#2dd4bf','#f472b6']
 RNG=re.compile(r'^\s*(\d+)(?::(\d+))?(?:\s*[–-]\s*(\d+)(?::(\d+))?)?\s*(.*)$')
+def mnp(m):
+    mm=re.match(r'^(“[^”]+”)\s*（(.*)）$',m)
+    if mm: return f'<p class="mn"><span class="mnq">{E(mm.group(1))}</span><span class="mnx">{E(mm.group(2))}</span></p>'
+    return f'<p class="mn"><span class="mnq">{E(m)}</span></p>'
 def sbar(b):
     items=[x.strip() for x in b['ol'].split('|')]; segs=[]
     for it in items:
@@ -86,7 +90,7 @@ def card(b):
     cl,col,ic=CATS[b['cat']]; x=V2[b['id']]; i=b['id']
     ol=''.join(f'<li>{qmark(re.sub(r"^(\S+)",r"**\1**",x_.strip(),count=1),False)}</li>' for x_ in b['ol'].split('|'))
     app=''.join(f'<li>{qmark(x_.strip())}</li>' for x_ in b['app'].split('|'))
-    kv=''.join(verse(E(t),E(r)).replace('<blockquote class="v">','<blockquote class="v must"><span class="star">★ 必背</span>',1 if j==0 else 0) for j,(t,r) in enumerate(b['kv']))
+    kv=''.join((f'<blockquote class="v must"><span class="star">★ 必背</span><span class="vt">{E(t)}</span><cite>— {E(r)}（和合本）</cite></blockquote>' if j==0 else verse(E(t),E(r))) for j,(t,r) in enumerate(b['kv']))
     cf=b['cf'].split(',')
     chips=''.join(f'<span class="tag" style="color:var(--vio)">{conflabel(s_)}</span>' for s_ in cf)
     test='旧约' if b['n']<=39 else '新约'
@@ -103,7 +107,7 @@ def card(b):
 {v4strip(b)}
 <div class="bgrid btop">
 <div class="box span2">{H('ol','🧩 结构大纲 · 结构图')}{sbar(b)}<ol class="outline">{ol}</ol></div>
-<div class="box">{co('core','<ol>'+keys+'</ol>','核心三要点')}{co('mnc','<p class="mn">'+E(b['mn'])+'</p>','记忆口诀')}<div class="srcline">✍️ 作者：{E(b['au'])}<br>🕰️ 日期：{qmark(b['dt'])}</div></div>
+<div class="box">{co('core','<ol>'+keys+'</ol>','核心三要点')}{co('mnc',mnp(b['mn']),'记忆口诀')}<div class="srcline">✍️ 作者：{E(b['au'])}<br>🕰️ 日期：{qmark(b['dt'])}</div></div>
 </div>
 <div class="bgrid">
 <div class="box">{H('bg','🏺 真实背景 · 受众')}<p>{qmark(b['bg'])}</p></div>
