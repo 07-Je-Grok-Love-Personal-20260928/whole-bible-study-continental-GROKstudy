@@ -156,8 +156,21 @@ def svg(key,cfg,title=''):
     used=sorted({ICON.get(p['n']) or p.get('i') for p in pts}-{None,''})
     IK={'🕍':'圣殿/圣城','👑':'京城','⚓':'港口','⛰️':'山','🏔️':'高山','🔥':'筑坛/敬拜','⛪':'教会','💧':'水泉/井','🌴':'绿洲','🐟':'湖边渔村','⭐':'降生','🏛️':'希腊罗马名城','🏯':'巴比伦','🌙':'月神城','⚔️':'战场','⛺':'帐棚/营地','🐂':'金牛犊','🍷':'神迹','🏠':'家乡','🧱':'为奴之城','🪨':'磐石','📜':'异象','🏙️':'都市','🏺':'商都','𓂀':'埃及古都'}
     lg+= [f'<span class="lgi">{i} {IK.get(i,"")}</span>' for i in used if i in IK]
-    return (f'<figure class="cmap" data-k="{key}"><div class="cmw" style="aspect-ratio:{W}/{H}">{svgm}{svgo}</div>'
-            f'<figcaption class="cmleg">{"".join(lg)}<span class="lgn">✍️ 概念示意 · 疆界与路线为近似</span></figcaption></figure>')
+    jy,jyo,jst='','',''
+    st=cfg.get('story')
+    if st:
+        sp=[f(la,lo) for _,(la,lo),_ in st]
+        jst=' data-st="'+E_(json.dumps([[round(x/W,4),round(y/H,4)] for x,y in sp]))+'"'
+        jyo=(f'<svg class="jyt" viewBox="0 0 {W} {H}" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><polyline points=""/>'
+             +''.join(f'<g class="jyd" transform="translate({x:.0f} {y:.0f})"><circle r="13"/><text y="5">{i+1}</text></g>' for i,(x,y) in enumerate(sp))+'</svg><div class="jym" aria-hidden="true"><i></i></div>')
+        n=len(st)
+        jy=(f'<div class="jy" data-n="{n}"><div class="jyc"><button type="button" class="jyp" aria-pressed="false">▶ 播放讲解动画</button>'
+            f'<button type="button" class="jyb" aria-label="上一步">◀</button><button type="button" class="jyf" aria-label="下一步">▶</button>'
+            f'<span class="jybar" aria-hidden="true"><i></i></span><span class="jyn">1 / {n}</span></div>'
+            f'<div class="jyk" role="tablist" aria-label="讲解步骤">'+''.join(f'<button type="button" role="tab" data-i="{i}" aria-selected="{"true" if i==0 else "false"}"><span>{i+1}</span>{E_(nm)}</button>' for i,(nm,_,_) in enumerate(st))+'</div>'
+            f'<div class="jyx" aria-live="polite">'+''.join(f'<p data-i="{i}"{" class=on" if i==0 else ""}><b>{i+1}. {E_(nm)}</b>　{t}</p>' for i,(nm,_,t) in enumerate(st))+'</div></div>')
+    return (f'<figure class="cmap" data-k="{key}"{jst}><div class="cmw" style="aspect-ratio:{W}/{H}">{svgm}{svgo}{jyo}</div>'
+            f'<figcaption class="cmleg">{"".join(lg)}<span class="lgn">✍️ 概念示意 · 疆界与路线为近似</span></figcaption></figure>{jy}')
 def block(key,cfg,title,height=None,cls=''):
     """概念图 / 实景地图 tabs. The real (Leaflet) map is only built on first switch."""
     st=f' style="height:{height}"' if height else ''

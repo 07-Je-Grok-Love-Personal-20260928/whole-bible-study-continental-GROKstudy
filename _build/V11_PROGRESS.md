@@ -4,8 +4,8 @@ Freeze point: tag v10-20261024 + release exist (verified 2026-11-14).
 - [x] S0 freeze verified, branch v11-wip
 ## Remaining
 - [x] S1 24 keyless sources (curl-verified; CARTO removed: API KEY placeholder), 5 kinds, source picker + status dot, fallback tested (Esri+EOX blocked → MODIS)
-- [ ] S2 new maps (more historical maps) + concept illustrations for every map
-- [ ] S3 animated journeys (Exodus, Paul) SVG/CSS
+- [x] S2 6 new maps (nations, judges, elijah, prophets, roman, creeds) → 19 maps, geo_v11.py
+- [x] S3 讲解动画 journey player for all 19 maps (journey.js, WAAPI transform marker, phone auto-scroll)
 - [ ] S4 history/culture enrichment (geography, culture, history pages)
 - [ ] S5 note marking upgrade (CSS)
 - [ ] S6 palette vibrancy
