@@ -8,7 +8,7 @@ const THEMES=[],LIGHT={},TC={};$$('.tsw button').forEach(b=>{const k=b.dataset.t
 const tp=$('#tpanel'),tpb=$('#tpBtn');
 function markTheme(){const t=root.dataset.theme||'night';$$('.tsw button').forEach(b=>b.classList.toggle('on',b.dataset.theme===t));const m=$('meta[name=theme-color]');m&&m.setAttribute('content',TC[t]||TC.night)}
 function setTheme(t){if(!THEMES.includes(t))t='night';const ap=()=>{root.dataset.theme=t;root.classList.toggle('light',!!LIGHT[t]);markTheme()};LS.s('wb-theme',t);
-  if(document.startViewTransition&&!RM)document.startViewTransition(ap);else ap()}
+  if(document.startViewTransition&&!RM){if(window.__vt)try{window.__vt.skipTransition()}catch(e){}const v=window.__vt=document.startViewTransition(ap);[v.ready,v.finished,v.updateCallbackDone].forEach(x=>x&&x.catch(()=>{}))}else ap()}
 markTheme();
 $$('.tsw button').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.theme)));
 tpb&&tpb.addEventListener('click',e=>{e.stopPropagation();tp.hidden=!tp.hidden;tpb.setAttribute('aria-expanded',String(!tp.hidden))});
