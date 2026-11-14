@@ -1141,3 +1141,21 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .bchips .chip{padding:1px 8px;font-size:12px;line-height:1.6;white-space:nowrap;gap:3px}
 .bk>header>.one{flex:1 1 100%}
 @media(max-width:600px){.bk .no{width:34px;height:34px;border-radius:10px;font-size:15px}.bk>header{padding:10px 12px}.bchips{gap:4px}.bchips .chip{padding:0 7px;font-size:11.5px}}
+/* v11.1 one-row scrollable shelf */
+.shelf{gap:10px}
+.shelfrow{grid-template-columns:auto minmax(0,1fr);gap:8px;padding:8px 8px 0;align-items:stretch}
+.spwrap{position:relative;min-width:0}
+.spwrap::before,.spwrap::after{content:"";position:absolute;top:0;bottom:0;width:18px;z-index:2;pointer-events:none;opacity:0;transition:opacity .25s}
+.spwrap::before{left:0;background:linear-gradient(90deg,var(--card2),transparent)}
+.spwrap::after{right:0;background:linear-gradient(270deg,var(--card2),transparent)}
+.spwrap.cl::before,.spwrap.cr::after{opacity:1}
+.spines{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:3px;padding:10px 2px 0;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none;scroll-padding:0 24px}
+.spines::-webkit-scrollbar{display:none}
+.spines a{flex:1 0 27px;max-width:46px;scroll-snap-align:start}
+.spines a i{font-size:10px;font-variant-numeric:tabular-nums}
+.spines a.on{transform:translateY(-8px);outline:2px solid var(--gold);outline-offset:1px;box-shadow:0 6px 16px color-mix(in srgb,var(--c) 55%,transparent)}
+.spbtn{display:none;position:absolute;top:50%;z-index:3;width:28px;height:28px;margin-top:-10px;border-radius:50%;border:1px solid var(--line2);background:color-mix(in srgb,var(--card) 85%,transparent);color:var(--ink);font-size:18px;line-height:1;cursor:pointer;opacity:0;transition:opacity .2s,transform .2s;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.spbtn.l{left:2px}.spbtn.r{right:2px}
+@media(hover:hover) and (pointer:fine){.spbtn{display:block}.spwrap.cl .spbtn.l,.spwrap.cr .spbtn.r{opacity:.9}.spbtn:hover{transform:scale(1.08)}}
+.bk.spot>header{box-shadow:inset 0 0 0 2px var(--gold)}
+.shelfnote b.k{font-weight:800}

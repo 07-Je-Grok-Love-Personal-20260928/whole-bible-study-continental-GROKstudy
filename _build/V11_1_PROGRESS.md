@@ -7,3 +7,5 @@
 - [ ] B5 check_overlap.py audit + fixes
 - [ ] regress check.py/check_ix.py 390,1440; WebKit 390
 - [ ] deploy v11.1
+- [x] t16u A/B shelf: 1 row OT + 1 row NT, horizontal scroll-snap strip, edge fades, arrows (fine pointer), spine number = chapters (assert 1189), precise tap-jump (+settle corrections, cancel on user input), active spine follows reading (IO), spot highlight
+- [x] t16u C/D home order: hero → shelf → 66 book details → 附 (十类速览+legend, TaNaK, 使用方法); hero lead tightened
