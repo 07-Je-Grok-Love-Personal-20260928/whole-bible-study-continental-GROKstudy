@@ -179,7 +179,8 @@ THEMES=[('night','🌌','星空深蓝','#060a1c','#ffcb5c','#edf0fb',0,'经典�
  ('jade','🍃','翡翠清新','#eaf6f0','#04875a','#0d2a21',1,'清爽护眼'),('ruby','👑','红宝石宫廷','#1c0711','#ffd27a','#fbeef2',0,'庄重华丽'),
  ('contrast','🔆','高对比护眼','#0b0a08','#ffd400','#fffaf0',0,'最大对比度'),('violet','🔮','紫罗兰暮光','#140b28','#ffc76b','#f1ecfb',0,'暮色沉静'),
  ('ocean','🌊','深海青蓝','#031a22','#33e3d9','#e8f7fa',0,'深邃清凉'),('amber','☀️','暖阳琥珀','#fbf3e4','#b35f00','#2a1c0c',1,'温暖明亮'),
- ('sakura','🌸','樱花粉雾','#fcf2f5','#c2306e','#2c1520',1,'柔美轻盈'),('sepia','📜','墨纸书卷','#f4ecd8','#8a5a10','#2b2418',1,'纸书长读')]
+ ('sakura','🌸','樱花粉雾','#fcf2f5','#c2306e','#2c1520',1,'柔美轻盈'),('sepia','📜','墨纸书卷','#f4ecd8','#8a5a10','#2b2418',1,'纸书长读'),
+ ('aurora','🌈','极光霓彩','#050f1a','#3dffb0','#eefaf6',0,'v11 · 活泼鲜明'),('spring','🌷','春日晴空','#f2f9ff','#c4205f','#14213d',1,'v11 · 明快多彩')]
 THEME_RE='|'.join(t[0] for t in THEMES); THEME_LIGHT=','.join(f'{t[0]}:1' for t in THEMES if t[6])
 def _tsw(k,ic,n,bg,ac,ink,lt,tag): return (f'<button data-theme="{k}" data-bg="{bg}"'+(' data-light="1"' if lt else '')+f' style="--sw:{bg};--sa:{ac};--si:{ink}" aria-label="{n}">'
     f'<span class="pv" aria-hidden="true"><i></i><i></i><i></i><em></em></span><b>{ic} {n}</b><small>{tag}</small></button>')

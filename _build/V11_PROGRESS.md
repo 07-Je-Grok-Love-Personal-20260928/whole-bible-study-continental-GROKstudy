@@ -6,9 +6,9 @@ Freeze point: tag v10-20261024 + release exist (verified 2026-11-14).
 - [x] S1 24 keyless sources (curl-verified; CARTO removed: API KEY placeholder), 5 kinds, source picker + status dot, fallback tested (Esri+EOX blocked → MODIS)
 - [x] S2 6 new maps (nations, judges, elijah, prophets, roman, creeds) → 19 maps, geo_v11.py
 - [x] S3 讲解动画 journey player for all 19 maps (journey.js, WAAPI transform marker, phone auto-scroll)
-- [ ] S4 history/culture enrichment (geography, culture, history pages)
-- [ ] S5 note marking upgrade (CSS)
-- [ ] S6 palette vibrancy
+- [x] S4 culture: archaeology timeline (15) + worldview table; geo: arc + source table
+- [x] S5 note marking v11 CSS (pen highlighter, under-rules, paragraph pins)
+- [x] S6 two vivid themes: aurora 极光霓彩 (dark), spring 春日晴空 (light) → 12 themes
 - [ ] S7 overflow check all widths + interactive
 - [ ] S8 perf 4x
 - [ ] S9 deploy (merge, tag v11-20261114, release, README, Pages, Netlify, surge), shots
