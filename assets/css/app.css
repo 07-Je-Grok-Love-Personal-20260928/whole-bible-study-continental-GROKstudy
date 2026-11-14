@@ -1112,3 +1112,5 @@ html.light .sect .sh b{color:color-mix(in srgb,var(--c) 40%,var(--ink))}
 .cstrip .ci{grid-row:span 2;font-size:26px}
 .cstrip b{font-size:15px}.cstrip small{color:var(--ink2);font-size:12px;overflow-wrap:anywhere}
 .cstrip a.cmore{grid-column:1/-1;display:block;text-align:center;font-weight:800;background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 18%,transparent),color-mix(in srgb,var(--rose) 14%,transparent))}
+main span.mn{overflow-wrap:anywhere;word-break:break-word}
+span.mn{padding:1px 6px;border-radius:9px;overflow:visible;position:static}
