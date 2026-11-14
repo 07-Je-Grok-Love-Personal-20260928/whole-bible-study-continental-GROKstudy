@@ -24,6 +24,13 @@ import os
 _D=os.path.dirname(os.path.abspath(__file__))
 BOOKS=parse(os.path.join(_D,'books_ot1.txt'))+parse(os.path.join(_D,'books_ot2.txt'))+parse(os.path.join(_D,'books_nt.txt'))
 assert [b['n'] for b in BOOKS]==list(range(1,67)),[b['n'] for b in BOOKS]
+def _kw(k):
+    """v11.2: header keyword never ends with 之书/的书 (救赎之书→救赎)"""
+    return re.sub(r'[之的]书(”?)(（[上下]）)?$',r'\1\2',k)
+for _b in BOOKS:
+    if '：' in _b['one']:
+        _k,_r=_b['one'].split('：',1); _b['one']=_kw(_k)+'：'+_r
+    assert not re.match(r'^[^：]*[之的]书”?(（[上下]）)?：',_b['one']),_b['one']
 V2={}
 for _l in open(os.path.join(_D,'books_v2.txt')):
     _id,_r=_l.rstrip('\n').split('|',1); _k,_t=_r.split('|trap:'); V2[_id]={'key':[x.strip() for x in re.split(r'\s*\|\s*',_k.replace('key:','',1).strip()) if x.strip()],'trap':_t.strip()}
@@ -74,8 +81,9 @@ def sbar(b):
             return 'x'
         cls=' '.join(c for c in (('p'+fit(310)) if fit(310) else '',('w'+fit(620)) if fit(620) else '') if c)
         sp+=f'<span class="{cls}" style="flex:{f*100:.2f} 1 0;background:{col};transition-delay:{i*.08:.2f}s" title="{E(items[i])}"><b class="l">{E(lab)}</b><b class="r">{E(rs)}</b></span>'
-        lg+=f'<span><i style="background:{col}"></i>{E(rng)} {E(lab)}</span>'
-    return f'<div class="sbar" role="img" aria-label="{E(b["name"])}结构图">{sp}</div><div class="sleg">{lg}</div>'
+        txt=items[i][len(rng):].strip() if items[i].startswith(rng) else items[i]
+        lg+=f'<li><i style="background:{col}"></i><b class="rg">{E(rs if not items[i].startswith("卷") else rng)}</b><span>{qmark(txt,False)}</span></li>'
+    return f'<div class="sbar" role="img" aria-label="{E(b["name"])}结构图">{sp}</div><ol class="sleg2">{lg}</ol>'
 V4={}
 for _l in open(os.path.join(_D,'books_v4.txt')):
     _m=re.match(r'^(\w+)\|前因：(.*?)\s*\|\s*后果：(.*?)\|文学：(.*)$',_l.rstrip('\n'))
@@ -103,10 +111,26 @@ def confline(b):
                 return co('conf','<p>'+rich('{{'+k+'|'+cl+'}}',False)+'</p>','认信一句（逐字）')
     return ''
 def v4strip(b):
+    """v11.2: 前因 / 后果 in one compact two-row (wide: two-column) card; middle box removed"""
     x=V4[b['id']]
-    return (f'<div class="causal"><div class="cz pre"><b>⏮️ 前因</b>{rich(x["pre"])}</div><div class="cz arr" aria-hidden="true">➜</div>'
-            f'<div class="cz now" style="--c:{CATS[b["cat"]][1]}"><b>📍 {E(b["name"])}</b>{rich(b["one"].split("：")[0],False)}</div><div class="cz arr" aria-hidden="true">➜</div>'
-            f'<div class="cz post"><b>⏭️ 后果</b>{rich(x["post"])}</div></div>')
+    return (f'<div class="causal2"><div class="cz pre"><b>⏮️ 前因</b><span>{rich(x["pre"])}</span></div>'
+            f'<div class="cz post"><b>⏭️ 后果</b><span>{rich(x["post"])}</span></div></div>')
+_DR=re.compile(r'(记事|事件)?(在)?约?主[前后]约?\d+(?:\s*[–-]\s*约?\d+)?年?(左右|前后)?')
+_DTX={4:'记事38年多；成书于摩押平原',19:'最早为诗90（摩西）；约主前450年前后编辑完成',34:'主前663年底比斯（挪亚们）陷落（3:8）之后、612年尼尼微陷落之前'}
+def dtx(b):
+    """v11.2: the part of 'dt' NOT already shown by the header date chip"""
+    if b['n'] in _DTX: return _DTX[b['n']]
+    d=b['dt']; m=_DR.search(d); r=d
+    if m and m.start()<=3: r=(d[:m.start()]+d[m.end():]).strip()
+    r=re.sub(r'^[；，、代前]','',r).strip()
+    mm=re.match(r'^（([^）]*)）(.*)$',r)
+    if mm: r=mm.group(1)+('；' if mm.group(2) and not mm.group(2).startswith(('；','成书')) else '')+mm.group(2)
+    return re.sub(r'^[；，、]','',r).strip()
+def bgnote(b):
+    """v11.2: author/date block removed (dup of header chips); unique facts folded here"""
+    a=b['au']; ax=a if len(a)>len(_au(a))+1 else ''; d=dtx(b)
+    if not ax and not d: return ''
+    return '<p class="bgnote">'+(f'<span>✍️ {qmark(ax,False)}</span>' if ax else '')+(f'<span>🕰️ {qmark(d,False)}</span>' if d else '')+'</p>'
 def card(b):
     import xref as _XF
     cl,col,ic=CATS[b['cat']]; x=V2[b['id']]; i=b['id']
@@ -127,20 +151,18 @@ def card(b):
 <div class="one">💡 {qmark(one)}</div></header>
 <div class="body" data-lazy><template>
 {v4strip(b)}
-<div class="bgrid btop">
-<div class="box span2">{H('ol','🧩 结构大纲 · 结构图')}{sbar(b)}<ol class="outline">{ol}</ol></div>
-<div class="box">{co('core','<ol>'+keys+'</ol>','核心三要点')}{co('mnc',mnp(b['mn']),'记忆口诀')}<div class="srcline">✍️ 作者：{E(b['au'])}<br>🕰️ 日期：{qmark(b['dt'])}</div></div>
-</div>
 <div class="bgrid">
-<div class="box">{H('bg','🏺 真实背景 · 受众')}<p>{qmark(b['bg'])}</p></div>
+<div class="box span2">{H('ol','🧩 结构大纲 · 结构图')}{sbar(b) or '<ol class="outline">'+ol+'</ol>'}</div>
+<div class="box">{H('bg','🏺 真实背景 · 受众')}<p>{qmark(b['bg'])}</p>{bgnote(b)}</div>
 <div class="box">{H('why','🎯 为什么写')}<p>{qmark(b['why'])}</p></div>
 <div class="box">{H('core','💎 核心信息 · 基督中心')}<p class="sideb">{qmark(core)}</p>{co('xc','<p>'+qmark(b['xc'])+'</p>','基督')}</div>
 <div class="box">{H('cov','🤝 圣约位置')}<p>{qmark(b['cov'])}</p></div>
 <div class="box">{H('lit','📐 文学视角 · 写了什么')}<p>{qmark(V4[b['id']]['lit'])}</p>{confline(b)}</div>
 <div class="box">{H('kv','📖 关键经文')}{kv}</div>
 <div class="box">{H('hard','⚠️ 难点 · 易错')}{co('hardc','<p>'+qmark(b['hard'])+'</p>','难点辨析')}{co('trap','<p>'+qmark(x['trap'],False)+'</p>','易错点')}</div>
-<div class="box span2">{H('rel','🔗 相关书卷 · 跨卷连接')}{_XF.chips(i) or '<p class="srcline">（本数据集暂无）</p>'}<p class="srcline">全部 {len(_XF.XR)} 条精选连接与弧线图 → <a href="compare.html#xref">跨卷连接网络</a></p></div>
 <div class="box">{H('app','🌱 应用')}{co('app','<ul>'+app+'</ul>','教牧应用')}</div>
+<div class="box">{H('key','🧠 核心三要点 · 记忆口诀')}{co('core','<ol>'+keys+'</ol>','核心三要点')}{co('mnc',mnp(b['mn']),'记忆口诀')}</div>
+<div class="box">{H('rel','🔗 相关书卷 · 跨卷连接')}{_XF.chips(i) or '<p class="srcline">（本数据集暂无）</p>'}<p class="srcline">全部 {len(_XF.XR)} 条精选连接与弧线图 → <a href="compare.html#xref">跨卷连接网络</a></p></div>
 </div>
 <details class="dx" style="margin-top:10px"><summary>📚 认信连接（三项联合信条原文，逐字引自 ccifellowship.org）{chips}</summary><div class="in">{confref(b['cf'])}</div></details>
 </template></div></article>'''
