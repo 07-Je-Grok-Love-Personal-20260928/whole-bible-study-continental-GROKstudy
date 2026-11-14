@@ -270,3 +270,6 @@ sh.addEventListener('click',e=>{const a=e.target.closest('.spines a');if(!a||e.m
  bk.classList.add('spot');setTimeout(()=>bk.classList.remove('spot'),1800)});
 if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){act(e.target.id.slice(3))}},{rootMargin:'-35% 0px -60% 0px'});document.querySelectorAll('article.bk[id^="bk-"]').forEach(b=>io.observe(b))}
 })();
+/* v11.1 fit labels in proportional bars: hide text that can't fit (tooltip/click keeps details) */
+(()=>{const SEL='.kt .kb,.dk,.dm,.obar>span';let t=0;const run=()=>{const els=[...document.querySelectorAll(SEL)];els.forEach(e=>e.classList.remove('tx0'));const bad=els.filter(e=>e.clientWidth>0&&e.clientWidth<26&&e.scrollWidth>e.clientWidth+1);bad.forEach(e=>e.classList.add('tx0'))};
+const go=()=>{clearTimeout(t);t=setTimeout(()=>requestAnimationFrame(run),150)};if(document.readyState!=='loading')go();else addEventListener('DOMContentLoaded',go);addEventListener('load',go);addEventListener('resize',go,{passive:true});window.__fitBars=run})();

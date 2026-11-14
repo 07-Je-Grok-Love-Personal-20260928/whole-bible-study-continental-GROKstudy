@@ -1159,3 +1159,12 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 @media(hover:hover) and (pointer:fine){.spbtn{display:block}.spwrap.cl .spbtn.l,.spwrap.cr .spbtn.r{opacity:.9}.spbtn:hover{transform:scale(1.08)}}
 .bk.spot>header{box-shadow:inset 0 0 0 2px var(--gold)}
 .shelfnote b.k{font-weight:800}
+/* v11.1 audit fixes */
+.eraband.lifeband{height:auto;position:relative;top:auto;z-index:auto;margin:8px 0}
+.kt .kb,.dk,.dm{text-overflow:ellipsis}
+.kt .kb.pro{line-height:12px}
+.dm{line-height:18px;padding:0 6px}
+.tx0{font-size:0!important;padding-left:0!important;padding-right:0!important}
+@media(max-width:760px){.dyn>div:not(:last-child)::after{content:none}}
+.obar>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:600px){.hero .chips{gap:5px}.hero .chips .chip{font-size:11.5px;padding:1px 8px}}

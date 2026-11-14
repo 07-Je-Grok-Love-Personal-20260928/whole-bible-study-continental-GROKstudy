@@ -66,7 +66,8 @@ style G fill:#173f2f,stroke:#3ee0a1''','海德堡要理问答三部曲——与�
     c.append('<div style="margin:8px 0"><button class="btn" data-expand="#dort-wrap details">全部展开</button></div><div id="dort-wrap">')
     for i,hd in enumerate(DT['heads']):
         c.append(h3(f'dt-h{i}',DT_HEAD[i]+' '+hd['title']));k=0
-        if hd.get('intro'): c.append(f'<div class="conf">{paras(hd["intro"])}</div>')
+        _pi=paras(hd['intro']) if hd.get('intro') else ''
+        if _pi: c.append(f'<div class="conf">{_pi}</div>')
         for a in hd['articles']:
             c.append(f'<details class="dx"><summary><h4 class="h nonum" id="dt{i}-{dn(i)}">{dico(i,a)} {E(a["title"])}</h4></summary><div class="in"><div class="conf"><div class="src">逐字引自 <a href="{a["url"]}" target="_blank" rel="noopener">ccifellowship.org</a></div>{paras(a["text"])}{refs(a["refs"])}</div></div></details>')
     c.append('</div>')
