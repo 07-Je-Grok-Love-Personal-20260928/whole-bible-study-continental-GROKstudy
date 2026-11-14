@@ -49,9 +49,16 @@ def sbar(b):
         w.append(max(nx-sg[0],.35))
     T=sum(w); sp=''; lg=''
     for i,(sg,ww) in enumerate(zip(segs,w)):
-        col=PAL[i%len(PAL)]; lab=re.split(r'[：:（(，,、]',sg[2])[0][:10]
+        col=PAL[i%len(PAL)]; lab=re.split(r'[：:（(，,、；;—]',sg[2])[0].strip()[:8]
         rng=' '.join(items[i].split(' ')[:2]) if items[i].startswith('卷') else items[i].split(' ')[0]
-        sp+=f'<span style="flex:{ww/T*100:.2f} 1 0;background:{col};transition-delay:{i*.08:.2f}s" title="{E(items[i])}">{E(lab) if ww/T>.1 else ""}</span>'
+        rs=re.sub(r'^卷\S+\s+','',rng); f=ww/T
+        def fit(W):
+            seg=f*W
+            if len(lab)*11.5+12<=seg: return ''
+            if len(rs)*6.0+6<=seg: return 'n'
+            return 'x'
+        cls=' '.join(c for c in (('p'+fit(310)) if fit(310) else '',('w'+fit(620)) if fit(620) else '') if c)
+        sp+=f'<span class="{cls}" style="flex:{f*100:.2f} 1 0;background:{col};transition-delay:{i*.08:.2f}s" title="{E(items[i])}"><b class="l">{E(lab)}</b><b class="r">{E(rs)}</b></span>'
         lg+=f'<span><i style="background:{col}"></i>{E(rng)} {E(lab)}</span>'
     return f'<div class="sbar" role="img" aria-label="{E(b["name"])}结构图">{sp}</div><div class="sleg">{lg}</div>'
 V4={}

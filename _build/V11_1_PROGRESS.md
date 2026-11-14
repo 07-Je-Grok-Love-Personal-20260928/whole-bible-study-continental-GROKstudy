@@ -2,7 +2,7 @@
 - [x] before shots (chromium 390) /workspace/wb/shots/v11_1/before_*
 - [x] B1 must-verse: generic `.must` (display:inline, border, ★::before) hit blockquote.v.must → scoped to span.must; verse text in span.vt
 - [x] B2 mnemonic: `.mn` map-note card rule (position/overflow/::before gold bar) + inline-chip rule both hit p.mn → scoped div.mn/span.mn; p.mn block w/ .mnq highlight + .mnx gloss
-- [ ] B3 structure bar labels
+- [x] B3 sbar: labels cut at ；—, ≤8 chars, build-time fit → label / range-number / none per container width (container query 560px), ellipsis; heading sn gap
 - [ ] B4 book header chips
 - [ ] B5 check_overlap.py audit + fixes
 - [ ] regress check.py/check_ix.py 390,1440; WebKit 390

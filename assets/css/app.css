@@ -1124,3 +1124,12 @@ p.mn::before{content:none}
 p.mn .mnq{font-weight:800;color:var(--ink);background:linear-gradient(transparent 60%,color-mix(in srgb,var(--emer) 32%,transparent) 60%)}
 p.mn .mnx{display:block;margin-top:2px;font-size:13px;font-weight:400;color:var(--ink2);line-height:1.6}
 .co.mnc>.lb{display:flex;width:max-content;max-width:100%}
+.sbar{container-type:inline-size}
+.sbar span{min-width:0;padding:0 2px}
+.sbar span>b{font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbar span>b.r{display:none;font-variant-numeric:tabular-nums;font-size:10.5px}
+@container (min-width:561px){.sbar span.wn>b.l,.sbar span.wx>b.l,.sbar span.wx>b.r{display:none}.sbar span.wn>b.r{display:block}}
+@container (max-width:560px){
+ .sbar span.pn>b.l,.sbar span.px>b.l,.sbar span.px>b.r{display:none}.sbar span.pn>b.r{display:block}
+}
+h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
