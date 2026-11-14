@@ -1,35 +1,65 @@
 /* v9 maps: Leaflet + Natural Earth offline base (assets/data/ne.js) + online tile chains; loaded lazily. Degrades to a text list if Leaflet missing. */
 (function(){
 addEventListener('scroll',()=>{window.__mLS=performance.now()},{passive:true});
-/* v9: tile-provider chains with automatic fallback (tileerror / no-load watchdog) over an always-present
-   offline Natural Earth base drawn in its own pane UNDER the tiles — if every host is blocked the base still shows. */
-const PROV={
- topo:[['https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}','Esri World Topo','',17],
-       ['https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png','© OpenTopoMap (CC-BY-SA) © OSM','abc',15],
-       ['https://services.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}','Esri Shaded Relief','',13],
-       ['https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png','© CARTO © OpenStreetMap','abcd',18]],
- sat:[['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}','Esri World Imagery','',17],
-      ['https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}','Esri World Imagery（备用主机）','',17]],
- street:[['https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png','© CARTO © OpenStreetMap','abcd',18],
-         ['https://tile.openstreetmap.org/{z}/{x}/{y}.png','© OpenStreetMap','',18],
-         ['https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png','© OSM France · HOT','abc',18]]};
-const KIND=[['off','示意'],['topo','地形'],['sat','卫星'],['street','街道']];
+/* v11: 24 keyless tile sources (each verified from a server with curl on 2026-11-14), grouped into 5 kinds.
+   AUTO = walk the chain with a 4.5 s no-load watchdog + tileerror counting; the user can also pin one source via the picker.
+   CARTO was REMOVED: since 2026 its keyless raster tiles return an "API KEY REQUIRED" placeholder image (HTTP 200, so no tileerror).
+   The offline Natural Earth base is always drawn under the tiles as the last resort. */
+const EA='https://server.arcgisonline.com/ArcGIS/rest/services/',EB='https://services.arcgisonline.com/ArcGIS/rest/services/',
+ GB='https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/',EX='https://tiles.maps.eox.at/wmts/1.0.0/';
+/* id:[url, label, subdomains, maxNativeZoom, flag]  flag: 'cn' = also reachable from mainland China in our experience */
+const SRC={
+ etopo:[EA+'World_Topo_Map/MapServer/tile/{z}/{y}/{x}','Esri 世界地形','',17],
+ etopo2:[EB+'World_Topo_Map/MapServer/tile/{z}/{y}/{x}','Esri 世界地形（备用主机）','',17],
+ otm:['https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png','OpenTopoMap 等高线','abc',15],
+ eoxter:[EX+'terrain-light_3857/default/g/{z}/{y}/{x}.jpg','EOX 地形（Terrain Light）','',13],
+ natgeo:[EA+'NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}','Esri 国家地理风格','',12],
+ cyclosm:['https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png','CyclOSM 地形晕渲','abc',18],
+ shade:[EA+'World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}','Esri 晕渲地貌','',13],
+ phys:[EA+'World_Physical_Map/MapServer/tile/{z}/{y}/{x}','Esri 自然地理','',8],
+ eimg:[EA+'World_Imagery/MapServer/tile/{z}/{y}/{x}','Esri 世界影像','',18],
+ eimg2:[EB+'World_Imagery/MapServer/tile/{z}/{y}/{x}','Esri 世界影像（备用主机）','',18],
+ s2:[EX+'s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg','EOX Sentinel-2 无云影像 2020','',15],
+ bm:[GB+'BlueMarble_ShadedRelief_Bathymetry/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg','NASA 蓝色弹珠（含海底地形）','',8],
+ modis:[GB+'MODIS_Terra_CorrectedReflectance_TrueColor/default/2024-06-01/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg','NASA MODIS 真彩卫星','',9],
+ usgs:['https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}','USGS 影像（全球低倍）','',8],
+ osm:['https://tile.openstreetmap.org/{z}/{x}/{y}.png','OpenStreetMap 标准','',19],
+ osmde:['https://tile.openstreetmap.de/{z}/{x}/{y}.png','OpenStreetMap 德国镜像','',18],
+ osmfr:['https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png','OpenStreetMap 法国','abc',19],
+ hot:['https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png','OSM 人道主义（HOT）','abc',19],
+ eoxosm:[EX+'osm_3857/default/g/{z}/{y}/{x}.jpg','EOX OSM 底图','',16],
+ estreet:[EA+'World_Street_Map/MapServer/tile/{z}/{y}/{x}','Esri 街道图','',18],
+ opnv:['https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png','ÖPNV 交通图','',17],
+ gaode:['https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}','高德地图（中文·大陆友好，境外仅低倍）','1234',10,'cn'],
+ egray:[EA+'Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}','Esri 浅灰素图','',16],
+ edark:[EA+'Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}','Esri 深灰素图','',16],
+ eocean:[EA+'Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}','Esri 海洋底图','',13]};
+const PROV={topo:['etopo','etopo2','otm','eoxter','natgeo','cyclosm','shade','phys'],
+ sat:['eimg','eimg2','s2','modis','bm','usgs'],
+ street:['osm','osmde','osmfr','hot','eoxosm','estreet','opnv','gaode'],
+ plain:['egray','edark','eocean','eoxter']};
+const KIND=[['off','示意'],['topo','地形'],['sat','卫星'],['street','街道'],['plain','素图']];
 const BEST={};/* provider index that worked on this page, shared by all maps */
+const BAD={};/* sources that failed on this page — skipped by later maps in AUTO mode */
 const SEAS=[['地 中 海',[34.2,25]],['红 海',[21.5,38.3]],['波 斯 湾',[27.3,51]],['黑 海',[43.2,34.5]],['里 海',[41.5,50.6]],['爱 琴 海',[38.6,25.1]],['亚 得 里 亚 海',[42.8,15.6]]];
+const pin=k=>{try{return localStorage.getItem('wb-mapsrc-'+k)||'auto'}catch(_){return 'auto'}};
 function tiles(m,kind,note){
   if(m._tl){m.removeLayer(m._tl);m._tl=null}clearTimeout(m._wd);m._kind=kind;m._el&&m._el.classList.remove('mtok');
-  if(kind==='off'){note('离线示意底图（Natural Earth）');return}
-  const ch=PROV[kind];let i=BEST[kind]||0;
-  const next=why=>{if(m._tl){m.removeLayer(m._tl);m._tl=null}clearTimeout(m._wd);
+  m._syncSel&&m._syncSel(kind);
+  if(kind==='off'){note('离线示意底图（Natural Earth）','ok');return}
+  const pinned=pin(kind),ch=pinned!=='auto'&&SRC[pinned]?[pinned].concat(PROV[kind].filter(x=>x!==pinned)):PROV[kind].slice();
+  let i=pinned!=='auto'?0:(BEST[kind]||0);
+  const next=()=>{if(m._tl){m.removeLayer(m._tl);m._tl=null}clearTimeout(m._wd);
     m._el&&m._el.classList.remove('mtok');
-    if(i>=ch.length){note('⚠️ 在线底图均不可达 → 已显示离线底图',1);m._el&&m._el.classList.add('mtfail');return}
-    const p=ch[i],t=L.tileLayer(p[0],{subdomains:p[2]||'abc',maxZoom:p[3],maxNativeZoom:p[3],attribution:p[1],crossOrigin:false,keepBuffer:1,updateWhenIdle:true});
-    let ok=0,er=0;const adv=()=>{if(m._tl!==t)return;i++;next()};
-    t.on('tileload',()=>{if(!ok){BEST[kind]=i;note(KIND.find(k=>k[0]===kind)[1]+' · '+p[1].replace(/^©\s*/,''))}ok++});
-    /* v9 perf: once the online layer has fully covered the view, stop painting the offline base under it (it was the main scroll-raster cost) */
+    while(i<ch.length&&BAD[ch[i]]&&!(i===0&&pinned!=='auto'))i++;
+    if(i>=ch.length){note('在线底图均不可达 → 已显示离线底图','bad');m._el&&m._el.classList.add('mtfail');return}
+    const id=ch[i],p=SRC[id],t0=performance.now(),t=L.tileLayer(p[0],{subdomains:p[2]||'abc',maxZoom:19,maxNativeZoom:p[3],attribution:p[1],crossOrigin:false,keepBuffer:1,updateWhenIdle:true});
+    let ok=0,er=0;const adv=()=>{if(m._tl!==t)return;BAD[id]=1;i++;m._el&&m._el.dispatchEvent(new CustomEvent('mapsrc',{detail:{id,ok:0}}));next()};
+    t.on('tileload',()=>{if(!ok){if(pinned==='auto')BEST[kind]=i;m._src=id;note(p[1]+' · '+Math.round(performance.now()-t0)+' ms',i&&pinned!=='auto'?'warn':'ok',id)}ok++});
+    /* v9 perf: once the online layer has fully covered the view, stop painting the offline base under it */
     t.on('load',()=>{if(m._tl===t&&ok&&m._el)m._el.classList.add('mtok')});
     t.on('tileerror',()=>{er++;if(er>=3&&ok===0||er>ok*2+8)adv()});
-    m._tl=t;t.addTo(m);m._wd=setTimeout(()=>{if(!ok)adv()},4500);note('⏳ 正在连接 '+p[1].replace(/^©\s*/,'')+'…')};
+    m._tl=t;t.addTo(m);m._wd=setTimeout(()=>{if(!ok)adv()},4500);note('正在连接 '+p[1]+'…','wait')};
   m._el&&m._el.classList.remove('mtfail');next()}
 /* v10: offline Natural Earth base as a local 256-px tile layer (GridLayer of canvas tiles drawn from the vectors on demand,
    in idle slices) — behaves like the online tile layers, which scroll smoothly; no single huge raster surface. */
@@ -65,12 +95,17 @@ function base(el,cfg,jobs){
         m.on('mousemove',e=>{ev=e;if(!raf)raf=requestAnimationFrame(()=>{raf=0;const n=find(ev);if(n){if(!tt)tt=L.tooltip({direction:'top',offset:[0,-6]});tt.setLatLng(ev.latlng).setContent(n);if(!m.hasLayer(tt))tt.addTo(m)}else if(tt&&m.hasLayer(tt))m.removeLayer(tt)})});
         m.on('mouseout',()=>{if(tt&&m.hasLayer(tt))m.removeLayer(tt)})}
       SEAS.forEach(s=>{if(B.contains(s[1]))L.marker(s[1],{pane:'nebase',interactive:false,icon:L.divIcon({className:'',html:'<span class="mlabel sea">'+s[0]+'</span>',iconSize:null})}).addTo(m)})})}
-  /* status chip + switcher 示意/地形/卫星/街道 */
-  const st=L.control({position:'bottomright'});let stEl;st.onAdd=()=>{stEl=L.DomUtil.create('div','mlnote');return stEl};st.addTo(m);
-  const note=(t,bad)=>{if(stEl){stEl.textContent=t;stEl.classList.toggle('bad',!!bad)}};
-  const sw=L.control({position:'topright'});sw.onAdd=()=>{const d=L.DomUtil.create('div','mlsw');d.setAttribute('role','group');d.setAttribute('aria-label','底图');
-    d.innerHTML=KIND.map(k=>'<button type="button" data-k="'+k[0]+'" aria-pressed="false">'+k[1]+'</button>').join('');L.DomEvent.disableClickPropagation(d);
-    d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;set(b.dataset.k);try{localStorage.setItem('wb-mapbase',b.dataset.k)}catch(_){}});return d};sw.addTo(m);
+  /* v11: status chip (coloured dot + source + first-tile latency) and a switcher: 5 kinds + a per-kind source picker */
+  const st=L.control({position:'bottomright'});let stEl;st.onAdd=()=>{stEl=L.DomUtil.create('div','mlnote');stEl.setAttribute('role','status');stEl.setAttribute('aria-live','polite');return stEl};st.addTo(m);
+  const note=(t,lv)=>{if(stEl){stEl.innerHTML='<i class="mld"></i>'+t;stEl.dataset.lv=lv||'ok';stEl.classList.toggle('bad',lv==='bad')}};
+  const sw=L.control({position:'topright'});let selEl;sw.onAdd=()=>{const d=L.DomUtil.create('div','mlsw');d.setAttribute('role','group');d.setAttribute('aria-label','底图');
+    d.innerHTML='<div class="mlk">'+KIND.map(k=>'<button type="button" data-k="'+k[0]+'" aria-pressed="false">'+k[1]+'</button>').join('')+'</div><label class="mlsrc"><span>源</span><select aria-label="底图来源"></select></label>';
+    L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);selEl=d.querySelector('select');
+    d.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;set(b.dataset.k);try{localStorage.setItem('wb-mapbase',b.dataset.k)}catch(_){}});
+    selEl.addEventListener('change',()=>{const k=m._kind;if(k==='off')return;try{localStorage.setItem('wb-mapsrc-'+k,selEl.value)}catch(_){}if(selEl.value!=='auto')delete BAD[selEl.value];tiles(m,k,note)});return d};sw.addTo(m);
+  m._syncSel=k=>{if(!selEl)return;const lab=selEl.parentNode;lab.hidden=k==='off';if(k==='off')return;const cur=pin(k);
+    selEl.innerHTML='<option value="auto">自动（失败自动换源）</option>'+PROV[k].map(id=>'<option value="'+id+'"'+(BAD[id]?' class="bad"':'')+'>'+(BAD[id]?'✕ ':'')+SRC[id][1]+'</option>').join('');selEl.value=SRC[cur]?cur:'auto'};
+  el.addEventListener('mapsrc',()=>m._syncSel(m._kind));
   const set=k=>{sw.getContainer().querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));tiles(m,k,note)};
   let k0='topo';try{k0=localStorage.getItem('wb-mapbase')||'topo'}catch(_){}if(navigator.onLine===false)k0='off';if(!PROV[k0])k0='off';
   jobs.push(()=>set(k0));

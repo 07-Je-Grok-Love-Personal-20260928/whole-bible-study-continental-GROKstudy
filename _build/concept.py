@@ -161,5 +161,5 @@ def svg(key,cfg,title=''):
 def block(key,cfg,title,height=None,cls=''):
     """概念图 / 实景地图 tabs. The real (Leaflet) map is only built on first switch."""
     st=f' style="height:{height}"' if height else ''
-    return (f'<div class="mapx rv {cls}" data-k="{key}"><div class="mxt" role="tablist" aria-label="{E_(title)} 视图"><button type="button" role="tab" data-v="c" aria-selected="true">🎨 概念图</button><button type="button" role="tab" data-v="r" aria-selected="false" tabindex="-1">🛰️ 实景地图</button><span class="mxh">示意 · 地形 · 卫星 · 街道；在线底图不可达时自动退回离线底图</span></div>'
+    return (f'<div class="mapx rv {cls}" data-k="{key}"><div class="mxt" role="tablist" aria-label="{E_(title)} 视图"><button type="button" role="tab" data-v="c" aria-selected="true">🎨 概念图</button><button type="button" role="tab" data-v="r" aria-selected="false" tabindex="-1">🛰️ 实景地图</button><span class="mxh">5 类底图 · 24 个全球源可选；不可达自动换源，最终退回离线底图</span></div>'
             f'<div class="mxc" role="tabpanel">{svg(key,cfg,title)}</div><div class="map" data-map="{key}" role="tabpanel" aria-label="{E_(title)} · 实景地图" hidden{st}><div class="lazyph" style="height:100%">🗺️ 实景地图加载中…</div></div></div>')

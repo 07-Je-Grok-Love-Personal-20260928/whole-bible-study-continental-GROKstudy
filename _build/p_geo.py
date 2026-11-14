@@ -67,7 +67,7 @@ def mapindex():
     return '<nav class="mapidx rv" aria-label="地图索引"><b>🗺️ 13 幅地图 · 点击跳转</b>'+''.join(f'<a href="#map-{k}" style="--i:{i}"><span>{TITLES[k][0].split(" ")[0]}</span>{E(TITLES[k][0].split(" ",1)[1])}</a>' for i,k in enumerate(order))+'</nav>'
 def build():
     open(SITE+'assets/data/maps.js','w').write('window.MAPS='+json.dumps(MAPS,ensure_ascii=False,separators=(',',':'))+';')
-    c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">🗺️ 地理文化</span><span class="chip">{len(MAPS)} 幅地图 · 概念图 + 实景</span><span class="chip">离线可用（Natural Earth）</span></div><h1>把经文放回<em>真实的地上</em></h1><p class="lead">圣经的救恩是在真实的时间与空间中成就的（“在本丢·彼拉多手下受难”）。每幅地图都有两种看法：<b>🎨 概念图</b>（手绘风、按民族/帝国着色、路线动画，完全离线）与 <b>🛰️ 实景地图</b>（Leaflet；右上角切换 示意/地形/卫星/街道，在线底图不可达时自动换源，全部失败则退回离线 Natural Earth 底图）。每图附“历史背景 + 文化札记”。</p></section>''']
+    c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">🗺️ 地理文化</span><span class="chip">{len(MAPS)} 幅地图 · 概念图 + 实景</span><span class="chip">离线可用（Natural Earth）</span></div><h1>把经文放回<em>真实的地上</em></h1><p class="lead">圣经的救恩是在真实的时间与空间中成就的（“在本丢·彼拉多手下受难”）。每幅地图都有两种看法：<b>🎨 概念图</b>（手绘风、按民族/帝国着色、路线动画，完全离线）与 <b>🛰️ 实景地图</b>（Leaflet；右上角切换 示意/地形/卫星/街道/素图，并可在“源”下拉框中从 24 个全球源里手选；右下状态灯：绿=已连接、黄=连接中、红=全部不可达，全部失败则退回离线 Natural Earth 底图）。每图附“历史背景 + 文化札记”。</p></section>''']
     c.append(legend_box())
     c.append(h2('why-geo','🧭','地理神学与地形'))
     c.append(h3('why3','为什么地理很重要？三个神学要点'))
@@ -100,5 +100,5 @@ def build():
             pts=[x for x in MAPS[k].get('points',[]) if x.get('d')][:9]
             if pts:
                 c.append('<details class="dx"><summary>📍 本图地点速记（'+str(len(pts))+'）</summary><div class="in"><div class="grid g3">'+''.join(f'<div class="co info" style="margin:0"><span class="lb">📍 {E(x["n"])}</span><p>{rich(x["d"])}</p></div>' for x in pts)+'</div></div></details>')
-    c.append(note('🧩 地图说明','<p>离线底图：Natural Earth 1:10m 陆地、湖泊、河流中心线（公有领域，naturalearthdata.com）经裁剪简化；在线底图依次尝试 Esri / OpenTopoMap / CARTO / OpenStreetMap。概念图为示意，不按真实比例绘制疆界。古代疆界与路线多为学界大致重建（尤其出埃及路线、西奈山位置有多种观点），本站取保守传统观点并作标注。</p>'))
+    c.append(note('🧩 地图说明','<p>离线底图：Natural Earth 1:10m 陆地、湖泊、河流中心线（公有领域，naturalearthdata.com）经裁剪简化；在线底图共 24 个免密钥全球源（Esri 多主机、OpenTopoMap、EOX、CyclOSM、NASA GIBS、USGS、OpenStreetMap 多镜像、高德等），右上角可手选来源，自动模式下失败即换源。概念图为示意，不按真实比例绘制疆界。古代疆界与路线多为学界大致重建（尤其出埃及路线、西奈山位置有多种观点），本站取保守传统观点并作标注。</p>'))
     return page('geography.html','地理文化',''.join(c),extra_head='',scripts='<script src="assets/data/maps.js" defer></script><script src="assets/js/maps.js?v='+V+'" defer></script>')

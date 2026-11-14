@@ -3,7 +3,7 @@ Freeze point: tag v10-20261024 + release exist (verified 2026-11-14).
 ## Done
 - [x] S0 freeze verified, branch v11-wip
 ## Remaining
-- [ ] S1 tile sources: curl-verify keyless hosts; source picker + status in maps.js
+- [x] S1 24 keyless sources (curl-verified; CARTO removed: API KEY placeholder), 5 kinds, source picker + status dot, fallback tested (Esri+EOX blocked → MODIS)
 - [ ] S2 new maps (more historical maps) + concept illustrations for every map
 - [ ] S3 animated journeys (Exodus, Paul) SVG/CSS
 - [ ] S4 history/culture enrichment (geography, culture, history pages)
