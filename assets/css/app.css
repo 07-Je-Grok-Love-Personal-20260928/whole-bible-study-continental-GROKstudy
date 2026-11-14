@@ -1100,3 +1100,8 @@ main :is(p,li):has(> .must){box-shadow:inset 3px 0 0 color-mix(in srgb,var(--ros
 html.plain main :is(p,li):has(> .must){box-shadow:none;padding-left:0}
 html.plain mark.hy,html.plain mark.hg{border:0;background:none}
 html.plain .ug,html.plain .uw{background:none}
+/* v11: desktop header — progressively compact the 7 nav groups so they never run under the right-hand icon buttons */
+@media(min-width:1001px) and (max-width:1500px){.brand .t{display:none}.ngb{padding-left:8px;padding-right:8px}}
+@media(min-width:1001px) and (max-width:1380px){.ngb .gn{display:none}}
+@media(min-width:1001px) and (max-width:1240px){.ngb .gi{display:none}.ngb{padding-left:6px;padding-right:6px;font-size:13px}.brand small{display:none}}
+@media(min-width:1001px) and (max-width:1100px){.hdx{display:none}}
