@@ -9,3 +9,6 @@
 - [ ] deploy v11.1
 - [x] t16u A/B shelf: 1 row OT + 1 row NT, horizontal scroll-snap strip, edge fades, arrows (fine pointer), spine number = chapters (assert 1189), precise tap-jump (+settle corrections, cancel on user input), active spine follows reading (IO), spot highlight
 - [x] t16u C/D home order: hero → shelf → 66 book details → 附 (十类速览+legend, TaNaK, 使用方法); hero lead tightened
+- [x] B5 audit: check_overlap.py clean 320/360/390/414/768/1024/1440 chromium + 390/1440 webkit (deps from .debs in /workspace/wkdeps → copied into playwright webkit lib dir)
+- [x] regress: check.py 390,1440 50 rows 0 bad; check_ix 390 386 / 1440 411 checks 0 BAD
+- [ ] deploy
