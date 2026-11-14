@@ -11,10 +11,14 @@ const esc=[];const inV=(sel)=>document.querySelectorAll(sel).forEach(e=>{const s
 inV('#tpanel');inV('.fabm');inV('.ngi.open .ndd, .open>.ndd');if(tag==='toc')inV('#toc');if(tag==='toc-hidden'&&innerWidth>1000){const t=document.getElementById('toc').getBoundingClientRect(),m=document.getElementById('main').getBoundingClientRect();if(m.left>t.right+40&&t.right>0)esc.push('main-not-reflowed')}inV('.fab');
 return {tag,sw:d.scrollWidth,cw:d.clientWidth,over:over.slice(0,6),esc:esc.slice(0,6)}}"""
 out=[]
+import time
+T0=[time.time()]
 def chk(page,tag,pg,w):
+    t=time.time()
     r=page.evaluate(OV,tag); r.update(page=pg,w=w)
     if r['sw']>r['cw'] or r['over'] or r['esc']: print('BAD',json.dumps(r,ensure_ascii=False),flush=True)
     out.append(r)
+    if os.environ.get('TIMING'): print('T',tag,round(time.time()-T0[0],1),'eval',round(time.time()-t,1),flush=True)
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
     for w in widths:
