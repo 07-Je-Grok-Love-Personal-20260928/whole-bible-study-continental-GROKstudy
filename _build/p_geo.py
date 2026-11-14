@@ -79,6 +79,9 @@ def build():
     c.append(h2('why-geo','🧭','地理神学与地形'))
     c.append(h3('why3','为什么地理很重要？三个神学要点'))
     c.append('<div class="grid g3 reveal">'+''.join(f'<div class="card tile"><div class="big">{i}</div><h4>{t}</h4><p>{d}</p></div>' for i,t,d in [('🌉','陆桥神学','迦南夹在埃及与两河之间，是列国必经之路。神把子民放在“世界的十字路口”，使他们或作见证，或在背约时首当其冲受列国的击打。'),('🌧️','靠天降雨之地','“你们要过去得为业的那地，乃是有山、有谷、雨水滋润之地”（申11:11）。埃及靠尼罗河，迦南靠神降雨——这地本身就训练百姓信靠；巴力（雨神）崇拜正是对这一点的试探。'),('🗺️','从一地到万国','应许从“一块地”（迦南）扩展到“全地”（罗4:13：承受世界），最终是新天新地。保罗的旅程把福音从耶路撒冷带到罗马。')])+'</div>')
+    import culture_v11 as _c11
+    c.append(h3('geo-arc','圣经的地理弧线：从伊甸到新耶路撒冷'))
+    c.append(_c11.arc())
     c.append(h3('land-regions','应许之地的地形五带（自西向东）'))
     c.append('<div class="steps reveal">'+''.join(f'<div style="--c:{col}"><span class="e">{i}</span><b>{t}</b><span>{d}</span></div>' for i,t,d,col in [('🌊','沿海平原','非利士城、沙仑平原；“沿海的路”（Via Maris）国际商道','#5ec8ff'),('🌾','示非拉（低丘）','犹大与非利士的缓冲地带；大卫战歌利亚（以拉谷）','#b6f36b'),('⛰️','中央山地','耶路撒冷、伯利恒、示剑、撒玛利亚；族长与诸王的主要舞台','#ffb34d'),('🏜️','约旦裂谷','加利利海（海拔−212米）、约旦河、死海（−430米，地表最低）','#ff7aa8'),('🐑','外约旦高原','基列、摩押、以东；“王道”（King’s Highway）','#b18cff')])+'</div>')
     c.append(table(['地区','特点','新约意义'],[['加利利','肥沃、湖边渔村、外邦人杂居（“外邦人的加利利”赛9:1）','耶稣主要事工区；门徒多为渔夫'],['撒玛利亚','混血与分裂的宗教（基利心山）','好撒玛利亚人；叙加妇人；徒8福音入撒玛利亚'],['犹太','耶路撒冷圣殿、宗教中心；旷野','受难与复活；教会诞生'],['低加波利','十座希腊化城市','格拉森被鬼附者成为宣教者（可5:20）']]))
@@ -106,5 +109,8 @@ def build():
             pts=[x for x in MAPS[k].get('points',[]) if x.get('d')][:9]
             if pts:
                 c.append('<details class="dx"><summary>📍 本图地点速记（'+str(len(pts))+'）</summary><div class="in"><div class="grid g3">'+''.join(f'<div class="co info" style="margin:0"><span class="lb">📍 {E(x["n"])}</span><p>{rich(x["d"])}</p></div>' for x in pts)+'</div></div></details>')
+    c.append(h2('map-src','🛰️','实景地图的 24 个来源'))
+    c.append(co('info','<p>'+rich('右上角先选**类别**（示意/地形/卫星/街道/素图），再在“源”下拉框中**手选来源**；默认“自动”：某源 4.5 秒无响应或连续报错即自动换下一源，**全部失败则显示内置离线底图**。右下状态灯：🟢 已连接（显示首块瓦片耗时）、🟡 连接中、🔴 全部不可达。')+'</p>','怎么用'))
+    c.append(_c11.srctable())
     c.append(note('🧩 地图说明','<p>离线底图：Natural Earth 1:10m 陆地、湖泊、河流中心线（公有领域，naturalearthdata.com）经裁剪简化；在线底图共 24 个免密钥全球源（Esri 多主机、OpenTopoMap、EOX、CyclOSM、NASA GIBS、USGS、OpenStreetMap 多镜像、高德等），右上角可手选来源，自动模式下失败即换源。概念图为示意，不按真实比例绘制疆界。古代疆界与路线多为学界大致重建（尤其出埃及路线、西奈山位置有多种观点），本站取保守传统观点并作标注。</p>'))
     return page('geography.html','地理文化',''.join(c),extra_head='',scripts='<script src="assets/data/maps.js" defer></script><script src="assets/js/maps.js?v='+V+'" defer></script><script src="assets/js/journey.js?v='+V+'" defer></script>')
