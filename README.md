@@ -1,17 +1,17 @@
-# 整本圣经研读-20261114-v11.1-GROKstudy
+# 整本圣经研读-20261114-v11.2-GROKstudy
 
-> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-14｜**版本号**：v11.1｜GROKstudy
+> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-14｜**版本号**：v11.2｜GROKstudy
 
 66 卷书架与逐卷解读 · 全景总览 · 救赎故事 · 圣约神学 · 时间线 · **地理（19 幅地图：概念图＋讲解动画＋24 个全球实景源）· 历史文化 · 考古** · 基督生平 · 四福音对照 · 四福音合参（202 段，和合本）· 使徒行传与初代教会 · 五组文体对照 · 列王纪×历代志 · 跨卷连接网络 · 统计 · 三大信经与三项联合信条全文 · 记忆测验。
 信经与信条引文全部**逐字**取自 [ccifellowship.org](https://ccifellowship.org)（中国改革宗教会），构建时自动校验（182 处）；经文采用和合本；威斯敏斯特标准仅作补充参照。
 
-## 🔗 在线访问（当前版本 v11.1）
+## 🔗 在线访问（当前版本 v11.2）
 
 | 平台 | 链接 |
 |---|---|
 | GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/whole-bible-study-continental-GROKstudy/ |
-| Surge | https://whole-bible-study-20261114-v11-1-grokstudy.surge.sh/ |
-| Netlify | https://whole-bible-study-20261114-v11-1-grokstudy.netlify.app/ |
+| Surge | https://whole-bible-study-20261114-v11-2-grokstudy.surge.sh/ |
+| Netlify | https://whole-bible-study-20261114-v11-2-grokstudy.netlify.app/ |
 | 源码仓库 | https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy |
 
 ## 📑 页面结构（23 页 · 7 组）
@@ -22,7 +22,7 @@
 
 | # | 文件 | 页面 | 要点 |
 |---|---|---|---|
-| 1.1 | `index.html` | 📚 66卷书 | 单行可滑动书架（旧约一行 · 新约一行，书脊数字＝章数）→ 66 卷逐卷 13 项 → 附：分类速览 · 正典排列 · 使用方法 |
+| 1.1 | `index.html` | 📚 66卷书 | 单行可滑动书架（旧约一行 · 新约一行，书脊数字＝章数）→ 66 卷逐卷 13 项（v11.2 精简：前因·后果一卡、结构图图例合并大纲、要点口诀在相关书卷前）→ 附：分类速览 · 正典排列 · 使用方法 |
 
 ### ② 🧭 全景总览
 
@@ -91,6 +91,11 @@ WIDTHS=390 ENGINE=webkit python3 _build/check_overlap.py all   # v11.1 排版质
 - 信条数据：`_build/data/cci/*.json`。正文短引用以 `{{HC27|…}}` 标记，构建时必须是原文子串，否则构建失败。
 
 ## 📝 版本历史
+
+### v11.2 — 2026-11-14（tag `v11.2-20261114`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v11.2-20261114)）
+- 在线：Surge https://whole-bible-study-20261114-v11-2-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261114-v11-2-grokstudy.netlify.app/ · GitHub Pages（main）
+- **66 卷逐卷卡片统一精简**（生成器 `_build/books.py`）：标题钥词去掉“之书”（救赎之书→救赎）；删去前因与后果之间的“书名/钥词”中间框，前因·后果合为一张紧凑卡片（宽屏左右两栏，手机上下两行）；结构大纲删除重复的逐行列表，独有信息并入结构图图例（宽屏两栏）；删除“作者/日期”块（与标题标签重复），独有事实（如王上6:1 建殿前480年、成书于旷野）并入“真实背景”末行；“核心三要点 · 记忆口诀”移到“相关书卷”之前，成为独立小节；卡片排版节奏统一（标题细线、间距、圆角）。
+- 检查：check_overlap 320/360/390/414/768/1024/1440（Chromium）+ 390（WebKit）全站 0 问题；引文逐字校验 182 处、链接 4557 个全部通过。
 
 ### v11.1 — 2026-11-14（tag `v11.1-20261114`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v11.1-20261114)）
 - 在线：Surge https://whole-bible-study-20261114-v11-1-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261114-v11-1-grokstudy.netlify.app/ · GitHub Pages（main）
