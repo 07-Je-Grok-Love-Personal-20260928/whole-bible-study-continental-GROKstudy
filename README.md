@@ -1,17 +1,17 @@
-# 整本圣经研读-20261114-v11-GROKstudy
+# 整本圣经研读-20261114-v11.1-GROKstudy
 
-> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-14｜**版本号**：v11｜GROKstudy
+> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-14｜**版本号**：v11.1｜GROKstudy
 
 66 卷书架与逐卷解读 · 全景总览 · 救赎故事 · 圣约神学 · 时间线 · **地理（19 幅地图：概念图＋讲解动画＋24 个全球实景源）· 历史文化 · 考古** · 基督生平 · 四福音对照 · 四福音合参（202 段，和合本）· 使徒行传与初代教会 · 五组文体对照 · 列王纪×历代志 · 跨卷连接网络 · 统计 · 三大信经与三项联合信条全文 · 记忆测验。
 信经与信条引文全部**逐字**取自 [ccifellowship.org](https://ccifellowship.org)（中国改革宗教会），构建时自动校验（182 处）；经文采用和合本；威斯敏斯特标准仅作补充参照。
 
-## 🔗 在线访问（当前版本 v11）
+## 🔗 在线访问（当前版本 v11.1）
 
 | 平台 | 链接 |
 |---|---|
 | GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/whole-bible-study-continental-GROKstudy/ |
-| Surge | https://whole-bible-study-20261114-v11-grokstudy.surge.sh/ |
-| Netlify | https://whole-bible-study-20261114-v11-grokstudy.netlify.app/ |
+| Surge | https://whole-bible-study-20261114-v11-1-grokstudy.surge.sh/ |
+| Netlify | https://whole-bible-study-20261114-v11-1-grokstudy.netlify.app/ |
 | 源码仓库 | https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy |
 
 ## 📑 页面结构（23 页 · 7 组）
@@ -22,7 +22,7 @@
 
 | # | 文件 | 页面 | 要点 |
 |---|---|---|---|
-| 1.1 | `index.html` | 📚 66卷书 | 书架总图（7 组 · 12 类）· 66 卷逐卷 13 项 · 相关书卷链接 |
+| 1.1 | `index.html` | 📚 66卷书 | 单行可滑动书架（旧约一行 · 新约一行，书脊数字＝章数）→ 66 卷逐卷 13 项 → 附：分类速览 · 正典排列 · 使用方法 |
 
 ### ② 🧭 全景总览
 
@@ -81,6 +81,8 @@
 ```bash
 python3 _build/build.py      # 生成全部 HTML；逐字引文校验；Mermaid 预渲染；内部链接/锚点/资源检查（_build/links.py）
 WIDTHS=320,360,390,414,768,1024,1280,1440,1920 python3 _build/check.py all   # 无头 Chromium：溢出、控制台错误、Mermaid、地图（THEMES=… 可指定主题）
+WIDTHS=390 python3 _build/check_ix.py all        # 展开/标签页/目录/主题/地图源等交互后再查溢出
+WIDTHS=390 ENGINE=webkit python3 _build/check_overlap.py all   # v11.1 排版质量：兄弟元素重叠、空框、文字被裁切、行内装饰碎片重叠、标签行乱换行
 ```
 
 - 纯静态站点；第三方库已本地化：`assets/vendor/`（Leaflet 1.9.4、Mermaid 11 仅构建期使用、Lenis 1.3.27）。
@@ -89,6 +91,21 @@ WIDTHS=320,360,390,414,768,1024,1280,1440,1920 python3 _build/check.py all   # �
 - 信条数据：`_build/data/cci/*.json`。正文短引用以 `{{HC27|…}}` 标记，构建时必须是原文子串，否则构建失败。
 
 ## 📝 版本历史
+
+### v11.1 — 2026-11-14（tag `v11.1-20261114`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v11.1-20261114)）
+- 在线：Surge https://whole-bible-study-20261114-v11-1-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261114-v11-1-grokstudy.netlify.app/ · GitHub Pages（main）
+- **🧱 重叠/遮挡修复**（用户截图 4 处）：
+  - 关键经文“★必背”卡片：通用 `.must` 行内样式误作用到整段引文（变成行内窄框、出处掉到框外、下方多一个空框）→ 只作用于行内 `span.must`；必背经文恢复为整宽引文卡片，荧光笔下划线只标经文本身。
+  - 记忆口诀：地图注释卡 `.mn` 的定位竖条与行内标签样式同时作用到口诀段落（多个半透明框互相叠压、竖条穿过文字）→ 拆分作用范围；标签单独一行，口诀加粗＋荧光底，括号解释另起一行小字。
+  - 结构图色条：标签在“；/—”处截断、最长 8 字；构建期按宽度判断每段显示“标签 / 章号 / 不显示”，容器查询区分手机与桌面，省略号兜底，绝不溢出。
+  - 书卷标题区：编号方块缩小，去掉标题前重复的“3.”，作者/日期标签精简（如“主前约1445”），四个标签一行排完，不再错乱换行、留大片空白（66 卷统一）。
+- **📚 首页重排**：书架 → 66 卷逐卷 → 附录（十类速览、TaNaK、使用方法）。书架改为**旧约一行、新约一行**的横向滑动条（滑动吸附、边缘渐隐、桌面左右箭头）；**书脊数字＝章数**（共 1189 章，构建时校验）；点书脊精准跳到该卷并高亮，阅读时当前书卷的书脊自动居中。
+- **🔍 全站排查**：新增 `_build/check_overlap.py`（重叠、空框、裁切、行内碎片叠压、标签行乱换行）。另修：基督生平“八个阶段”色带被压成 8px 细条；列王时间轴/王朝条窄格文字被裁（放不下就隐藏，点击仍看详情）；多特信经 4 个空白框；流程箭头越出容器；五经流程 5 卡一行。
+- **✅ 检查**：check_overlap 在 320/360/390/414/768/1024/1440（Chromium）和 390（WebKit，近似 iOS Safari）全部 0 问题；check.py 与 check_ix.py（390、1440）无回归；4,491 个站内链接有效，逐字引文 182 处通过。
+
+### v11 — 2026-11-14（tag `v11-20261114`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v11-20261114)）
+- 在线：Surge https://whole-bible-study-20261114-v11-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261114-v11-grokstudy.netlify.app/
+- 19 幅地图（新增列国、士师、以利亚、先知、罗马帝国、信条发源地），24 个免密钥全球地图源（5 类，可切换、状态灯、自动回退离线底图），每幅地图配讲解动画；文化页考古时间线与世界观对照；笔记标记加强；12 套主题（新增极光霓彩、春日晴空）。
 
 ### v10 — 2026-10-24（tag `v10-20261024`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v10-20261024)）
 - 在线：Surge https://whole-bible-study-20261024-v10-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261024-v10-grokstudy.netlify.app/ · GitHub Pages（main）
