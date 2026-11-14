@@ -1171,3 +1171,27 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .fstep>div:not(:last-child)::after,.dyn>div:not(:last-child)::after{width:10px;right:-10px;text-align:center;font-size:12px;overflow:hidden}
 .fstep{grid-template-columns:repeat(auto-fit,minmax(min(100%,128px),1fr))}
 .cbar a{min-width:0}
+/* ===== v11.2 book card: compact 前因/后果, merged structure legend, folded author/date, refined rhythm ===== */
+.bk .body{padding:12px 14px 14px}
+.causal2{display:grid;grid-template-columns:1fr 1fr;margin:0 0 10px;border-radius:12px;border:1px solid var(--line);background:var(--card2);overflow:hidden}
+.causal2 .cz{display:flex;gap:8px;align-items:baseline;padding:8px 12px;font-size:13.5px;line-height:1.65;min-width:0}
+.causal2 .cz+.cz{border-left:1px solid var(--line)}
+.causal2 .cz>b{flex:none;font-size:12px;font-weight:800;padding:0 7px;border-radius:99px;line-height:1.7;white-space:nowrap;color:var(--sky);background:color-mix(in srgb,var(--sky) 14%,transparent)}
+.causal2 .cz.post>b{color:var(--emer);background:color-mix(in srgb,var(--emer) 14%,transparent)}
+.causal2 .cz>span{min-width:0;overflow-wrap:anywhere}
+@media(max-width:760px){.causal2{grid-template-columns:1fr}.causal2 .cz+.cz{border-left:0;border-top:1px dashed var(--line)}.causal2 .cz{padding:7px 10px;font-size:13.5px}}
+.bk .bgrid{gap:10px}
+.bk .box{padding:10px 12px 11px;line-height:1.7}
+.bk .box>h4.h{display:flex;align-items:center;gap:6px;margin:0 0 6px;padding-bottom:5px;font-size:14px;letter-spacing:.02em;border-bottom:1px solid color-mix(in srgb,var(--c) 28%,transparent)}
+.bk .box>p{margin:0 0 4px}
+.bk .box>:last-child{margin-bottom:0}
+.bk .box .co{margin:8px 0 0}
+.bk .box>h4.h+.co{margin-top:2px}
+.sleg2{list-style:none;margin:6px 0 0!important;padding:0!important;display:grid;gap:3px 18px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.sleg2 li{display:flex;gap:6px;align-items:baseline;min-width:0;font-size:13px;line-height:1.6;color:var(--ink2);padding:2px 0}
+.sleg2 li>i{flex:none;width:9px;height:9px;border-radius:3px;align-self:center}
+.sleg2 li>b.rg{flex:none;font-variant-numeric:tabular-nums;font-weight:800;color:var(--ink);font-size:12.5px;white-space:nowrap}
+.sleg2 li>span{min-width:0;overflow-wrap:anywhere}
+.bgnote{display:flex;flex-direction:column;gap:2px;margin:6px 0 0!important;padding-top:5px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.6;color:var(--mut)}
+.bgnote span{overflow-wrap:anywhere}
+.sleg2 li{margin:0!important;padding:1px 0}
