@@ -62,6 +62,7 @@ with sync_playwright() as p:
                 page.evaluate("()=>document.querySelectorAll('.jyp').forEach(b=>b.click())"); page.wait_for_timeout(2500); chk(page,'journey-mid',pg,w)
                 page.evaluate("()=>document.querySelectorAll('.jyf').forEach(b=>{for(let i=0;i<30;i++)b.click()})"); page.wait_for_timeout(800); chk(page,'journey-end',pg,w)
             if errs: print('ERR',pg,w,errs[:3],flush=True)
+            print('PG',pg,w,flush=True)
             page.close()
         ctx.close()
 print('DONE',len(out),'checks')
