@@ -255,3 +255,21 @@ $$('.covflow').forEach(cf=>{const info=$(cf.dataset.info);cf.addEventListener('c
 document.querySelectorAll('.memtrk').forEach(w=>{const k=w.dataset.k,bs=[...w.querySelectorAll('button[data-d]')],out=w.querySelector('.mtp b');let st={};try{st=JSON.parse(localStorage.getItem(k)||'{}')}catch(e){}
   const paint=()=>{let n=0;bs.forEach(b=>{const on=!!st[b.dataset.d];n+=on;b.setAttribute('aria-pressed',on)});if(out)out.textContent=n};
   w.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.classList.contains('mtr'))st={};else if(b.dataset.d)st[b.dataset.d]=!st[b.dataset.d];try{localStorage.setItem(k,JSON.stringify(st))}catch(e){}paint()});paint()});
+/* v11.1 one-row shelf: edge fades, arrows, tap → book, active spine follows reading */
+(()=>{const sh=document.getElementById('shelf');if(!sh)return;
+const wraps=[...sh.querySelectorAll('.spwrap')];
+const upd=w=>{const s=w.firstElementChild.nextElementSibling;const l=s.scrollLeft>2,r=s.scrollLeft+s.clientWidth<s.scrollWidth-2;w.classList.toggle('cl',l);w.classList.toggle('cr',r)};
+wraps.forEach(w=>{const s=w.querySelector('.spines');let q=0;s.addEventListener('scroll',()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;upd(w)})}},{passive:true});upd(w);
+ w.querySelectorAll('.spbtn').forEach(b=>b.addEventListener('click',()=>s.scrollBy({left:(b.classList.contains('l')?-1:1)*s.clientWidth*.8,behavior:'smooth'})));});
+addEventListener('resize',()=>wraps.forEach(upd),{passive:true});
+const map=new Map();sh.querySelectorAll('.spines a').forEach(a=>map.set(a.getAttribute('href').slice(3),a));
+let cur=null;const act=id=>{const a=map.get(id);if(!a||a===cur)return;cur&&cur.classList.remove('on');a.classList.add('on');cur=a;const s=a.parentElement,x=a.offsetLeft-s.clientWidth/2+a.offsetWidth/2;s.scrollTo({left:Math.max(0,x),behavior:'smooth'})};
+let jt=0;['wheel','touchstart','keydown'].forEach(t=>addEventListener(t,()=>{jt++},{passive:true}));const off=()=>parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||76;
+sh.addEventListener('click',e=>{const a=e.target.closest('.spines a');if(!a||e.metaKey||e.ctrlKey)return;const id=a.getAttribute('href').slice(3);const bk=document.getElementById('bk-'+id);if(!bk)return;e.preventDefault();act(id);
+ history.replaceState(null,'','#b-'+id);const my=++jt;const go=()=>{if(my!==jt)return;const d=bk.getBoundingClientRect().top-off();if(Math.abs(d)>3)scrollTo({top:scrollY+d,behavior:'instant'})};go();[120,350,800,1500].forEach(t=>setTimeout(go,t));
+ bk.classList.add('spot');setTimeout(()=>bk.classList.remove('spot'),1800)});
+if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){act(e.target.id.slice(3))}},{rootMargin:'-35% 0px -60% 0px'});document.querySelectorAll('article.bk[id^="bk-"]').forEach(b=>io.observe(b))}
+})();
+/* v11.1 fit labels in proportional bars: hide text that can't fit (tooltip/click keeps details) */
+(()=>{const SEL='.kt .kb,.dk,.dm,.obar>span,.cbar>a';let t=0;const run=()=>{const els=[...document.querySelectorAll(SEL)];els.forEach(e=>e.classList.remove('tx0'));const bad=els.filter(e=>e.clientWidth>0&&e.clientWidth<26&&e.scrollWidth>e.clientWidth+1);bad.forEach(e=>e.classList.add('tx0'))};
+const go=()=>{clearTimeout(t);t=setTimeout(()=>requestAnimationFrame(run),150)};if(document.readyState!=='loading')go();else addEventListener('DOMContentLoaded',go);addEventListener('load',go);addEventListener('resize',go,{passive:true});window.__fitBars=run})();

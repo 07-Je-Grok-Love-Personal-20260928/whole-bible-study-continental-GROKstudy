@@ -1,0 +1,14 @@
+# v11.1 progress (branch v11.1-wip, from tag v11-20261114)
+- [x] before shots (chromium 390) /workspace/wb/shots/v11_1/before_*
+- [x] B1 must-verse: generic `.must` (display:inline, border, ★::before) hit blockquote.v.must → scoped to span.must; verse text in span.vt
+- [x] B2 mnemonic: `.mn` map-note card rule (position/overflow/::before gold bar) + inline-chip rule both hit p.mn → scoped div.mn/span.mn; p.mn block w/ .mnq highlight + .mnx gloss
+- [x] B3 sbar: labels cut at ；—, ≤8 chars, build-time fit → label / range-number / none per container width (container query 560px), ellipsis; heading sn gap
+- [x] B4 header: .bhd row (tile+title, dup "3." hidden), chips full-width row, short author/date (_au/_dt), smaller tile+chips ≤600px
+- [ ] B5 check_overlap.py audit + fixes
+- [ ] regress check.py/check_ix.py 390,1440; WebKit 390
+- [ ] deploy v11.1
+- [x] t16u A/B shelf: 1 row OT + 1 row NT, horizontal scroll-snap strip, edge fades, arrows (fine pointer), spine number = chapters (assert 1189), precise tap-jump (+settle corrections, cancel on user input), active spine follows reading (IO), spot highlight
+- [x] t16u C/D home order: hero → shelf → 66 book details → 附 (十类速览+legend, TaNaK, 使用方法); hero lead tightened
+- [x] B5 audit: check_overlap.py clean 320/360/390/414/768/1024/1440 chromium + 390/1440 webkit (deps from .debs in /workspace/wkdeps → copied into playwright webkit lib dir)
+- [x] regress: check.py 390,1440 50 rows 0 bad; check_ix 390 386 / 1440 411 checks 0 BAD
+- [ ] deploy

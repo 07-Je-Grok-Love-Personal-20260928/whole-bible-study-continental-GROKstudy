@@ -30,6 +30,25 @@ for _l in open(os.path.join(_D,'books_v2.txt')):
 def qmark(t,auto=True): return rich(t,auto)
 PAL=['#ffcb5c','#ff6fa5','#b78cff','#5cc8ff','#3ee0a1','#ff9f43','#2dd4bf','#f472b6']
 RNG=re.compile(r'^\s*(\d+)(?::(\d+))?(?:\s*[–-]\s*(\d+)(?::(\d+))?)?\s*(.*)$')
+def _au(a):
+    a=re.split(r'[（(；;]',a)[0]
+    a=re.sub(r'^(犹太)?传统[：:]','',a).replace('为主','').strip()
+    if a.startswith('不详'): return '不详'
+    p=re.split(r'[、，,]',a)
+    a=p[0]+('等' if len(p)>1 and p[1].strip() else '')
+    return a[:8]
+_DTO={58:'主后70年前',19:'主前约1440–450',34:'主前约650',18:'族长时代',8:'主前约1150'}
+def _dt(n,d):
+    if n in _DTO: return _DTO[n]
+    d=d.split('；')[0]
+    m=re.search(r'(约)?(主[前后])(约)?(\d+)(?:\s*[–-]\s*约?(\d+))?',d)
+    if not m: return d[:10]
+    ap=bool(m.group(1) or m.group(3) or '左右' in d or '前后' in d[m.end():m.end()+4])
+    return m.group(2)+('约' if ap else '')+m.group(4)+('–'+m.group(5) if m.group(5) else '')
+def mnp(m):
+    mm=re.match(r'^(“[^”]+”)\s*（(.*)）$',m)
+    if mm: return f'<p class="mn"><span class="mnq">{E(mm.group(1))}</span><span class="mnx">{E(mm.group(2))}</span></p>'
+    return f'<p class="mn"><span class="mnq">{E(m)}</span></p>'
 def sbar(b):
     items=[x.strip() for x in b['ol'].split('|')]; segs=[]
     for it in items:
@@ -45,9 +64,16 @@ def sbar(b):
         w.append(max(nx-sg[0],.35))
     T=sum(w); sp=''; lg=''
     for i,(sg,ww) in enumerate(zip(segs,w)):
-        col=PAL[i%len(PAL)]; lab=re.split(r'[：:（(，,、]',sg[2])[0][:10]
+        col=PAL[i%len(PAL)]; lab=re.split(r'[：:（(，,、；;—]',sg[2])[0].strip()[:8]
         rng=' '.join(items[i].split(' ')[:2]) if items[i].startswith('卷') else items[i].split(' ')[0]
-        sp+=f'<span style="flex:{ww/T*100:.2f} 1 0;background:{col};transition-delay:{i*.08:.2f}s" title="{E(items[i])}">{E(lab) if ww/T>.1 else ""}</span>'
+        rs=re.sub(r'^卷\S+\s+','',rng); f=ww/T
+        def fit(W):
+            seg=f*W
+            if len(lab)*11.5+12<=seg: return ''
+            if len(rs)*6.0+6<=seg: return 'n'
+            return 'x'
+        cls=' '.join(c for c in (('p'+fit(310)) if fit(310) else '',('w'+fit(620)) if fit(620) else '') if c)
+        sp+=f'<span class="{cls}" style="flex:{f*100:.2f} 1 0;background:{col};transition-delay:{i*.08:.2f}s" title="{E(items[i])}"><b class="l">{E(lab)}</b><b class="r">{E(rs)}</b></span>'
         lg+=f'<span><i style="background:{col}"></i>{E(rng)} {E(lab)}</span>'
     return f'<div class="sbar" role="img" aria-label="{E(b["name"])}结构图">{sp}</div><div class="sleg">{lg}</div>'
 V4={}
@@ -86,7 +112,7 @@ def card(b):
     cl,col,ic=CATS[b['cat']]; x=V2[b['id']]; i=b['id']
     ol=''.join(f'<li>{qmark(re.sub(r"^(\S+)",r"**\1**",x_.strip(),count=1),False)}</li>' for x_ in b['ol'].split('|'))
     app=''.join(f'<li>{qmark(x_.strip())}</li>' for x_ in b['app'].split('|'))
-    kv=''.join(verse(E(t),E(r)).replace('<blockquote class="v">','<blockquote class="v must"><span class="star">★ 必背</span>',1 if j==0 else 0) for j,(t,r) in enumerate(b['kv']))
+    kv=''.join((f'<blockquote class="v must"><span class="star">★ 必背</span><span class="vt">{E(t)}</span><cite>— {E(r)}（和合本）</cite></blockquote>' if j==0 else verse(E(t),E(r))) for j,(t,r) in enumerate(b['kv']))
     cf=b['cf'].split(',')
     chips=''.join(f'<span class="tag" style="color:var(--vio)">{conflabel(s_)}</span>' for s_ in cf)
     test='旧约' if b['n']<=39 else '新约'
@@ -96,14 +122,14 @@ def card(b):
     H=lambda k,t:f'<h4 class="h" id="b-{i}-{k}">{t}</h4>'
     ph=BKH.get(i,{})
     return f'''<article class="bk" id="bk-{i}" data-cat="{b['cat']}" data-t="{'ot' if b['n']<=39 else 'nt'}" style="--c:{col};--phd:{ph.get('d',1500)}px;--pht:{ph.get('t',2100)}px;--phm:{ph.get('m',3000)}px;--pfd:{ph.get('D',1700)}px;--pft:{ph.get('T',2300)}px;--pfm:{ph.get('M',3300)}px">
-<header><div class="no">{b['n']}</div><div style="min-width:0;flex:1"><h3 class="h" id="b-{i}" data-num="{b['n']}" data-toc="{E(b['name'])}">{ic} {b['name']}<small>{b['en']} · {b['ch']}章</small></h3>
-<div class="chips" style="margin-top:6px"><span class="chip" style="border-color:{col};color:{col}">{cl}</span><span class="chip">{test}第{b['n'] if b['n']<=39 else b['n']-39}卷</span><span class="chip">✍️ {E(_chipcut(b['au'],22))}</span><span class="chip">🕰️ {E(_chipcut(b['dt'].split('；')[0],30))}</span></div></div>
+<header><div class="bhd"><div class="no">{b['n']}</div><h3 class="h" id="b-{i}" data-num="{b['n']}" data-toc="{E(b['name'])}">{ic} {b['name']}<small>{b['en']} · {b['ch']}章</small></h3>
+</div><div class="chips bchips"><span class="chip" style="border-color:{col};color:{col}">{cl}</span><span class="chip">{test}第{b['n'] if b['n']<=39 else b['n']-39}卷</span><span class="chip" title="{E(b['au'])}">✍️ {E(_au(b['au']))}</span><span class="chip" title="{E(b['dt'].split('；')[0])}">🕰️ {E(_dt(b['n'],b['dt']))}</span></div>
 <div class="one">💡 {qmark(one)}</div></header>
 <div class="body" data-lazy><template>
 {v4strip(b)}
 <div class="bgrid btop">
 <div class="box span2">{H('ol','🧩 结构大纲 · 结构图')}{sbar(b)}<ol class="outline">{ol}</ol></div>
-<div class="box">{co('core','<ol>'+keys+'</ol>','核心三要点')}{co('mnc','<p class="mn">'+E(b['mn'])+'</p>','记忆口诀')}<div class="srcline">✍️ 作者：{E(b['au'])}<br>🕰️ 日期：{qmark(b['dt'])}</div></div>
+<div class="box">{co('core','<ol>'+keys+'</ol>','核心三要点')}{co('mnc',mnp(b['mn']),'记忆口诀')}<div class="srcline">✍️ 作者：{E(b['au'])}<br>🕰️ 日期：{qmark(b['dt'])}</div></div>
 </div>
 <div class="bgrid">
 <div class="box">{H('bg','🏺 真实背景 · 受众')}<p>{qmark(b['bg'])}</p></div>

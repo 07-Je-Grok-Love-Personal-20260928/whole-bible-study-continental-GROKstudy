@@ -56,26 +56,30 @@ def shelf():
             if not sel(b): continue
             cl,col,ic=CATS[b['cat']]; h=74+math.sqrt(b['ch'])*7.4
             nm={'撒母耳记上':'撒上','撒母耳记下':'撒下','耶利米哀歌':'哀歌','帖撒罗尼迦前书':'帖前','帖撒罗尼迦后书':'帖后'}.get(b['name'],b['name'].rstrip('书') if len(b['name'])>3 else b['name'])
-            o+=f'<a href="#b-{b["id"]}" data-cat="{b["cat"]}" data-t="{"ot" if b["n"]<=39 else "nt"}" style="--c:{col};--h:{h:.0f}px;--i:{b["n"]%40}" title="{b["n"]}. {b["name"]} · {b["ch"]}章 · {cl}：{E(b["one"][:46])}"><i>{b["n"]}</i><span>{E(nm)}</span></a>'
-        return f'<div class="shelfrow"><b class="shlab">{lab}</b><div class="spines">{o}</div></div>'
-    return '<div class="shelf rv" id="shelf">'+row(lambda b:b['n']<=39,'📜 旧约 39')+row(lambda b:b['n']>39,'✝️ 新约 27')+'</div><p class="srcline">📏 书脊高度 ∝ √章数（诗篇 150 章最高，俄巴底亚书、腓利门书等 1 章最矮）；颜色＝文体；点击跳到该卷；上方按钮同时筛选书架与卡片。</p>'
+            o+=f'<a href="#b-{b["id"]}" data-cat="{b["cat"]}" data-t="{"ot" if b["n"]<=39 else "nt"}" style="--c:{col};--h:{h:.0f}px;--i:{b["n"]%40}" title="{b["n"]}. {b["name"]} · {b["ch"]}章 · {cl}：{E(b["one"][:46])}"><i>{b["ch"]}</i><span>{E(nm)}</span></a>'
+        return f'<div class="shelfrow"><b class="shlab">{lab}</b><div class="spwrap"><button class="spbtn l" type="button" aria-label="向左滚动" tabindex="-1">‹</button><div class="spines" tabindex="0" aria-label="{lab} 书架（可左右滑动）">{o}</div><button class="spbtn r" type="button" aria-label="向右滚动" tabindex="-1">›</button></div></div>'
+    assert sum(b['ch'] for b in BOOKS)==1189
+    return '<div class="shelf rv" id="shelf">'+row(lambda b:b['n']<=39,'📜 旧约 39')+row(lambda b:b['n']>39,'✝️ 新约 27')+'</div><p class="srcline shelfnote">🔢 书脊数字＝<b class="k">章数</b>（共 1189 章）· 高度 ∝ √章数 · 颜色＝文体 · ⇆ 左右滑动 · 点击直达该卷</p>'
 def books():
     nOT=sum(b['ch'] for b in BOOKS[:39]); nNT=sum(b['ch'] for b in BOOKS[39:])
-    c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">📚 66 卷书</span><span class="chip">旧约 39 · 新约 27 · {nOT+nNT} 章</span><span class="chip">每卷 13 项 · 认信连接逐字</span></div><h1>66 卷，<em>一位基督、一个故事</em></h1><p class="lead">“这经就是为我作见证的”（约5:39）。旧约是==应许、预表与等候==，新约是==应验、实体与差遣==。先看书架抓整体，再点开逐卷：一句话 · 背景 · 为什么写 · 结构图 · 核心 · 基督 · 圣约 · 难点 · 认信 · 应用 · 口诀 · 相关书卷。</p>
+    c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">📚 66 卷书</span><span class="chip">旧约 39 · 新约 27 · {nOT+nNT} 章</span><span class="chip">每卷 13 项 · 认信连接逐字</span></div><h1>66 卷，<em>一位基督、一个故事</em></h1><p class="lead">“这经就是为我作见证的”（约5:39）。旧约＝==应许、预表与等候==，新约＝==应验、实体与差遣==。书架选卷 → 逐卷 13 项：背景 · 目的 · 结构 · 核心 · 基督 · 圣约 · 难点 · 认信 · 口诀。</p>
 <div class="chips" style="margin-top:8px"><a class="btn on" href="#ot">📜 旧约 39 卷</a><a class="btn" href="#nt">✝️ 新约 27 卷</a><a class="btn" href="overview.html">🧭 全景总览</a><a class="btn" href="story.html">🧭 救赎大故事</a></div></section>'''.replace('==应许、预表与等候==','<mark class="hy">应许、预表与等候</mark>').replace('==应验、实体与差遣==','<mark class="hy">应验、实体与差遣</mark>')]
-    c.append(h2('shelf-h','🗄️','书架总图：66 卷一眼看全'))
+    c.append(h2('shelf-h','🗄️','书架：66 卷一眼看全'))
     c.append(filters(list(CATS.keys()),'.bk,.shelf a'))
-    c.append(legend(list(CATS.keys()))+shelf())
-    c.append(h3('cat10','十类速览'))
-    c.append(table(['分类','书卷','核心','口诀'],[['⚖️ 律法书','创—申（5）','根基：创造、拣选、救赎、立约、律法','起·出·圣·数·重'],['🏛️ 历史书','书—斯（12）','得地、王国、分裂、被掳、归回','书士得 撒撒王王代代 拉尼斯'],['🎼 诗歌智慧书','伯—歌（5）','在约中受苦、敬拜、生活、相爱','苦·赞·智·虚·爱'],['🔥 大先知书','赛—但（5）','审判与安慰、新约、神的国','赛耶哀结但'],['📯 小先知书','何—玛（12）','背约控诉、耶和华的日子、余民','何珥摩俄拿弥，鸿哈番该亚玛'],['✝️ 福音书','太—约（4）','基督是谁、做了什么','君王·仆人·人子·神子'],['🕊️ 使徒行传','徒（1）','升天基督藉圣灵建立教会','耶路撒冷→犹太撒玛利亚→地极'],['✉️ 保罗书信','罗—门（13）','福音的教义与生活','罗林林加，弗腓西，帖帖提提多门'],['📨 普通书信','来—犹（8）','持守信心、真道与爱','来雅彼彼，约约约犹'],['👑 启示录','启（1）','羔羊得胜，万有更新','七教会·七印·七号·七碗']]))
-    c.append(h3('tanak','希伯来正典的排列（TaNaK）'));c.append(note('📜 希伯来正典的排列（TaNaK）','<p>犹太人的圣经（24 卷，内容与新教 39 卷相同）分为：<span class="key">律法（Torah）</span>、<span class="key">先知（Nevi’im，含约书亚—列王纪“前先知”与以赛亚—小先知“后先知”）</span>、<span class="key">圣卷（Ketuvim，诗篇—历代志）</span>。耶稣说“摩西的律法、先知的书和诗篇”（路24:44），正对应这三部分；“从亚伯的血起，直到……撒迦利亚的血为止”（太23:35）则是从创世记到历代志（希伯来正典最后一卷）。</p>','vio'))
-    c.append(h3('how','如何使用逐卷卡片'));c.append(HOW)
+    c.append(shelf())
+    tail=[]
+    tail.append(h3('cat10','十类速览'))
+    tail.append(legend(list(CATS.keys()))+table(['分类','书卷','核心','口诀'],[['⚖️ 律法书','创—申（5）','根基：创造、拣选、救赎、立约、律法','起·出·圣·数·重'],['🏛️ 历史书','书—斯（12）','得地、王国、分裂、被掳、归回','书士得 撒撒王王代代 拉尼斯'],['🎼 诗歌智慧书','伯—歌（5）','在约中受苦、敬拜、生活、相爱','苦·赞·智·虚·爱'],['🔥 大先知书','赛—但（5）','审判与安慰、新约、神的国','赛耶哀结但'],['📯 小先知书','何—玛（12）','背约控诉、耶和华的日子、余民','何珥摩俄拿弥，鸿哈番该亚玛'],['✝️ 福音书','太—约（4）','基督是谁、做了什么','君王·仆人·人子·神子'],['🕊️ 使徒行传','徒（1）','升天基督藉圣灵建立教会','耶路撒冷→犹太撒玛利亚→地极'],['✉️ 保罗书信','罗—门（13）','福音的教义与生活','罗林林加，弗腓西，帖帖提提多门'],['📨 普通书信','来—犹（8）','持守信心、真道与爱','来雅彼彼，约约约犹'],['👑 启示录','启（1）','羔羊得胜，万有更新','七教会·七印·七号·七碗']]))
+    tail.append(h3('tanak','希伯来正典的排列（TaNaK）'));tail.append(note('📜 希伯来正典的排列（TaNaK）','<p>犹太人的圣经（24 卷，内容与新教 39 卷相同）分为：<span class="key">律法（Torah）</span>、<span class="key">先知（Nevi’im，含约书亚—列王纪“前先知”与以赛亚—小先知“后先知”）</span>、<span class="key">圣卷（Ketuvim，诗篇—历代志）</span>。耶稣说“摩西的律法、先知的书和诗篇”（路24:44），正对应这三部分；“从亚伯的血起，直到……撒迦利亚的血为止”（太23:35）则是从创世记到历代志（希伯来正典最后一卷）。</p>','vio'))
+    tail.append(h3('how','如何使用逐卷卡片'));tail.append(HOW)
     groups={1:('law-h','⚖️ 律法书'),6:('hist-h','🏛️ 历史书'),18:('poet-h','🎼 诗歌智慧书'),23:('majp-h','🔥 大先知书'),28:('minp-h','📯 小先知书'),40:('gosp-h','✝️ 福音书'),44:('acts-h','🕊️ 使徒行传'),45:('paul-h','✉️ 保罗书信'),58:('gen-h','📨 普通书信'),66:('rev-h','👑 启示录')}
     for b in BOOKS:
         if b['n']==1: c.append('<div class="testb" id="ot"><b>📜 旧约 39 卷</b><span>应许 · 预表 · 等候</span></div>')
         if b['n']==40: c.append('<div class="testb nt" id="nt"><b>✝️ 新约 27 卷</b><span>应验 · 实体 · 差遣</span></div>')
         if b['n'] in groups: c.append(h2(groups[b['n']][0],groups[b['n']][1].split(' ')[0],groups[b['n']][1].split(' ')[1])+co('info','<p>'+rich(GI[groups[b['n']][0]],False)+GL.get(groups[b['n']][0],'')+'</p>','本组要旨'))
         c.append(card(b))
+    c.append(h2('appx','🧭','附：分类速览 · 正典排列 · 使用方法'))
+    c+=tail
     return page('index.html','66卷书',''.join(c),cv=False)
 def stub(fn,anchor,title):
     return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>{title} → 66卷书</title><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=index.html#{anchor}"><link rel="canonical" href="index.html#{anchor}"><script>location.replace('index.html'+(location.hash&&location.hash.length>1?location.hash:'#{anchor}'))</script></head><body style="font-family:sans-serif;background:#0b1020;color:#eee;padding:40px"><p id="{anchor}">{title}已并入 <a href="index.html#{anchor}" style="color:#ffcb5c">66卷书</a>（v8）。</p></body></html>'''

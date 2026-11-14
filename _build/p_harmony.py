@@ -59,7 +59,7 @@ def coverage():
         mk+=f'<line x1="{k*6-0.5}" x2="{k*6-0.5}" y1="-4" y2="66" stroke="currentColor" stroke-opacity=".35"/><text x="{k*6+2}" y="76" font-size="9.5" fill="currentColor" opacity=".8">{p["n"]}</text>';k+=len(p['s'])
     return f'<div class="tw cov"><svg viewBox="-62 -6 {W+66} 86" style="min-width:760px;width:100%;color:var(--ink2)" role="img" aria-label="四福音段落覆盖图">{o}{mk}</svg></div>'
 def build():
-    c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">📖 四福音合参</span><span class="chip">{N} 段 · {len(P)} 个阶段</span><span class="chip">和合本（新标点·简体）</span><span class="chip">编辑合参 · 依 Robertson / Aland 次序</span></div>
+    c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">📖 四福音合参</span><span class="chip">{N} 段 · {len(P)} 个阶段</span><span class="chip">和合本</span><span class="chip">依 Robertson·Aland 次序</span></div>
 <h1>一位基督，<em>四卷见证，合成一个叙事</em></h1><p class="lead">像二世纪他提安的 <b class="k">Diatessaron</b> 那样把四福音“合成一卷”来读：每段以<b class="k">一卷为主文</b>，列出其余福音书的<mark class="hy">平行经文</mark>，并把它们<mark class="hy">独有的细节</mark>并入、逐条标明出处。点开段落才加载经文（按需渲染）。</p></section>''']
     c.append(h2('hm-how','🧭','怎样使用这份合参'))
     c.append('<div class="grid g3">'+co('info','<p>'+rich('**编辑性合参**：段落划分与先后次序是==编者的判断==，大体依 A. T. Robertson《四福音合参》与 K. Aland《Synopsis》的通行次序；圣经本身没有给出逐日的“总时间表”。',False)+'</p>','这是什么')+co('hardc','<p>'+rich('**年代说明**：采用“约翰福音记三至四个逾越节”的通行框架（约2:13；5:1?；6:4；11:55），公开事工约三年半；受难年取 ~~主后30年~~（亦有主张33年）。各阶段年代均为==约数==。',False)+'</p>','年代与次序')+co('core','<p>'+rich('四福音不是“矛盾的四份口供”，而是**圣灵默示的四重见证**（比利时信条第3–5条）：同一事件，各按写作目的取材、排列。合参的目的是==看见更完整的基督==，不是取代四卷各自的信息。',False)+'</p>','认信立场')+'</div>')
