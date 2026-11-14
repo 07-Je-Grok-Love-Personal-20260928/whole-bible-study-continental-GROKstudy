@@ -53,6 +53,8 @@ def build():
     c.append(creedcard('athanasian','③','网站介绍称第二部分为“第29-43点”，而网站所载正文编号至 42)；本站照录正文，不作改动。'))
     c.append(note('🪝 结构钩子','<p><span class="mn">1–2 序：必须持守</span> → <span class="mn">3–28 三一：位格不紊、本质不分</span> → <span class="mn">29–41 基督：完全的神、完全的人、一位</span> → <span class="mn">42 结语</span></p><p>三一段的“节奏”：<span class="key">“父如何，子就如何，圣灵也如何”</span>——每个属性说三次，然后说“非三位……乃一位……”。</p>','emer'))
     c.append(h2('cmpx','⚖️','深度对比与历史战场'))
+    import culture_v11 as _c11
+    c.append(_c11.creedstrip('creeds'))
     c.append(h3('compare','📊 三大信经对照表'))
     c.append(table(['比较项','使徒信经','尼西亚信经','亚他那修信经'],[
      ['📅 形成时间','古罗马信经（约2世纪）→ 约公元400年形式，8世纪定型','325 尼西亚会议 → 381 君士坦丁堡会议正式采纳','约6世纪上半叶，作者不详（非亚他那修本人）'],

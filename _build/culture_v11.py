@@ -39,3 +39,8 @@ SRCT=[('地形','Esri 世界地形 / 备用主机','17','Esri'),('地形','OpenT
  ('街道','OpenStreetMap 标准 / 德国 / 法国 / HOT','18–19','ODbL'),('街道','EOX OSM / Esri 街道 / ÖPNV','16–18','ODbL / Esri'),('街道','高德（中文·大陆友好）','10','高德'),('素图','Esri 浅灰 / 深灰 / 海洋','13–16','Esri'),('离线','Natural Earth（内置）','—','公有领域')]
 def srctable():
     return table(['类别','来源','最高原生级','许可'],[[a,b,c,d] for a,b,c,d in SRCT])
+STRIP={'creeds':[('🏛️','罗马','使徒信经','约2世纪→8世纪定型'),('🏛️','尼西亚 · 君士坦丁堡','尼西亚信经','325 / 381'),('📜','拉丁西方（南高卢？）','亚他那修信经','约6世纪上半叶')],
+ 'forms':[('📗','图尔奈（低地国家）','比利时信条','1561'),('📘','海德堡（普法尔茨）','海德堡要理问答','1563'),('📕','多特（荷兰）','多特信经','1618–19')]}
+def creedstrip(k):
+    return ('<div class="cstrip rv">'+''.join(f'<a href="geography.html#map-creeds" style="--i:{i}"><span class="ci">{ic}</span><b>{E(n)}</b><small>📍 {E(pl)} · <span class="ub">{E(d)}</span></small></a>' for i,(ic,pl,n,d) in enumerate(STRIP[k]))
+            +'<a class="cmore" href="geography.html#map-creeds">🗺️ 看「信经与信条诞生地」地图 + 讲解动画 →</a></div>')
