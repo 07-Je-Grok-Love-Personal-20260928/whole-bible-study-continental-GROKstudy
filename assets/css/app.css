@@ -1218,7 +1218,7 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .rhflow.run li::after{opacity:.9;animation:rhpulse 2.4s linear 3;animation-delay:calc(var(--i)*.18s)}
 @keyframes rhpulse{from{background-position:200% 0}to{background-position:-200% 0}}
 /* chains */
-.lchain{list-style:none;margin:10px 0 12px;padding:0;display:grid;gap:8px 22px;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}
+.lchain{list-style:none;margin:10px 0 12px;padding:0 0 2px;display:grid;overflow:hidden;overflow:clip;gap:8px 22px;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}
 .lchain li{position:relative;min-width:0;padding:9px 11px 9px 46px;border-radius:14px;background:color-mix(in srgb,var(--sky) 9%,var(--card));border:1px solid var(--line)}
 .lchain li .ce{position:absolute;left:10px;top:9px;font-size:22px;line-height:1}
 .lchain li b{display:block;font-size:14.5px}
