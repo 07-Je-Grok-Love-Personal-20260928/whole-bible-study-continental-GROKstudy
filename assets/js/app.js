@@ -97,7 +97,7 @@ function goTo(id){let el=document.getElementById(id);if(!el&&document.getElement
   let n=0,ly=-1,stop=false;const cancel=()=>{stop=true};['wheel','touchstart','keydown','pointerdown'].forEach(ev=>addEventListener(ev,cancel,{once:true,passive:true}));let jy=scrollY;const fix=()=>{if(stop)return;if(Math.abs(scrollY-jy)>innerHeight){stop=true;return}n++;const y=scrollY,d=el.getBoundingClientRect().top-off();if(y===ly&&Math.abs(d)>8){jump(tgt());jy=scrollY}ly=y;if(n<14)setTimeout(fix,200)};setTimeout(fix,far?60:400)}
 if(location.hash.length>1)addEventListener('load',()=>setTimeout(()=>goTo(decodeURIComponent(location.hash.slice(1))),60));
 /* ---------- TOC tree ---------- */
-const toc=$('#toc'),tree=$('#toc .tree'),tb=$('.tocbody');
+const toc=$('#toc'),tree=$('#toc .tree'),tb=$('.tocbody');let cur=null,syncT=0,sync=()=>{};
 /* v8.1: closed TOC branches ship as <template>; nodes are moved (identity kept) into the tree on demand */
 const mat=li=>{const t=li&&li.querySelector(':scope>template.tl');if(t)li.replaceChild(t.content,t)};
 const matAll=()=>{let t;while((t=tree&&tree.querySelector('template.tl')))t.parentElement.replaceChild(t.content,t)};
@@ -106,9 +106,14 @@ const ensure=a=>{if(a.isConnected)return;const ts=[...tree.querySelectorAll('tem
 if(tree){
   tree.addEventListener('click',e=>{const t=e.target.closest('.tg');if(t){const li=t.closest('li');mat(li);li.classList.toggle('closed');return}
     const a=e.target.closest('a');if(a){e.preventDefault();if(MOB())body.classList.remove('tocopen');requestAnimationFrame(()=>goTo(a.getAttribute('href').slice(1)))}});
-  $('#tocAll')&&$('#tocAll').addEventListener('click',()=>(matAll(),$$('li',tree)).forEach(l=>l.classList.remove('closed')));
-  $('#tocNone')&&$('#tocNone').addEventListener('click',()=>$$('li',tree).forEach(l=>{if(l.querySelector(':scope>ul,:scope>template'))l.classList.add('closed')}));
-  $('#tocL2')&&$('#tocL2').addEventListener('click',()=>$$('li',tree).forEach(l=>{if(l.querySelector(':scope>ul,:scope>template'))l.classList.toggle('closed',!l.classList.contains('l1'))}));
+  /* v12: per-level expansion — 1/2/3/all; remembered; current branch still auto-expands (sync) */
+  const lvBtns=$$('.toclv button');
+  const depth=li=>li.classList.contains('l1')?1:li.classList.contains('l2')?2:3;
+  const setLv=(n,save)=>{if(n>=3)matAll();$$('li',tree).forEach(l=>{if(l.querySelector(':scope>ul,:scope>template'))l.classList.toggle('closed',depth(l)>=n)});
+    lvBtns.forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.lv===n)));if(save)LS.s('wb-toclv',n);if(cur){clearTimeout(syncT);syncT=setTimeout(sync,60)}};
+  lvBtns.forEach(b=>b.addEventListener('click',()=>setLv(+b.dataset.lv,true)));
+  const lv0=+LS.g('wb-toclv')||0;
+  if(lv0)setLv(lv0,false);else{const big=!!tree.querySelector('template.tl');lvBtns.forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.lv===(big?2:9))))}
   const q=$('#tocq');q&&q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();if(v)matAll();
     $$('li',tree).forEach(li=>{li.classList.remove('hidden')});if(!v)return;
     $$('li',tree).forEach(li=>{const own=li.querySelector(':scope>.row>a').textContent.toLowerCase().includes(v);const sub=[...li.querySelectorAll('a')].some(a=>a.textContent.toLowerCase().includes(v));li.classList.toggle('hidden',!sub);if(sub&&!own)li.classList.remove('closed');if(own)li.classList.remove('closed')})});
@@ -157,7 +162,7 @@ const fab=$('.fab');if(fab){const t=fab.querySelector('.fabt');let sT=0,sc=false
    Headings inside skipped content (content-visibility / lazy template) fall back to their container being fully passed. */
 if(tree&&'IntersectionObserver' in window){
   const links=tocLinks(),n=links.length,ids=links.map(a=>a.getAttribute('href').slice(1));
-  const hAbove=new Uint8Array(n),cGone=new Map();let cur=null,raf=0;const idx=new Map(),cont=new Array(n);
+  const hAbove=new Uint8Array(n),cGone=new Map();let raf=0;const idx=new Map(),cont=new Array(n);
   const TOPM=-(parseInt(getComputedStyle(root).getPropertyValue('--top'))||56);
   const hio=new IntersectionObserver(es=>{es.forEach(e=>{const i=idx.get(e.target);if(i!==undefined)hAbove[i]=e.isIntersecting?1:0});sched()},{rootMargin:'100000px 0px -72% 0px'});
   // container fully above the band  <=>  container NOT intersecting the region below the 28% line, and its top is above it
@@ -170,12 +175,12 @@ if(tree&&'IntersectionObserver' in window){
   onDehyd.push(body=>{for(const [el,i] of [...idx]){if(body.contains(el)){hio.unobserve(el);idx.delete(el);hAbove[i]=0}}});
   onHyd.push(body=>{const card=body.closest('.bk');for(let i=0;i<n;i++){if(cont[i]!==card)continue;const el=document.getElementById(ids[i]);if(el&&!idx.has(el))bind(i)}sched()});
   function sched(){if(!raf)raf=requestAnimationFrame(spy)}
-  let ancs=[],syncT=0;
+  let ancs=[];
   function spy(){raf=0;let ans=0;for(let i=n-1;i>=0;i--){if(hAbove[i]||(cont[i]&&cGone.get(cont[i]))){ans=i;break}}
     const a=links[ans];if(!a||a===cur)return;ensure(a);cur&&cur.classList.remove('act');cur=a;a.classList.add('act');
     /* branch expansion + TOC auto-scroll need layout: defer until scrolling pauses so flings stay compositor-only */
     clearTimeout(syncT);syncT=setTimeout(sync,140)}
-  function sync(){const a=cur;if(!a)return;if(performance.now()-lastScroll<120){syncT=setTimeout(sync,140);return}
+  sync=function(){const a=cur;if(!a)return;if(performance.now()-lastScroll<120){syncT=setTimeout(sync,140);return}
     ancs.forEach(x=>x.classList.remove('anc'));ancs=[];
     let li=a.closest('li').parentElement.closest('li');while(li){li.classList.remove('closed');const x=li.querySelector(':scope>.row>a');x.classList.add('anc');ancs.push(x);li=li.parentElement.closest('li')}
     if(tb&&(!MOB()||body.classList.contains('tocopen'))){const r=a.getBoundingClientRect(),br=tb.getBoundingClientRect();if(r.top<br.top+30||r.bottom>br.bottom-30)tb.scrollTo({top:tb.scrollTop+r.top-br.top-br.height/3})}}

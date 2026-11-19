@@ -102,7 +102,7 @@ def toctree(toc):
         node={'lv':lv,'id':hid,'num':num,'txt':txt,'ch':[]}
         while stack and stack[-1]['lv']>=lv: stack.pop()
         (stack[-1]['ch'] if stack else roots).append(node); stack.append(node)
-    big=len(toc)>60
+    big=len(toc)>40
     def r(nodes,d):
         o=''
         for n in nodes:
@@ -247,7 +247,7 @@ def page(fn,title,content,extra_head='',scripts='',cv=True):
 <link rel="stylesheet" href="assets/css/app.css?v={V}">{extra_head}</head>
 <body data-mer="assets/vendor/mermaid.min.js"><div class="aurora"></div><div class="prog"></div>
 <header class="top"><button class="ibtn" id="tocBtn" title="目录 显示/隐藏" aria-label="目录">☰</button><a class="brand" href="index.html">📖 <b>整本圣经</b><span class="t">· 欧陆改革宗研读</span><small>GROKstudy {V}</small></a><nav class="nav">{nav}</nav>'''+HDR+f'''</header>
-<div class="wrap"><aside class="toc" id="toc"><div class="toch"><b>📑 本页目录</b><button id="tocL2" title="只展开到二级">二级</button><button id="tocAll" title="全部展开">全开</button><button id="tocNone" title="全部收起">全收</button><button id="tocClose" title="隐藏目录" aria-label="隐藏目录">✕</button></div>
+<div class="wrap"><aside class="toc" id="toc"><div class="toch"><b>📑 本页目录</b><button id="tocClose" title="隐藏目录" aria-label="隐藏目录">✕</button></div><div class="toclv" role="group" aria-label="目录展开层级"><span>展开到</span><button type="button" data-lv="1" title="只看一级（大标题）" aria-pressed="false">1级</button><button type="button" data-lv="2" title="展开到二级" aria-pressed="false">2级</button><button type="button" data-lv="3" title="展开到三级" aria-pressed="false">3级</button><button type="button" data-lv="9" id="tocAll" title="全部展开" aria-pressed="false">全部</button></div>
 <input id="tocq" placeholder="🔍 筛选目录…" aria-label="筛选目录"><div class="tocbody" data-lenis-prevent>{toctree(toc)}<div class="tocpages"><b>🧭 全站页面 · {len(GROUPS)} 组 {len(PAGES)} 页</b>{pages}</div></div><div class="rz" title="拖动调整目录宽度（双击复位）" role="separator" aria-orientation="vertical"><span class="rztip"></span></div><div class="rzhint" hidden>↔ 拖动右边缘调整目录宽度</div></aside><div class="scrim"></div>
 <main id="main">{cb[0]}{content}
 {cb[1]}<footer class="ft">📖 整本圣经 · 欧陆改革宗研读 — GROKstudy {V}（{DATE}）。信经与信条引文逐字取自 <a href="https://ccifellowship.org" target="_blank" rel="noopener">ccifellowship.org</a>（中国改革宗教会）；经文采用和合本。本站为学习辅助，日期采用保守派（Thiele 式）年代学，个别年份学界有±1–2年差异。<br>{"<br>".join(f'<b>{GCIRC[int(g)-1]} {gn}</b>：'+" · ".join(f'<a href="{f}">{PNUM[f]} {t}</a>' for f,i,t,d in ps) for g,gn,gi,ps in GROUPS)}</footer></main></div>
