@@ -163,7 +163,9 @@ const fab=$('.fab');if(fab){const t=fab.querySelector('.fabt');let sT=0,sc=false
   fab.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
     if(a==='back'){if(canBack())history.back();else location.href='index.html'}else if(a==='fwd')history.forward();else if(a==='top')go(0);else if(a==='bot'){measure();go(root.scrollHeight)}
     if(MOB())setTimeout(()=>set(false),250)});
-  addEventListener('scroll',()=>{if(!sc){sc=true;fab.classList.add('sc')}clearTimeout(sT);sT=setTimeout(()=>{sc=false;fab.classList.remove('sc')},700)},{passive:true})}
+  addEventListener('scroll',()=>{if(!sc){sc=true;fab.classList.add('sc')}clearTimeout(sT);sT=setTimeout(()=>{sc=false;fab.classList.remove('sc');ring()},700)},{passive:true});
+  /* progress ring: updated once when scrolling settles (a scroll-driven SVG animation repaints every frame) */
+  const rc=fab.querySelector('.fring circle'),ring=()=>{if(!rc)return;const h=root.scrollHeight-innerHeight;rc.style.strokeDashoffset=(113.1*(1-(h>0?Math.min(1,scrollY/h):0))).toFixed(1)};ring()}
 /* ---------- scroll-spy: IntersectionObserver only (no layout reads while scrolling) ----------
    Band = everything above 28% of the viewport. A heading is "passed" when it is in the band.
    Headings inside skipped content (content-visibility / lazy template) fall back to their container being fully passed. */
