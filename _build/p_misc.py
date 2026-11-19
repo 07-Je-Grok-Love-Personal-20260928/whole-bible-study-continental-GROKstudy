@@ -107,6 +107,8 @@ def sources():
     c.append(f'<p>整体相似度：信经 {pdf["ratio"]["creeds"]}，比利时信条 {pdf["ratio"]["bc"]}，海德堡 {pdf["ratio"]["hc"]}，多特 {pdf["ratio"]["dort"]}。差异多为写法（如“400年/四百年”、“·”间隔号）或个别用词；本站一律以 ccifellowship.org 为准。</p>')
     c.append(table(['信经','PDF页','ccifellowship.org（本站采用）','2015 手册','类型'],rows))
     c.append(h2('refs','📚','参考网站（供延伸学习；本站未从中作逐字引用）'))
+    c.append(h3('liu','📜 v12 整合：刘道顺《新旧约圣经全景》'))
+    c.append(table(['文献','本站处理','用在'],[['刘道顺 牧师著《新旧约圣经全景》（房角石；用户附件 PDF，339 页；旧约序言 1995 年）','全书逐章（序言·序论·66卷·先知书序论·书信序论·附录救赎史讲道法）要义转述与可视化；仅引用原书短语；与三项联合信条需校准处以 🧭 标出','<a href="panorama.html">新旧约全景页</a>；66 卷卡片「📜 全景要义」']]))
     R=[('https://ccifellowship.org','中国改革宗教会（CCI）','信经、信条、海德堡讲道（52主日）、经文证道、疑难解答'),('https://www.ccreformed.org','洛杉矶改革宗·恩约教会','中文改革宗讲道与教导'),('https://www.reformedbeginner.net','改革宗初学者','入门文章与信条导读'),('https://canrc.org','Canadian Reformed Churches','欧陆改革宗（荷兰解放派传统），Book of Praise'),('https://www.urcna.org','United Reformed Churches in North America','三项联合信条'),('https://heritagereformed.com','Heritage Reformed Congregations','荷兰第二次改教（Nadere Reformatie）传统'),('https://www.prca.org','Protestant Reformed Churches in America','三项联合信条；圣约论述'),('https://opc.org','Orthodox Presbyterian Church','威斯敏斯特信仰准则（opc.org/wcf.html 等）'),('https://canadianreformedseminary.ca','Canadian Reformed Theological Seminary','欧陆改革宗神学教育'),('https://crts.edu','CRTS','神学院资源'),('https://www.wts.edu','Westminster Theological Seminary','霍志恒圣经神学传统')]
     c.append('<div class="grid g3">'+''.join(f'<a class="card tile" href="{u}" target="_blank" rel="noopener"><div class="big">🔗</div><h4>{n}</h4><p>{d}<br><small>{u}</small></p></a>' for u,n,d in R)+'</div>')
     c.append(h2('v8src','📖','v8 新增：和合本经文与跨卷数据'))

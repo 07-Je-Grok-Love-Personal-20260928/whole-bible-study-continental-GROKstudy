@@ -1195,3 +1195,50 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .bgnote{display:flex;flex-direction:column;gap:2px;margin:6px 0 0!important;padding-top:5px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.6;color:var(--mut)}
 .bgnote span{overflow-wrap:anywhere}
 .sleg2 li{margin:0!important;padding:1px 0}
+/* ===== v12: 刘道顺《新旧约圣经全景》 ===== */
+.bk .box.liu{position:relative;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 13%,var(--card)),color-mix(in srgb,var(--gold) 7%,var(--card)));border:1px solid color-mix(in srgb,var(--c) 45%,transparent);box-shadow:inset 3px 0 0 var(--c)}
+.liu .lth{font-family:var(--serif);font-size:16.5px;line-height:1.55;margin:0 0 6px!important}
+.liu .lth mark{padding:1px 6px;border-radius:6px}
+.liu .lst{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 6px}
+.liu .lst>span{flex:0 1 auto;min-width:0;max-width:100%;font-size:12.5px;line-height:1.5;padding:2px 9px;border-radius:99px;border:1px dashed color-mix(in srgb,var(--c) 60%,transparent);background:color-mix(in srgb,var(--c) 9%,transparent);overflow-wrap:anywhere}
+.liu .lps{margin:0 0 4px;padding:0;list-style:none;counter-reset:lp;display:grid;gap:4px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.liu .lps li{counter-increment:lp;position:relative;padding:6px 8px 6px 32px;border-radius:10px;background:color-mix(in srgb,var(--ink) 4%,transparent);font-size:13.5px;line-height:1.65;min-width:0;overflow-wrap:anywhere}
+.liu .lps li::before{content:counter(lp);position:absolute;left:7px;top:7px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;color:#111;background:var(--c)}
+/* era flow */
+.rhflow{list-style:none;margin:10px 0 14px;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,178px),1fr));counter-reset:none}
+.rhflow li{position:relative;min-width:0}
+.rhflow a{display:flex;flex-direction:column;gap:3px;height:100%;padding:11px 12px 12px;border-radius:16px;text-decoration:none;color:var(--ink);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 24%,transparent),color-mix(in srgb,var(--c) 6%,transparent));border:1px solid color-mix(in srgb,var(--c) 55%,transparent);transition:transform .25s,box-shadow .25s}
+.rhflow a:hover,.rhflow a:focus-visible{transform:translateY(-3px);box-shadow:0 10px 24px -12px var(--c)}
+.rhflow .rn{position:absolute;top:8px;right:10px;font-size:11px;font-weight:800;opacity:.7}
+.rhflow .ri{font-size:24px;line-height:1}
+.rhflow b{font-family:var(--serif);font-size:16px}
+.rhflow small{font-size:11.5px;color:var(--mut)}
+.rhflow .rk{font-size:12.5px;line-height:1.55;color:var(--ink2)}
+.rhflow li::after{content:'';position:absolute;left:12px;right:12px;bottom:-1px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--c),transparent);background-size:200% 100%;opacity:.0}
+.rhflow.run li::after{opacity:.9;animation:rhpulse 2.4s linear 3;animation-delay:calc(var(--i)*.18s)}
+@keyframes rhpulse{from{background-position:200% 0}to{background-position:-200% 0}}
+/* chains */
+.lchain{list-style:none;margin:10px 0 12px;padding:0;display:grid;gap:8px 22px;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}
+.lchain li{position:relative;min-width:0;padding:9px 11px 9px 46px;border-radius:14px;background:color-mix(in srgb,var(--sky) 9%,var(--card));border:1px solid var(--line)}
+.lchain li .ce{position:absolute;left:10px;top:9px;font-size:22px;line-height:1}
+.lchain li b{display:block;font-size:14.5px}
+.lchain li small{display:block;font-size:12.5px;line-height:1.55;color:var(--ink2);overflow-wrap:anywhere}
+.lchain li:not(:last-child)::after{content:'➜';position:absolute;right:-17px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--gold);opacity:.8}
+@media(max-width:560px){.lchain{gap:14px}.lchain li:not(:last-child)::after{content:'⬇';right:auto;left:50%;top:auto;bottom:-15px;transform:translateX(-50%)}}
+.lchain.wide{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))}
+/* 66 cards */
+.lgrid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));margin:8px 0 12px}
+.lcard{position:relative;display:flex;flex-direction:column;gap:3px;min-width:0;padding:9px 11px 10px;border-radius:13px;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--c) 11%,var(--card));border:1px solid color-mix(in srgb,var(--c) 40%,transparent);border-top:3px solid var(--c);transition:transform .2s}
+.lcard:hover,.lcard:focus-visible{transform:translateY(-2px)}
+.lcard b{font-family:var(--serif);font-size:15px;padding-right:38px}
+.lcard .lch{position:absolute;top:7px;right:8px;font-size:11px;font-weight:800;padding:0 6px;border-radius:99px;background:color-mix(in srgb,var(--c) 30%,transparent)}
+.lcard .lch::after{content:'章'}
+.lcard .lt{font-size:13px;line-height:1.55;color:var(--ink2);overflow-wrap:anywhere}
+/* golden chain rings */
+.rings{margin:10px auto 14px;max-width:560px;text-align:center}
+.rings svg{width:100%;height:auto;display:block}
+.rings circle{stroke-dasharray:24 8;stroke-linecap:round}
+.rings.run circle{animation:flow 1.6s linear 3}
+/* v12 note-marking additions */
+.kch{display:inline-block;padding:0 6px;margin:0 1px;border:1.5px solid var(--gold);border-radius:6px;font-weight:700;line-height:1.45;color:var(--gold)}
+.uv{text-decoration:underline dotted var(--vio) 2.5px;text-underline-offset:4px}

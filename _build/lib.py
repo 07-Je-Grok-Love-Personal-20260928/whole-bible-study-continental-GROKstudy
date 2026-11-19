@@ -1,5 +1,5 @@
 import json,re,html
-V='v11'; DATE='2026-11-14'
+V='v12'; DATE='2026-11-19'
 import os
 HERE=os.path.dirname(os.path.abspath(__file__))
 CCI=os.path.join(HERE,'data','cci')+'/'
@@ -33,7 +33,7 @@ def conflabel(s):
     if s.startswith('BC'): return f'比利时{s[2:]}条'
     h,n=s[2:].split('.'); return f'多特{["一","二","三四","五"][int(h)]}·{n}'
 GROUPS=[('1','66卷书','📚',[('index.html','📚','66卷书','书架·逐卷13项解读')]),
- ('2','全景总览','🧭',[('overview.html','🏠','全景总览','学习路线·一页纸·标注系统'),('story.html','🧭','救赎大故事','四幕剧·红线·圣经神学'),('covenant.html','🤝','圣约神学','三约·六约·两种施行'),('timeline.html','⏳','时间线·诸王','11时代·8钉子·42王'),('geography.html','🗺️','地理文化','19幅地图·讲解动画+24源实景'),('culture.html','🏺','文化与生活','节期·圣殿·派别·度量衡')]),
+ ('2','全景总览','🧭',[('overview.html','🏠','全景总览','学习路线·一页纸·标注系统'),('panorama.html','📜','新旧约全景','刘道顺·救赎史·66卷一卷一句'),('story.html','🧭','救赎大故事','四幕剧·红线·圣经神学'),('covenant.html','🤝','圣约神学','三约·六约·两种施行'),('timeline.html','⏳','时间线·诸王','11时代·8钉子·42王'),('geography.html','🗺️','地理文化','19幅地图·讲解动画+24源实景'),('culture.html','🏺','文化与生活','节期·圣殿·派别·度量衡')]),
  ('3','基督与福音','✝️',[('life-of-christ.html','🌟','基督生平','事件×地图联动'),('gospels.html','📗','四福音对照','四幅肖像·段落对照'),('harmony.html','📖','四福音合参','202段·和合本·独有细节'),('acts.html','🕊️','使徒行传·初代教会','AD30–95·旅程动画')]),
  ('4','文体对比','🧩',[('pentateuch.html','⚖️','摩西五经对照','五经横向×纵向'),('history.html','🏛️','历史书对照','得地→被掳→归回'),('poetry.html','🎼','诗歌智慧书对照','五卷三角度看智慧'),('prophets.html','🔥','先知书对照','17先知×君王×帝国'),('epistles.html','✉️','新约书信对照','21封书信·年代·主题')]),
  ('5','专题','🔍',[('kings-chronicles.html','👑','列王纪×历代志','42王逐王对照'),('compare.html','🔗','跨卷对照','以经解经·引用网络'),('stats.html','📊','圣经统计','章节·类别·引用')]),
@@ -124,7 +124,7 @@ QUOTES=[]
 EMR=[(r'\*\*(.+?)\*\*',r'<b class="k">\1</b>'),(r'==(.+?)==',r'<mark class="hy">\1</mark>'),(r'%%(.+?)%%',r'<mark class="hg">\1</mark>'),
      (r'!!(.+?)!!',r'<span class="uw">\1</span>'),(r'\+\+(.+?)\+\+',r'<span class="ug">\1</span>'),(r'\^\^(.+?)\^\^',r'<span class="ub">\1</span>'),
      (r'\[\[(.+?)\]\]',r'<span class="cx">\1</span>'),(r'~~(.+?)~~',r'<span class="cr">\1</span>'),
-     (r'@@(.+?)@@',r'<span class="must">\1</span>'),(r';;(.+?);;',r'<span class="ud">\1</span>'),(r'__(.+?)__',r'<span class="uo">\1</span>'),(r'\$\$(.+?)\$\$',r'<mark class="hb">\1</mark>')]
+     (r'@@(.+?)@@',r'<span class="must">\1</span>'),(r';;(.+?);;',r'<span class="ud">\1</span>'),(r'__(.+?)__',r'<span class="uo">\1</span>'),(r'\$\$(.+?)\$\$',r'<mark class="hb">\1</mark>'),(r'&lt;&lt;(.+?)&gt;&gt;',r'<span class="kch">\1</span>')]
 REFRE=re.compile(r'(?<![\d:新旧立守背盟之圣])((?:撒上|撒下|王上|王下|代上|代下|林前|林后|帖前|帖后|提前|提后|彼前|彼后|约一|约二|约三|[创出利民申书士得拉尼斯伯诗箴传歌赛耶哀结但何珥摩俄拿弥鸿哈番该亚玛太可路约徒罗加弗腓西多门来雅犹启])\d{1,3}:\d{1,3}(?:[–\-]\d{1,3}(?::\d{1,3})?)?)(?![\d])')
 TERMS=['恩典之约','行为之约','救赎之约','亚伯拉罕之约','摩西之约','西奈之约','大卫之约','挪亚之约','新约应许','因信称义','代赎','中保','道成肉身','受苦的仆人','预表','护理','拣选','归算','三位一体','神的主权']
 DATERE=re.compile(r'(?<![\d\^])((?:约|主前|主后|公元前|AD ?)?\d{2,4}(?:[–\-]\d{2,4})?(?: ?BC| ?AD|年代?))(?![\d\^])')
@@ -159,7 +159,7 @@ def co(typ,body,label=None,cls=''):
     ic,lb=CO[typ]
     return f'<div class="co {typ} {cls}"><span class="lb">{ic} {label or lb}</span>{body}</div>'
 # v10: legend grouped by memorization tier (what to memorize → understand → anchor → contrast → grace), plus how to use 背诵模式
-_LG=[('🔴','必背层','先背这些：背诵模式下会被遮住',[('<span class="must">必背</span>','必须逐字背诵'),('<mark class="hy">黄底</mark>','核心句'),('<span class="mbadge">★ 必背</span>','必背徽章'),('<span class="kbmini">🔑</span>','钥点框·编号必背'),('<span class="mnf">口诀</span>','记忆口诀')]),
+_LG=[('🔴','必背层','先背这些：背诵模式下会被遮住',[('<span class="must">必背</span>','必须逐字背诵'),('<mark class="hy">黄底</mark>','核心句'),('<span class="mbadge">★ 必背</span>','必背徽章'),('<span class="kbmini">🔑</span>','钥点框·编号必背'),('<span class="mnf">口诀</span>','记忆口诀'),('<span class="kch">核心章</span>','核心章·钥节')]),
  ('🟡','理解层','读懂这些：概念与定义',[('<b class="k">粗体金</b>','关键词'),('<span class="cx">紫粗体</span>','神学术语'),('<span class="ud">金双线</span>','定义·原则'),('<span class="key">“金底引文”</span>','信条逐字引文')]),
  ('🔵','线索层','挂钩记忆：时间·人地·出处',[('<span class="ub">蓝虚线</span>','日期·年代'),('<mark class="hb">蓝底点线</mark>','人物·地点'),('<span class="rf">罗8:28</span>','经文出处'),('<span class="kpb">1</span>','编号要点')]),
  ('🟠','辨析层','分清对错：对比与警示',[('<span class="uo">橙粗线</span>','对比·差异'),('<span class="uw">红波浪</span>','易错·异端'),('<span class="cr">红字</span>','罪·审判')]),
