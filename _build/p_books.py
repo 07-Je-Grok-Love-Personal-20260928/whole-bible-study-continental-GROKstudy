@@ -63,7 +63,7 @@ def shelf():
 def books():
     nOT=sum(b['ch'] for b in BOOKS[:39]); nNT=sum(b['ch'] for b in BOOKS[39:])
     c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">📚 66 卷书</span><span class="chip">旧约 39 · 新约 27 · {nOT+nNT} 章</span><span class="chip">每卷 13 项 · 认信连接逐字</span></div><h1>66 卷，<em>一位基督、一个故事</em></h1><p class="lead">“这经就是为我作见证的”（约5:39）。旧约＝==应许、预表与等候==，新约＝==应验、实体与差遣==。书架选卷 → 逐卷 13 项：背景 · 目的 · 结构 · 核心 · 基督 · 圣约 · 难点 · 认信 · 口诀。</p>
-<div class="chips" style="margin-top:8px"><a class="btn on" href="#ot">📜 旧约 39 卷</a><a class="btn" href="#nt">✝️ 新约 27 卷</a><a class="btn" href="overview.html">🧭 全景总览</a><a class="btn" href="story.html">🧭 救赎大故事</a></div></section>'''.replace('==应许、预表与等候==','<mark class="hy">应许、预表与等候</mark>').replace('==应验、实体与差遣==','<mark class="hy">应验、实体与差遣</mark>')]
+<div class="chips" style="margin-top:8px"><a class="btn on" href="#ot">📜 旧约 39 卷</a><a class="btn" href="#nt">✝️ 新约 27 卷</a><a class="btn" href="overview.html">🧭 全景总览</a><a class="btn" href="story.html">🧭 救赎大故事</a><a class="btn" href="liu.html">📖 刘道顺·全景原文全书</a></div></section>'''.replace('==应许、预表与等候==','<mark class="hy">应许、预表与等候</mark>').replace('==应验、实体与差遣==','<mark class="hy">应验、实体与差遣</mark>')]
     c.append(h2('shelf-h','🗄️','书架：66 卷一眼看全'))
     c.append(filters(list(CATS.keys()),'.bk,.shelf a'))
     c.append(shelf())

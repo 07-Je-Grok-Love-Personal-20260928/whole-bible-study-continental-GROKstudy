@@ -1,5 +1,5 @@
 import json,re,html
-V='v12'; DATE='2026-11-19'
+V='v12.1'; DATE='2026-11-19'
 import os
 HERE=os.path.dirname(os.path.abspath(__file__))
 CCI=os.path.join(HERE,'data','cci')+'/'
@@ -33,7 +33,7 @@ def conflabel(s):
     if s.startswith('BC'): return f'比利时{s[2:]}条'
     h,n=s[2:].split('.'); return f'多特{["一","二","三四","五"][int(h)]}·{n}'
 GROUPS=[('1','66卷书','📚',[('index.html','📚','66卷书','书架·逐卷13项解读')]),
- ('2','全景总览','🧭',[('overview.html','🏠','全景总览','学习路线·一页纸·标注系统'),('panorama.html','📜','新旧约全景','刘道顺·救赎史·66卷一卷一句'),('story.html','🧭','救赎大故事','四幕剧·红线·圣经神学'),('covenant.html','🤝','圣约神学','三约·六约·两种施行'),('timeline.html','⏳','时间线·诸王','11时代·8钉子·42王'),('geography.html','🗺️','地理文化','19幅地图·讲解动画+24源实景'),('culture.html','🏺','文化与生活','节期·圣殿·派别·度量衡')]),
+ ('2','全景总览','🧭',[('overview.html','🏠','全景总览','学习路线·一页纸·标注系统'),('panorama.html','📜','新旧约全景','刘道顺·救赎史·66卷一卷一句'),('liu.html','📖','全景·原文全书','刘道顺·76篇逐字·重点导读'),('story.html','🧭','救赎大故事','四幕剧·红线·圣经神学'),('covenant.html','🤝','圣约神学','三约·六约·两种施行'),('timeline.html','⏳','时间线·诸王','11时代·8钉子·42王'),('geography.html','🗺️','地理文化','19幅地图·讲解动画+24源实景'),('culture.html','🏺','文化与生活','节期·圣殿·派别·度量衡')]),
  ('3','基督与福音','✝️',[('life-of-christ.html','🌟','基督生平','事件×地图联动'),('gospels.html','📗','四福音对照','四幅肖像·段落对照'),('harmony.html','📖','四福音合参','202段·和合本·独有细节'),('acts.html','🕊️','使徒行传·初代教会','AD30–95·旅程动画')]),
  ('4','文体对比','🧩',[('pentateuch.html','⚖️','摩西五经对照','五经横向×纵向'),('history.html','🏛️','历史书对照','得地→被掳→归回'),('poetry.html','🎼','诗歌智慧书对照','五卷三角度看智慧'),('prophets.html','🔥','先知书对照','17先知×君王×帝国'),('epistles.html','✉️','新约书信对照','21封书信·年代·主题')]),
  ('5','专题','🔍',[('kings-chronicles.html','👑','列王纪×历代志','42王逐王对照'),('compare.html','🔗','跨卷对照','以经解经·引用网络'),('stats.html','📊','圣经统计','章节·类别·引用')]),
@@ -218,10 +218,12 @@ _IC={'top':'<path d="M5 4.5h14M12 20V9M7 13.5l5-5 5 5"/>','bot':'<path d="M5 19.
  'home':'<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.8V20h12V9.8M10 20v-5.5h4V20"/>',
  'pv':'<path d="M11.5 6.5 6 12l5.5 5.5M18 6.5 12.5 12l5.5 5.5"/>','nx':'<path d="M12.5 6.5 18 12l-5.5 5.5M6 6.5l5.5 5.5L6 17.5"/>'}
 def _svg(k): return f'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_IC[k]}</svg>'
+FABNAV={}  # v12.1: fn -> (prev,next) as (file,icon,title) for pages outside GROUPS (Liu reader chapters)
 def fab(fn):
     """v12 floating nav cluster: refined SVG icons + labels; top · back/fwd · home · prev/next page · bottom"""
     fs=[f for f,_i,_t in PAGES];k=fs.index(fn) if fn in fs else -1
     pv=PAGES[k-1] if k>0 else None;nx=PAGES[k+1] if 0<=k<len(PAGES)-1 else None
+    if fn in FABNAV: pv,nx=FABNAV[fn]
     a=lambda x,cls,lab:(f'<a class="fb {cls}" href="{x[0]}" data-tip="{lab} · {x[2]}" aria-label="{lab}：{x[2]}">{_svg(cls)}</a>' if x else '')
     bt=lambda k_,lab:f'<button type="button" class="fb" data-a="{k_}" data-tip="{lab}" aria-label="{lab}">{_svg(k_)}</button>'
     return ('<nav class="fab" aria-label="快捷导航"><div class="fabm" id="fabm" role="group">'

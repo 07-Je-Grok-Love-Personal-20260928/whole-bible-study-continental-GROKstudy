@@ -39,7 +39,7 @@ def paragraphs():
             elif r and r!=cur['role'] and (r!='p' or cur['role'] in('h1','h2','big','title')): brk=True
             elif ppage!=pg and r in('h1','h2','h3','title','big'): brk=True
         elif r and cur and r!=cur['role'] and r in('h1','h2','title','big') and cur['role'] not in('h1','h2','title','big') : brk=True
-        if c=='〈' and cur and cur['role']=='p': brk=True
+        if c=='〈' and r=='h1' and cur and cur['role']=='p': brk=True
         if newline and not c.isspace(): py=org[1]; ppage=pg
         elif py is None: py=org[1]; ppage=pg
         if brk:
