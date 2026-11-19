@@ -209,19 +209,22 @@ def autoref(html_):
         else:
             out.append(part if skip or ':' not in part else REFRE.sub(r'<span class="rf">\1</span>',part))
     return ''.join(out)
+_IC={'top':'<path d="M5 4.5h14M12 20V9M7 13.5l5-5 5 5"/>','bot':'<path d="M5 19.5h14M12 4v11M7 10.5l5 5 5-5"/>',
+ 'back':'<path d="M19 12H5.5M11 6l-6 6 6 6"/>','fwd':'<path d="M5 12h13.5M13 6l6 6-6 6"/>',
+ 'home':'<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.8V20h12V9.8M10 20v-5.5h4V20"/>',
+ 'pv':'<path d="M11.5 6.5 6 12l5.5 5.5M18 6.5 12.5 12l5.5 5.5"/>','nx':'<path d="M12.5 6.5 18 12l-5.5 5.5M6 6.5l5.5 5.5L6 17.5"/>'}
+def _svg(k): return f'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_IC[k]}</svg>'
 def fab(fn):
-    """v9 floating nav cluster: history back/forward, top/bottom, home, prev/next page in site order"""
+    """v12 floating nav cluster: refined SVG icons + labels; top · back/fwd · home · prev/next page · bottom"""
     fs=[f for f,_i,_t in PAGES];k=fs.index(fn) if fn in fs else -1
     pv=PAGES[k-1] if k>0 else None;nx=PAGES[k+1] if 0<=k<len(PAGES)-1 else None
-    a=lambda x,cls,ic,lab:(f'<a class="fb {cls}" href="{x[0]}" title="{lab}：{x[1]} {x[2]}" aria-label="{lab}：{x[2]}">{ic}</a>' if x else '')
-    return ('<nav class="fab" aria-label="快捷导航"><div class="fabm" id="fabm">'
-      '<button type="button" class="fb" data-a="back" title="后退（浏览记录）" aria-label="后退">←</button>'
-      '<button type="button" class="fb" data-a="fwd" title="前进（浏览记录）" aria-label="前进">→</button>'
-      +a(pv,'pv','‹','上一页')+a(nx,'nx','›','下一页')+
-      '<a class="fb" href="index.html" title="首页 · 66卷书" aria-label="首页">⌂</a>'
-      '<button type="button" class="fb" data-a="bot" title="到页底" aria-label="到页底">⤓</button>'
-      '<button type="button" class="fb" data-a="top" title="回到顶部" aria-label="回到顶部">⤒</button></div>'
-      '<button type="button" class="fabt" aria-expanded="false" aria-controls="fabm" title="快捷导航（后退/前进/顶部/底部/首页/上下页）" aria-label="快捷导航"><span>✦</span></button></nav>')
+    a=lambda x,cls,lab:(f'<a class="fb {cls}" href="{x[0]}" data-tip="{lab} · {x[2]}" aria-label="{lab}：{x[2]}">{_svg(cls)}</a>' if x else '')
+    bt=lambda k_,lab:f'<button type="button" class="fb" data-a="{k_}" data-tip="{lab}" aria-label="{lab}">{_svg(k_)}</button>'
+    return ('<nav class="fab" aria-label="快捷导航"><div class="fabm" id="fabm" role="group">'
+      +bt('top','回到顶部')+'<i class="fsep" aria-hidden="true"></i>'+bt('back','后退')+bt('fwd','前进')+
+      f'<a class="fb" href="index.html" data-tip="首页 · 66卷书" aria-label="首页">{_svg("home")}</a>'
+      +(('<i class="fsep" aria-hidden="true"></i>'+a(pv,'pv','上一页')+a(nx,'nx','下一页')) if (pv or nx) else '')+'<i class="fsep" aria-hidden="true"></i>'+bt('bot','到页底')+'</div>'
+      '<button type="button" class="fabt" aria-expanded="false" aria-controls="fabm" aria-label="快捷导航（顶部/后退/前进/首页/上下页/底部）" data-tip="快捷导航"><svg class="fring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18"/></svg><span>✦</span></button></nav>')
 def page(fn,title,content,extra_head='',scripts='',cv=True):
     content=content.replace(' reveal"',' rv"').replace('"reveal ','"rv ').replace('class="reveal"','class="rv"')
     from v5extra import tldr

@@ -1250,3 +1250,23 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .toclv button[aria-pressed="true"]{background:var(--gold);color:#1a1300;font-weight:700}
 .toclv button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
 .liu .lps{grid-template-columns:1fr}
+/* v12: refined floating nav */
+.fab .fb svg{display:block;width:18px;height:18px}
+.fab .fb{color:var(--ink2);position:relative;transition:color .2s,background .2s,transform .2s}
+.fab .fb:hover,.fab .fb:focus-visible{color:var(--gold);background:color-mix(in srgb,var(--gold) 16%,color-mix(in srgb,var(--bg) 78%,transparent));transform:scale(1.06)}
+.fab .fb:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.fab .fb:disabled{opacity:.35;cursor:default;transform:none}
+.fab .fsep{display:block;width:16px;height:1px;margin:0 auto;background:var(--line2);opacity:.7;flex:none}
+.fab .fabt{position:relative}
+.fab .fring{position:absolute;inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);transform:rotate(-90deg);pointer-events:none;overflow:visible}
+.fab .fring circle{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:113.1;stroke-dashoffset:113.1;opacity:0}
+@supports (animation-timeline:scroll()){.fab .fring circle{opacity:.85;animation:fring linear both;animation-timeline:scroll(root)}}
+@keyframes fring{to{stroke-dashoffset:0}}
+@media (hover:hover) and (pointer:fine){
+ .fab [data-tip]::after{content:attr(data-tip);position:absolute;right:calc(100% + 9px);top:50%;transform:translate(6px,-50%);white-space:nowrap;font:500 12px/1.2 system-ui,sans-serif;padding:5px 9px;border-radius:8px;background:color-mix(in srgb,var(--bg) 88%,transparent);color:var(--ink);border:1px solid var(--line2);box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
+ .fab [data-tip]:hover::after,.fab [data-tip]:focus-visible::after{opacity:1;transform:translate(0,-50%)}
+}
+@media print{.fab{display:none!important}}
+.fab .fabm{padding:8px 10px;margin:-8px -10px}
+.fab .fb{box-shadow:0 2px 8px rgba(0,0,0,.16)}
+.fab .fb{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 90%,var(--ink) 4%)}

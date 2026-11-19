@@ -147,15 +147,22 @@ if(CSSPROG&&'IntersectionObserver' in window){const sn=document.createElement('d
   new IntersectionObserver(es=>{const en=es[0],on=!en.isIntersecting&&en.boundingClientRect.top<0;if(on!==lastOn){tt&&tt.classList.toggle('on',on);lastOn=on}}).observe(sn)}
 else{addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(onS)}},{passive:true});onS()}
 tt&&tt.addEventListener('click',()=>lenis?lenis.scrollTo(0):scrollTo({top:0,behavior:'smooth'}));
-/* ---------- v9 floating nav cluster (.fab): expands on hover/tap/focus, fades while scrolling ---------- */
-const fab=$('.fab');if(fab){const t=fab.querySelector('.fabt');let sT=0,sc=false;
-  const set=o=>{fab.classList.toggle('open',o);t.setAttribute('aria-expanded',o)};
-  t.addEventListener('click',e=>{e.stopPropagation();set(!fab.classList.contains('open'))});
+/* ---------- v12 floating nav cluster (.fab): tap/hover/focus to open; fades while scrolling; history back falls back to home ---------- */
+const fab=$('.fab');if(fab){const t=fab.querySelector('.fabt');let sT=0,sc=false;const items=()=>$$('.fb',fab);
+  const SSK='wb-hist';let hn=0;try{hn=(+sessionStorage.getItem(SSK)||0)+1;sessionStorage.setItem(SSK,hn)}catch(e){}const hl0=history.length;
+  const canBack=()=>(window.navigation&&'canGoBack' in navigation)?navigation.canGoBack:(hn>1||history.length>hl0);
+  const bk=$('[data-a="back"]',fab),fw=$('[data-a="fwd"]',fab);
+  const upd=()=>{if(bk)bk.dataset.tip=canBack()?'后退':'后退 · 回首页';if(fw&&window.navigation&&'canGoForward' in navigation){fw.disabled=!navigation.canGoForward;fw.dataset.tip=fw.disabled?'前进（无记录）':'前进'}};upd();
+  if(window.navigation)navigation.addEventListener('currententrychange',upd);
+  const set=(o,focus)=>{fab.classList.toggle('open',o);t.setAttribute('aria-expanded',o);if(o){upd();if(focus){const f=items().find(x=>!x.disabled);f&&f.focus()}}};
+  t.addEventListener('click',e=>{e.stopPropagation();set(!fab.classList.contains('open'),e.detail===0)});
   document.addEventListener('click',e=>{if(fab.classList.contains('open')&&!fab.contains(e.target))set(false)});
-  fab.addEventListener('keydown',e=>{if(e.key==='Escape'){set(false);t.focus()}});
+  fab.addEventListener('keydown',e=>{if(e.key==='Escape'){set(false);t.focus();return}
+    if(e.key==='ArrowUp'||e.key==='ArrowDown'){const L=items().filter(x=>!x.disabled);const i=L.indexOf(document.activeElement);if(i<0&&e.target!==t)return;e.preventDefault();const n=e.target===t?L.length-1:(i+(e.key==='ArrowDown'?1:-1)+L.length)%L.length;L[n].focus()}});
   const go=y=>lenis?lenis.scrollTo(y):scrollTo({top:y,behavior:'smooth'});
   fab.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
-    if(a==='back')history.back();else if(a==='fwd')history.forward();else if(a==='top')go(0);else if(a==='bot'){measure();go(root.scrollHeight)}});
+    if(a==='back'){if(canBack())history.back();else location.href='index.html'}else if(a==='fwd')history.forward();else if(a==='top')go(0);else if(a==='bot'){measure();go(root.scrollHeight)}
+    if(MOB())setTimeout(()=>set(false),250)});
   addEventListener('scroll',()=>{if(!sc){sc=true;fab.classList.add('sc')}clearTimeout(sT);sT=setTimeout(()=>{sc=false;fab.classList.remove('sc')},700)},{passive:true})}
 /* ---------- scroll-spy: IntersectionObserver only (no layout reads while scrolling) ----------
    Band = everything above 28% of the viewport. A heading is "passed" when it is in the band.
