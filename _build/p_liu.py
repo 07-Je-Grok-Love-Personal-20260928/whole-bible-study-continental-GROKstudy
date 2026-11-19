@@ -53,6 +53,8 @@ def build():
     c.append(h3('eras','十二段：一条线串起66卷'))
     c.append(eraflow())
     c.append(co('mnc','<p>'+qmark('口诀：**创·族·出·征，王·分·掳·归，四百年后基督来，教会传到地极，宝座羔羊成全**',False)+'</p>','十二段口诀'))
+    c.append(h3('exile','🗺️ 被掳与归回：一张路线图'))
+    c.append(exilemap())
     c.append(h3('presence','以马内利的轨迹：神住在人中间'))
     c.append(chain([('🌳','伊甸','神与人同住'),('⛰️','西奈','神降临山上，人不可近'),('⛺','圣幕','「使我可以住在他们中间」（出25:8）；荣光充满（出40:34）'),('🏛️','圣殿','火从天降、荣光充满（代下7:1-2）'),('🔥','荣光离开','殿被焚——罪不在建筑，在人心（结10）'),('🧱','第二殿','「后来的荣耀必大过先前的荣耀」（该2:9）'),('✝️','基督','「道成肉身，住在我们中间」＝支搭帐幕（约1:14）'),('🕊️','教会','圣灵充满的不是楼房，而是120人；身子是圣灵的殿（林前6:19）'),('🏙️','新耶路撒冷','「神的帐幕在人间」（启21:3）')],'lchain wide'))
     c.append(h3('renew','约的更新链'))
@@ -73,6 +75,7 @@ style C fill:#5a4614,stroke:#f5c76b''','刘牧师：申命记的主题是「约�
     c.append(co('info','<p>'+qmark('；'.join(LIU['ntpre']['p']),False)+'</p>','新约全景序言'))
     c.append(h3('nt-gosp','✝️ 四福音：四幅肖像，一个问题'))
     c.append('<div class="grid g4 rv">'+''.join(f'<div class="card tile" style="--c:{col}"><div class="big">{ic}</div><h4>{n} · {p}</h4><p>{qmark(d,False)}</p></div>' for ic,n,p,d,col in [('👑','马太','王','亚伯拉罕的后裔、大卫的子孙（1:1）；分割点 16:15','var(--gold)'),('🐂','马可','仆人','舍命作多人的赎价（10:45）；分割点 8:29','var(--red)'),('🧑','路加','人子','寻找拯救失丧的人（19:10）；分割点 9:20','var(--sky)'),('🦅','约翰','神子','太初有道；七神迹＋七「我是」；叫你们信（20:31）','var(--vio)')])+'</div>')
+    c.append(splitbars())
     c.append(co('core','<p>'+qmark('对观福音都在中间位置问==「你们说我是谁？」==：前半见证 **耶稣是谁**（应许的弥赛亚），后半见证 **他为什么来**（十字架与复活）。四福音四侧面，正如利1–5章五种祭共同预表基督。',False)+'</p>','福音书的骨架'))
     c.append(card66(lambda b:b['cat'] in('gosp','acts'),'福音书与使徒行传'))
     c.append(h3('nt-epis','✉️ 书信：先教义，后「所以，弟兄们」'))
@@ -100,3 +103,26 @@ style C fill:#5a4614,stroke:#f5c76b''','刘牧师：申命记的主题是「约�
     c.append(co('app','<ul>'+''.join(f'<li>{qmark(x,False)}</li>' for x in ['讲道＝传讲神 ==全备的旨意==（徒20:27）——不是讨人喜欢的话，而是于人有益的话','跪着把经文读 **30遍**，先默想后参考','浓缩成一句：「通过今天的经文，神要说的话就是……」','必须有应用：没有应用的讲道如同流产'])+'</ul>','讲道前的准备'))
     c.append(f'<p class="srcline">资料：{SRC_LIU}；1995 年旧约序言、新约序言（羊圈教会）。本页为要义转述，非原文全文；书卷要义亦见每卷书卡片中的「📜 全景要义」。</p>')
     return page('panorama.html','新旧约全景 · 刘道顺 — 救赎史一卷一句','\n'.join(c))
+def P(lon,lat): return (round((lon-33)*50,1),round((38-lat)*55,1))
+def pl(pts): return ' '.join(f'{x},{y}' for x,y in (P(a,b) for a,b in pts))
+def exilemap():
+    sea=[(33,38),(33,29),(34.2,31.2),(34.6,31.9),(34.95,32.8),(35.1,33.4),(35.5,34.0),(35.85,34.9),(35.9,35.6),(36.1,36.2),(35.9,36.75),(35.3,36.6),(34.6,36.8),(34.0,36.3),(33.3,36.2),(33,38)]
+    gulf=[(47.6,30.1),(48.4,29.95),(48.9,29.4),(50,28.6),(50,29.9),(49.2,30.25),(48.5,30.3),(47.9,30.4)]
+    eu=[(38.0,37.6),(38.3,36.6),(39.0,35.9),(40.1,34.95),(41.4,34.4),(42.6,33.9),(43.6,33.2),(44.4,32.5),(45.4,31.7),(46.3,31.05),(47.3,30.9),(47.9,30.4)]
+    ti=[(40.2,37.95),(41.6,37.3),(42.6,36.9),(43.15,36.36),(43.5,35.4),(43.8,34.4),(44.4,33.3),(45.4,32.6),(46.6,31.5),(47.3,30.9)]
+    C={'耶路撒冷':(35.23,31.78),'撒玛利亚':(35.19,32.28),'大马士革':(36.29,33.51),'利比拉':(36.55,34.44),'迦基米施':(38.01,36.83),'哈兰':(39.03,36.86),'尼尼微':(43.15,36.36),'巴比伦':(44.42,32.54),'书珊':(48.25,32.19)}
+    R=[('a','#ff6b6b','722 BC 亚述掳北国',[C['撒玛利亚'],C['大马士革'],C['迦基米施'],C['哈兰'],C['尼尼微']]),
+       ('b','#ff9f43','605·597·586 BC 巴比伦三次掳犹大',[C['耶路撒冷'],C['大马士革'],C['利比拉'],C['迦基米施'],(40.1,34.95),C['巴比伦']]),
+       ('c','#3ee0a1','538 BC 所罗巴伯 · 458 以斯拉 · 445 尼希米 归回',[C['书珊'],C['巴比伦'],(41.4,34.4),(39.0,35.9),(37.6,35.2),(36.55,34.0),C['耶路撒冷']])]
+    off={'b':(0,-5),'c':(0,6),'a':(0,0)}
+    rs=''.join(f'<polyline class="flow" points="{" ".join(f"{x+off[k][0]},{y+off[k][1]}" for x,y in (P(a,b) for a,b in pts))}" fill="none" stroke="{col}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>' for k,col,lab,pts in R)
+    cs=''.join(f'<g><circle cx="{P(*v)[0]}" cy="{P(*v)[1]}" r="4.5" fill="var(--gold)" stroke="#111" stroke-width="1"/><text x="{P(*v)[0]+(-8 if n in("耶路撒冷","撒玛利亚","大马士革","利比拉") else 7)}" y="{P(*v)[1]+(14 if n in ("耶路撒冷",) else 20 if n=="哈兰" else -6)}" text-anchor="{"end" if n in("耶路撒冷","撒玛利亚","大马士革","利比拉") else "start"}" font-size="15" font-weight="700" fill="currentColor">{n}</text></g>' for n,v in C.items())
+    lg=''.join(f'<span><i style="background:{col}"></i>{lab}</span>' for k,col,lab,pts in R)
+    return (f'<figure class="xmap loop rv"><svg viewBox="0 0 850 500" role="img" aria-label="被掳与归回路线示意图"><rect width="850" height="500" fill="color-mix(in srgb,var(--emer) 7%,transparent)"/>'
+      f'<polygon points="{pl(sea)}" fill="color-mix(in srgb,var(--sky) 28%,transparent)"/><polygon points="{pl(gulf)}" fill="color-mix(in srgb,var(--sky) 28%,transparent)"/>'
+      f'<polyline points="{pl(eu)}" fill="none" stroke="var(--sky)" stroke-width="2" opacity=".7"/><polyline points="{pl(ti)}" fill="none" stroke="var(--sky)" stroke-width="2" opacity=".7"/>'
+      f'<text x="40" y="250" font-size="15" fill="currentColor" opacity=".6">大海（地中海）</text><text x="{P(39.6,35.5)[0]}" y="{P(39.6,35.5)[1]+26}" font-size="13" fill="currentColor" opacity=".55">幼发拉底河</text><text x="{P(43.9,35.2)[0]+8}" y="{P(43.9,35.2)[1]}" font-size="13" fill="currentColor" opacity=".55">底格里斯河</text><text x="{P(38.5,30.6)[0]}" y="{P(38.5,30.6)[1]}" font-size="15" fill="currentColor" opacity=".45">阿拉伯沙漠（商路绕行「新月沃土」）</text>'
+      f'{rs}{cs}</svg><figcaption><div class="xleg">{lg}</div><p class="srcline">示意图（非精确比例）：商旅与军队绕行「新月沃土」北上再顺幼发拉底河南下，并不直接穿越沙漠。刘道顺：「被掳归回」有三层救赎史意义——为神的圣名、为成就弥赛亚的计划、预表弥赛亚国的大恢复（拉1:1；结36:22）。</p></figcaption></figure>')
+def splitbars():
+    D=[('马太',16,28,'16:15','var(--gold)'),('马可',8,16,'8:29','var(--red)'),('路加',9,24,'9:20','var(--sky)')]
+    return '<div class="spbars rv">'+''.join(f'<div class="spb" style="--c:{col}"><b>{n}</b><div class="bar"><span class="a" style="flex:{s} 1 0">耶稣是谁</span><i title="{k}">❓ {k}</i><span class="z" style="flex:{t-s} 1 0">他为什么来</span></div><small>{t}章</small></div>' for n,s,t,k,col in D)+'<p class="srcline">分割点：「你们说我是谁？」——前半见证弥赛亚身份，后半走向十字架（按章比例绘制）</p></div>'

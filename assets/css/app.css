@@ -1277,3 +1277,19 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .lgmini>span{flex:none;display:inline-flex;align-items:baseline;gap:3px;white-space:nowrap;padding:1px 4px}
 .lgmini small{font-size:11px;color:var(--mut)}
 @media(min-width:1200px){.lgmini{flex-wrap:wrap;-webkit-mask-image:none;mask-image:none}}
+/* v12: exile map + gospel split bars */
+.xmap{margin:10px 0 14px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.xmap svg{display:block;width:100%;height:auto;color:var(--ink)}
+.xmap figcaption{padding:8px 12px 10px}
+.xleg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px}
+.xleg span{display:inline-flex;align-items:center;gap:6px}
+.xleg i{width:18px;height:4px;border-radius:3px;display:inline-block}
+.spbars{display:grid;gap:7px;margin:8px 0 12px}
+.spb{display:grid;grid-template-columns:3.2em 1fr 3em;align-items:center;gap:8px;font-size:13px}
+.spb b{font-family:var(--serif)}
+.spb small{color:var(--mut);text-align:right}
+.spb .bar{height:auto;display:flex;align-items:stretch;min-width:0;border-radius:9px;overflow:hidden;border:1px solid color-mix(in srgb,var(--c) 55%,transparent)}
+.spb .bar>span{height:auto;min-width:0;padding:3px 8px;line-height:1.55;display:block;vertical-align:top;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
+.spb .a{background:color-mix(in srgb,var(--c) 30%,transparent)}
+.spb .z{background:color-mix(in srgb,var(--red) 14%,transparent);text-align:right}
+.spb .bar i{flex:none;font-style:normal;font-size:11.5px;font-weight:800;padding:3px 6px;line-height:1.55;display:flex;align-items:center;background:var(--c);color:#111;white-space:nowrap}
