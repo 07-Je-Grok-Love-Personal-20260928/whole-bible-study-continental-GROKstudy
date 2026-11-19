@@ -78,6 +78,8 @@ style C fill:#5a4614,stroke:#f5c76b''','刘牧师：申命记的主题是「约�
     c.append(splitbars())
     c.append(co('core','<p>'+qmark('对观福音都在中间位置问==「你们说我是谁？」==：前半见证 **耶稣是谁**（应许的弥赛亚），后半见证 **他为什么来**（十字架与复活）。四福音四侧面，正如利1–5章五种祭共同预表基督。',False)+'</p>','福音书的骨架'))
     c.append(card66(lambda b:b['cat'] in('gosp','acts'),'福音书与使徒行传'))
+    c.append(h3('nt-acts','🕊️ 使徒行传：福音从耶路撒冷到罗马'))
+    c.append(gospelmap())
     c.append(h3('nt-epis','✉️ 书信：先教义，后「所以，弟兄们」'))
     c.append(chain([('🚂','车头＝福音（教义）','神为我们做了什么：坚固信仰'),('🚃','车厢＝伦理（实践）','我们当怎样生活：活出真理'),('⏳','唯一未成就的应许','主的再来（约一3:3）')]))
     c.append(card66(lambda b:b['cat'] in('paul','gen'),'书信'))
@@ -126,3 +128,21 @@ def exilemap():
 def splitbars():
     D=[('马太',16,28,'16:15','var(--gold)'),('马可',8,16,'8:29','var(--red)'),('路加',9,24,'9:20','var(--sky)')]
     return '<div class="spbars rv">'+''.join(f'<div class="spb" style="--c:{col}"><b>{n}</b><div class="bar"><span class="a" style="flex:{s} 1 0">耶稣是谁</span><i title="{k}">❓ {k}</i><span class="z" style="flex:{t-s} 1 0">他为什么来</span></div><small>{t}章</small></div>' for n,s,t,k,col in D)+'<p class="srcline">分割点：「你们说我是谁？」——前半见证弥赛亚身份，后半走向十字架（按章比例绘制）</p></div>'
+def Q2(lon,lat): return (round((lon-10)*28,1),round((44-lat)*36,1))
+def pl2(pts): return ' '.join(f'{x},{y}' for x,y in (Q2(a,b) for a,b in pts))
+def gospelmap():
+    """v12 S6: Acts 1:8 ripple + Jerusalem→Rome route (schematic)"""
+    sea=[(10,37),(11,33.5),(15,32.4),(20,30.8),(20,32.5),(23,32.6),(25,31.6),(29.9,31.2),(32.3,31.3),(34.2,31.3),(35,32.8),(35.9,35),(36,36.6),(34.7,36.8),(32.5,36.1),(30.6,36.8),(28.2,36.7),(27.3,37.9),(26.3,39.4),(26.5,40.3),(24,40.8),(22.9,40.6),(22.6,40),(23.3,39.0),(24,38.2),(23,37.3),(22.9,36.5),(21.7,36.8),(21.1,37.9),(21.3,38.4),(20.2,39.5),(19.4,40.7),(19.5,41.8),(18.5,42.5),(16.0,43.5),(13.9,44),(12.4,44),(13.6,43.5),(14.2,42.4),(16.1,41.4),(18.5,40.2),(17.2,40.4),(16.5,39.6),(17.1,39.0),(16.1,38),(15.6,38.3),(15.8,39.6),(15,40.2),(14.2,40.8),(13,41.3),(12.2,41.8),(11,42.4),(10.5,43.1),(10.2,43.9),(10,44)]
+    isl=[[(12.4,38.1),(15.6,38.25),(15.1,36.7),(14.3,37.0),(12.5,37.6)],[(23.5,35.5),(26.3,35.2),(24.5,34.95)],[(32.3,35),(34.6,35.7),(33.9,34.9)]]
+    C=[('耶路撒冷',35.23,31.78,'end',-8,16),('撒玛利亚',35.19,32.28,'end',-8,-4),('安提阿',36.16,36.2,'end',-8,-8),('以弗所',27.34,37.94,'start',8,5),('腓立比',24.28,41.01,'start',8,-4),('哥林多',22.93,37.9,'end',-8,4),('雅典',23.73,37.98,'start',8,-8),('罗马',12.48,41.9,'start',8,-6)]
+    route=[(35.23,31.78),(36.16,36.2),(27.34,37.94),(24.28,41.01),(22.93,37.9),(12.48,41.9)]
+    jx,jy=Q2(35.23,31.78)
+    rings=''.join(f'<circle cx="{jx}" cy="{jy}" r="{r}" fill="{col}" fill-opacity=".10" stroke="{col}" stroke-width="2" stroke-dasharray="{"0" if i==0 else "6 6"}"/>' for i,(r,col) in enumerate([(26,'var(--gold)'),(80,'var(--orange)'),(250,'var(--emer)')]))
+    rl=''.join(f'<text x="{jx-6}" y="{jy-r-6}" text-anchor="end" font-size="14" font-weight="700" fill="{col}">{t}</text>' for r,col,t in [(80,'var(--orange)','② 犹太·撒玛利亚（8–12章）'),(250,'var(--emer)','③ 直到地极（13–28章）')])
+    cs=''.join(f'<g><circle cx="{Q2(a,b)[0]}" cy="{Q2(a,b)[1]}" r="4.5" fill="var(--gold)" stroke="#111" stroke-width="1"/><text x="{Q2(a,b)[0]+dx}" y="{Q2(a,b)[1]+dy}" text-anchor="{an}" font-size="15" font-weight="700" fill="currentColor">{n}</text></g>' for n,a,b,an,dx,dy in C)
+    lg='<span><i style="background:var(--gold)"></i>① 耶路撒冷（1–7章 · 彼得）</span><span><i style="background:var(--orange)"></i>② 犹太·撒玛利亚（8–12章）</span><span><i style="background:var(--emer)"></i>③ 地极（13–28章 · 保罗）</span><span><i style="background:var(--rose)"></i>福音路线：耶路撒冷→安提阿→以弗所→腓立比→哥林多→罗马</span>'
+    return (f'<figure class="xmap loop rv"><svg viewBox="0 0 840 500" role="img" aria-label="使徒行传1:8 福音扩展示意图"><rect width="840" height="500" fill="color-mix(in srgb,var(--amb) 22%,var(--bg))"/>'
+      f'<polygon points="{pl2(sea)}" fill="color-mix(in srgb,var(--sky) 30%,var(--bg))"/>'+''.join(f'<polygon points="{pl2(p)}" fill="color-mix(in srgb,var(--amb) 22%,var(--bg))"/>' for p in isl)+''.join(f'<text x="{Q2(a,b)[0]}" y="{Q2(a,b)[1]}" text-anchor="middle" font-size="14" fill="currentColor" opacity=".5">{t}</text>' for t,a,b in [('意大利',14.9,41.9),('马其顿',21.6,41.6),('小亚细亚',31,40.2),('叙利亚',38.2,34.6)])+
+      f'<text x="{Q2(17,34.2)[0]}" y="{Q2(17,34.2)[1]}" font-size="16" fill="currentColor" opacity=".55">大海（地中海）</text>'
+      f'{rings}{rl}<polyline class="flow" points="{pl2(route)}" fill="none" stroke="var(--rose)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>{cs}</svg>'
+      f'<figcaption><div class="xleg">{lg}</div><p class="srcline">示意图（海岸线简化）：钥节 徒1:8「在耶路撒冷、犹太全地和撒马利亚，直到地极」就是全书大纲。刘道顺：核心不是使徒，而是「父所应许的」圣灵；罗马是神预备的舞台，全书以「放胆传讲…并没有人禁止」（28:31）作结。</p></figcaption></figure>')
