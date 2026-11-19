@@ -131,6 +131,25 @@ def bgnote(b):
     a=b['au']; ax=a if len(a)>len(_au(a))+1 else ''; d=dtx(b)
     if not ax and not d: return ''
     return '<p class="bgnote">'+(f'<span>✍️ {qmark(ax,False)}</span>' if ax else '')+(f'<span>🕰️ {qmark(d,False)}</span>' if d else '')+'</p>'
+def liubox(b):
+    """v12: 刘道顺《新旧约圣经全景》要义 — same 5-part block on all 66 cards"""
+    from liu_data import LIU
+    L=LIU[b['id']]; i=b['id']
+    st=''.join(f'<span>{qmark(x.strip(),False)}</span>' for x in L['s'].split('｜'))
+    KC=lambda t:re.sub(r'((?:核心|中心)章\s?(?:是)?第?\s?\d+(?:[–-]\d+)?章|钥节\s?\d+:\d+(?:-\d+)?)',r'<<\1>>',t)
+    Q=lambda t:re.sub(r'「([^」]{2,24})」',r';;「\1」;;',t,count=1)
+    # v12 S5: consistent marks — term before ： bold-gold, chains get arrow glyphs, x: A＝B → B green (恩典/基督), q gold-double
+    T=lambda t:re.sub(r'^([^：「」（）]{2,12})：',r'**\1**：',t,count=1)
+    AR=lambda h:h.replace('→','<i class="arw">→</i>')
+    CT=lambda t:re.sub(r'(不(?:在|因|是|靠)[^，；——（「」]{1,14})([，；]|——)(而|乃|是)([^，；（「」]{2,20})',r'__\1__\2\3%%\4%%',t,count=1)
+    ps=''.join(f'<li>{AR(qmark(KC(Q(CT(T(p))))))}</li>' for p in L['p'])
+    xx=re.sub(r'([^；，、＝]{1,16})＝([^；（＝]{1,24})',r'\1＝++\2++',L['x'])
+    q=f'<p class="lq">💬 <span class="ud">{E(L["q"])}</span></p>' if L.get('q') else ''
+    r=co('info','<p>'+qmark(L['r'],False)+'</p>','🧭 改革宗校准') if L.get('r') else ''
+    return (f'<div class="box span2 liu"><h4 class="h" id="b-{i}-liu">📜 全景要义 · 刘道顺</h4>'
+            f'<p class="lth"><mark class="hy">{qmark(L["t"],False)}</mark></p><div class="lst">{st}</div><ol class="lps">{ps}</ol>'
+            f'{q}{co("xc","<p>"+AR(qmark(xx,False))+"</p>","见证基督")}{r}'
+            f'<p class="srcline">要义转述自 刘道顺《新旧约圣经全景》 · <a href="panorama.html">全景页 →</a></p></div>')
 def card(b):
     import xref as _XF
     cl,col,ic=CATS[b['cat']]; x=V2[b['id']]; i=b['id']
@@ -153,6 +172,7 @@ def card(b):
 {v4strip(b)}
 <div class="bgrid">
 <div class="box span2">{H('ol','🧩 结构大纲 · 结构图')}{sbar(b) or '<ol class="outline">'+ol+'</ol>'}</div>
+{liubox(b)}
 <div class="box">{H('bg','🏺 真实背景 · 受众')}<p>{qmark(b['bg'])}</p>{bgnote(b)}</div>
 <div class="box">{H('why','🎯 为什么写')}<p>{qmark(b['why'])}</p></div>
 <div class="box">{H('core','💎 核心信息 · 基督中心')}<p class="sideb">{qmark(core)}</p>{co('xc','<p>'+qmark(b['xc'])+'</p>','基督')}</div>

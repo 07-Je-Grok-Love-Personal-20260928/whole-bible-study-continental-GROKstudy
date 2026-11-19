@@ -1,5 +1,5 @@
 import json,re,html
-V='v11'; DATE='2026-11-14'
+V='v12'; DATE='2026-11-19'
 import os
 HERE=os.path.dirname(os.path.abspath(__file__))
 CCI=os.path.join(HERE,'data','cci')+'/'
@@ -33,7 +33,7 @@ def conflabel(s):
     if s.startswith('BC'): return f'比利时{s[2:]}条'
     h,n=s[2:].split('.'); return f'多特{["一","二","三四","五"][int(h)]}·{n}'
 GROUPS=[('1','66卷书','📚',[('index.html','📚','66卷书','书架·逐卷13项解读')]),
- ('2','全景总览','🧭',[('overview.html','🏠','全景总览','学习路线·一页纸·标注系统'),('story.html','🧭','救赎大故事','四幕剧·红线·圣经神学'),('covenant.html','🤝','圣约神学','三约·六约·两种施行'),('timeline.html','⏳','时间线·诸王','11时代·8钉子·42王'),('geography.html','🗺️','地理文化','19幅地图·讲解动画+24源实景'),('culture.html','🏺','文化与生活','节期·圣殿·派别·度量衡')]),
+ ('2','全景总览','🧭',[('overview.html','🏠','全景总览','学习路线·一页纸·标注系统'),('panorama.html','📜','新旧约全景','刘道顺·救赎史·66卷一卷一句'),('story.html','🧭','救赎大故事','四幕剧·红线·圣经神学'),('covenant.html','🤝','圣约神学','三约·六约·两种施行'),('timeline.html','⏳','时间线·诸王','11时代·8钉子·42王'),('geography.html','🗺️','地理文化','19幅地图·讲解动画+24源实景'),('culture.html','🏺','文化与生活','节期·圣殿·派别·度量衡')]),
  ('3','基督与福音','✝️',[('life-of-christ.html','🌟','基督生平','事件×地图联动'),('gospels.html','📗','四福音对照','四幅肖像·段落对照'),('harmony.html','📖','四福音合参','202段·和合本·独有细节'),('acts.html','🕊️','使徒行传·初代教会','AD30–95·旅程动画')]),
  ('4','文体对比','🧩',[('pentateuch.html','⚖️','摩西五经对照','五经横向×纵向'),('history.html','🏛️','历史书对照','得地→被掳→归回'),('poetry.html','🎼','诗歌智慧书对照','五卷三角度看智慧'),('prophets.html','🔥','先知书对照','17先知×君王×帝国'),('epistles.html','✉️','新约书信对照','21封书信·年代·主题')]),
  ('5','专题','🔍',[('kings-chronicles.html','👑','列王纪×历代志','42王逐王对照'),('compare.html','🔗','跨卷对照','以经解经·引用网络'),('stats.html','📊','圣经统计','章节·类别·引用')]),
@@ -102,7 +102,7 @@ def toctree(toc):
         node={'lv':lv,'id':hid,'num':num,'txt':txt,'ch':[]}
         while stack and stack[-1]['lv']>=lv: stack.pop()
         (stack[-1]['ch'] if stack else roots).append(node); stack.append(node)
-    big=len(toc)>60
+    big=len(toc)>40
     def r(nodes,d):
         o=''
         for n in nodes:
@@ -124,7 +124,7 @@ QUOTES=[]
 EMR=[(r'\*\*(.+?)\*\*',r'<b class="k">\1</b>'),(r'==(.+?)==',r'<mark class="hy">\1</mark>'),(r'%%(.+?)%%',r'<mark class="hg">\1</mark>'),
      (r'!!(.+?)!!',r'<span class="uw">\1</span>'),(r'\+\+(.+?)\+\+',r'<span class="ug">\1</span>'),(r'\^\^(.+?)\^\^',r'<span class="ub">\1</span>'),
      (r'\[\[(.+?)\]\]',r'<span class="cx">\1</span>'),(r'~~(.+?)~~',r'<span class="cr">\1</span>'),
-     (r'@@(.+?)@@',r'<span class="must">\1</span>'),(r';;(.+?);;',r'<span class="ud">\1</span>'),(r'__(.+?)__',r'<span class="uo">\1</span>'),(r'\$\$(.+?)\$\$',r'<mark class="hb">\1</mark>')]
+     (r'@@(.+?)@@',r'<span class="must">\1</span>'),(r';;(.+?);;',r'<span class="ud">\1</span>'),(r'__(.+?)__',r'<span class="uo">\1</span>'),(r'\$\$(.+?)\$\$',r'<mark class="hb">\1</mark>'),(r'&lt;&lt;(.+?)&gt;&gt;',r'<span class="kch">\1</span>')]
 REFRE=re.compile(r'(?<![\d:新旧立守背盟之圣])((?:撒上|撒下|王上|王下|代上|代下|林前|林后|帖前|帖后|提前|提后|彼前|彼后|约一|约二|约三|[创出利民申书士得拉尼斯伯诗箴传歌赛耶哀结但何珥摩俄拿弥鸿哈番该亚玛太可路约徒罗加弗腓西多门来雅犹启])\d{1,3}:\d{1,3}(?:[–\-]\d{1,3}(?::\d{1,3})?)?)(?![\d])')
 TERMS=['恩典之约','行为之约','救赎之约','亚伯拉罕之约','摩西之约','西奈之约','大卫之约','挪亚之约','新约应许','因信称义','代赎','中保','道成肉身','受苦的仆人','预表','护理','拣选','归算','三位一体','神的主权']
 DATERE=re.compile(r'(?<![\d\^])((?:约|主前|主后|公元前|AD ?)?\d{2,4}(?:[–\-]\d{2,4})?(?: ?BC| ?AD|年代?))(?![\d\^])')
@@ -159,7 +159,7 @@ def co(typ,body,label=None,cls=''):
     ic,lb=CO[typ]
     return f'<div class="co {typ} {cls}"><span class="lb">{ic} {label or lb}</span>{body}</div>'
 # v10: legend grouped by memorization tier (what to memorize → understand → anchor → contrast → grace), plus how to use 背诵模式
-_LG=[('🔴','必背层','先背这些：背诵模式下会被遮住',[('<span class="must">必背</span>','必须逐字背诵'),('<mark class="hy">黄底</mark>','核心句'),('<span class="mbadge">★ 必背</span>','必背徽章'),('<span class="kbmini">🔑</span>','钥点框·编号必背'),('<span class="mnf">口诀</span>','记忆口诀')]),
+_LG=[('🔴','必背层','先背这些：背诵模式下会被遮住',[('<span class="must">必背</span>','必须逐字背诵'),('<mark class="hy">黄底</mark>','核心句'),('<span class="mbadge">★ 必背</span>','必背徽章'),('<span class="kbmini">🔑</span>','钥点框·编号必背'),('<span class="mnf">口诀</span>','记忆口诀'),('<span class="kch">核心章</span>','核心章·钥节')]),
  ('🟡','理解层','读懂这些：概念与定义',[('<b class="k">粗体金</b>','关键词'),('<span class="cx">紫粗体</span>','神学术语'),('<span class="ud">金双线</span>','定义·原则'),('<span class="key">“金底引文”</span>','信条逐字引文')]),
  ('🔵','线索层','挂钩记忆：时间·人地·出处',[('<span class="ub">蓝虚线</span>','日期·年代'),('<mark class="hb">蓝底点线</mark>','人物·地点'),('<span class="rf">罗8:28</span>','经文出处'),('<span class="kpb">1</span>','编号要点')]),
  ('🟠','辨析层','分清对错：对比与警示',[('<span class="uo">橙粗线</span>','对比·差异'),('<span class="uw">红波浪</span>','易错·异端'),('<span class="cr">红字</span>','罪·审判')]),
@@ -167,8 +167,12 @@ _LG=[('🔴','必背层','先背这些：背诵模式下会被遮住',[('<span c
 LEGEND_EM=('<div class="legend-em">'+''.join(f'<div class="lgrp"><b class="lgh">{ic} {t}<small>{d}</small></b><div class="lgi">'+''.join(f'<span class="it">{a} {b}</span>' for a,b in items)+'</div></div>' for ic,t,d,items in _LG)
  +'<div class="lgrp lgco"><b class="lgh">🗂️ 框<small>整段的性质</small></b><div class="lgi pills">'+''.join(f'<span class="pill co {k}">{v[0]}{v[1]}框</span>' for k,v in CO.items())+'</div></div>'
  +'<p class="lgtip">🙈 <b>背诵模式</b>（顶栏 🙈 或 🎨 面板）：遮住「必背层」与关键词，点一下揭开、再点遮回；左下角显示本页已揭开进度。先遮着自测，再揭开核对。</p></div>')
+_MINI=[('<b class="k">粗体金</b>','关键词'),('<mark class="hy">黄底</mark>','核心句'),('<span class="cx">紫粗</span>','术语'),('<span class="ud">金双线</span>','定义'),('<span class="kch">核心章</span>','钥节'),('<span class="ub">蓝虚线</span>','年代'),('<mark class="hb">蓝底</mark>','人地'),('<span class="uo">橙粗线</span>','对比'),('<span class="uw">红波浪</span>','易错'),('<span class="ug">绿实线</span>','恩典'),('<mark class="hg">绿底</mark>','应用')]
+def legend_mini():
+    """v12: always-visible one-line marking legend (scrolls sideways on narrow screens)"""
+    return '<div class="lgmini" role="note" aria-label="标注图例速览"><b>🎨</b>'+''.join(f'<span>{a}<small>{b}</small></span>' for a,b in _MINI)+'</div>'
 def legend_box(open_=False):
-    return f'<details class="dx legendbox"{" open" if open_ else ""}><summary>🎨 笔记式标注图例（颜色编码说明）</summary><div class="in">{LEGEND_EM}</div></details>'
+    return legend_mini()+f'<details class="dx legendbox"{" open" if open_ else ""}><summary>🎨 笔记式标注图例（颜色编码说明）</summary><div class="in">{LEGEND_EM}</div></details>'
 def wrap_sections(c):
     parts=re.split(r'(?=<h2 class="h)',c)
     def bal(p): return all(p.count('<'+t)==p.count('</'+t+'>') for t in ('div','section','details','article','figure','table'))
@@ -209,19 +213,22 @@ def autoref(html_):
         else:
             out.append(part if skip or ':' not in part else REFRE.sub(r'<span class="rf">\1</span>',part))
     return ''.join(out)
+_IC={'top':'<path d="M5 4.5h14M12 20V9M7 13.5l5-5 5 5"/>','bot':'<path d="M5 19.5h14M12 4v11M7 10.5l5 5 5-5"/>',
+ 'back':'<path d="M19 12H5.5M11 6l-6 6 6 6"/>','fwd':'<path d="M5 12h13.5M13 6l6 6-6 6"/>',
+ 'home':'<path d="M3.5 11 12 4l8.5 7"/><path d="M6 9.8V20h12V9.8M10 20v-5.5h4V20"/>',
+ 'pv':'<path d="M11.5 6.5 6 12l5.5 5.5M18 6.5 12.5 12l5.5 5.5"/>','nx':'<path d="M12.5 6.5 18 12l-5.5 5.5M6 6.5l5.5 5.5L6 17.5"/>'}
+def _svg(k): return f'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_IC[k]}</svg>'
 def fab(fn):
-    """v9 floating nav cluster: history back/forward, top/bottom, home, prev/next page in site order"""
+    """v12 floating nav cluster: refined SVG icons + labels; top · back/fwd · home · prev/next page · bottom"""
     fs=[f for f,_i,_t in PAGES];k=fs.index(fn) if fn in fs else -1
     pv=PAGES[k-1] if k>0 else None;nx=PAGES[k+1] if 0<=k<len(PAGES)-1 else None
-    a=lambda x,cls,ic,lab:(f'<a class="fb {cls}" href="{x[0]}" title="{lab}：{x[1]} {x[2]}" aria-label="{lab}：{x[2]}">{ic}</a>' if x else '')
-    return ('<nav class="fab" aria-label="快捷导航"><div class="fabm" id="fabm">'
-      '<button type="button" class="fb" data-a="back" title="后退（浏览记录）" aria-label="后退">←</button>'
-      '<button type="button" class="fb" data-a="fwd" title="前进（浏览记录）" aria-label="前进">→</button>'
-      +a(pv,'pv','‹','上一页')+a(nx,'nx','›','下一页')+
-      '<a class="fb" href="index.html" title="首页 · 66卷书" aria-label="首页">⌂</a>'
-      '<button type="button" class="fb" data-a="bot" title="到页底" aria-label="到页底">⤓</button>'
-      '<button type="button" class="fb" data-a="top" title="回到顶部" aria-label="回到顶部">⤒</button></div>'
-      '<button type="button" class="fabt" aria-expanded="false" aria-controls="fabm" title="快捷导航（后退/前进/顶部/底部/首页/上下页）" aria-label="快捷导航"><span>✦</span></button></nav>')
+    a=lambda x,cls,lab:(f'<a class="fb {cls}" href="{x[0]}" data-tip="{lab} · {x[2]}" aria-label="{lab}：{x[2]}">{_svg(cls)}</a>' if x else '')
+    bt=lambda k_,lab:f'<button type="button" class="fb" data-a="{k_}" data-tip="{lab}" aria-label="{lab}">{_svg(k_)}</button>'
+    return ('<nav class="fab" aria-label="快捷导航"><div class="fabm" id="fabm" role="group">'
+      +bt('top','回到顶部')+'<i class="fsep" aria-hidden="true"></i>'+bt('back','后退')+bt('fwd','前进')+
+      f'<a class="fb" href="index.html" data-tip="首页 · 66卷书" aria-label="首页">{_svg("home")}</a>'
+      +(('<i class="fsep" aria-hidden="true"></i>'+a(pv,'pv','上一页')+a(nx,'nx','下一页')) if (pv or nx) else '')+'<i class="fsep" aria-hidden="true"></i>'+bt('bot','到页底')+'</div>'
+      '<button type="button" class="fabt" aria-expanded="false" aria-controls="fabm" aria-label="快捷导航（顶部/后退/前进/首页/上下页/底部）" data-tip="快捷导航"><svg class="fring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18"/></svg><span>✦</span></button></nav>')
 def page(fn,title,content,extra_head='',scripts='',cv=True):
     content=content.replace(' reveal"',' rv"').replace('"reveal ','"rv ').replace('class="reveal"','class="rv"')
     from v5extra import tldr
@@ -247,7 +254,7 @@ def page(fn,title,content,extra_head='',scripts='',cv=True):
 <link rel="stylesheet" href="assets/css/app.css?v={V}">{extra_head}</head>
 <body data-mer="assets/vendor/mermaid.min.js"><div class="aurora"></div><div class="prog"></div>
 <header class="top"><button class="ibtn" id="tocBtn" title="目录 显示/隐藏" aria-label="目录">☰</button><a class="brand" href="index.html">📖 <b>整本圣经</b><span class="t">· 欧陆改革宗研读</span><small>GROKstudy {V}</small></a><nav class="nav">{nav}</nav>'''+HDR+f'''</header>
-<div class="wrap"><aside class="toc" id="toc"><div class="toch"><b>📑 本页目录</b><button id="tocL2" title="只展开到二级">二级</button><button id="tocAll" title="全部展开">全开</button><button id="tocNone" title="全部收起">全收</button><button id="tocClose" title="隐藏目录" aria-label="隐藏目录">✕</button></div>
+<div class="wrap"><aside class="toc" id="toc"><div class="toch"><b>📑 本页目录</b><button id="tocClose" title="隐藏目录" aria-label="隐藏目录">✕</button></div><div class="toclv" role="group" aria-label="目录展开层级"><span>展开到</span><button type="button" data-lv="1" title="只看一级（大标题）" aria-pressed="false">1级</button><button type="button" data-lv="2" title="展开到二级" aria-pressed="false">2级</button><button type="button" data-lv="3" title="展开到三级" aria-pressed="false">3级</button><button type="button" data-lv="9" id="tocAll" title="全部展开" aria-pressed="false">全部</button></div>
 <input id="tocq" placeholder="🔍 筛选目录…" aria-label="筛选目录"><div class="tocbody" data-lenis-prevent>{toctree(toc)}<div class="tocpages"><b>🧭 全站页面 · {len(GROUPS)} 组 {len(PAGES)} 页</b>{pages}</div></div><div class="rz" title="拖动调整目录宽度（双击复位）" role="separator" aria-orientation="vertical"><span class="rztip"></span></div><div class="rzhint" hidden>↔ 拖动右边缘调整目录宽度</div></aside><div class="scrim"></div>
 <main id="main">{cb[0]}{content}
 {cb[1]}<footer class="ft">📖 整本圣经 · 欧陆改革宗研读 — GROKstudy {V}（{DATE}）。信经与信条引文逐字取自 <a href="https://ccifellowship.org" target="_blank" rel="noopener">ccifellowship.org</a>（中国改革宗教会）；经文采用和合本。本站为学习辅助，日期采用保守派（Thiele 式）年代学，个别年份学界有±1–2年差异。<br>{"<br>".join(f'<b>{GCIRC[int(g)-1]} {gn}</b>：'+" · ".join(f'<a href="{f}">{PNUM[f]} {t}</a>' for f,i,t,d in ps) for g,gn,gi,ps in GROUPS)}</footer></main></div>

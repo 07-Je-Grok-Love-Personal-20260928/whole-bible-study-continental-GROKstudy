@@ -1195,3 +1195,110 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .bgnote{display:flex;flex-direction:column;gap:2px;margin:6px 0 0!important;padding-top:5px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.6;color:var(--mut)}
 .bgnote span{overflow-wrap:anywhere}
 .sleg2 li{margin:0!important;padding:1px 0}
+/* ===== v12: 刘道顺《新旧约圣经全景》 ===== */
+.bk .box.liu{position:relative;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 13%,var(--card)),color-mix(in srgb,var(--gold) 7%,var(--card)));border:1px solid color-mix(in srgb,var(--c) 45%,transparent);box-shadow:inset 3px 0 0 var(--c)}
+.liu .lth{font-family:var(--serif);font-size:16.5px;line-height:1.55;margin:0 0 6px!important}
+.liu .lth mark{padding:1px 6px;border-radius:6px}
+.liu .lst{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 6px}
+.liu .lst>span{flex:0 1 auto;min-width:0;max-width:100%;font-size:12.5px;line-height:1.5;padding:2px 9px;border-radius:99px;border:1px dashed color-mix(in srgb,var(--c) 60%,transparent);background:color-mix(in srgb,var(--c) 9%,transparent);overflow-wrap:anywhere}
+.liu .lps{margin:0 0 4px;padding:0;list-style:none;counter-reset:lp;display:grid;gap:4px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.liu .lps li{counter-increment:lp;position:relative;padding:6px 8px 6px 32px;border-radius:10px;background:color-mix(in srgb,var(--ink) 4%,transparent);font-size:13.5px;line-height:1.65;min-width:0;overflow-wrap:anywhere}
+.liu .lps li::before{content:counter(lp);position:absolute;left:7px;top:7px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:800;color:#111;background:var(--c)}
+/* era flow */
+.rhflow{list-style:none;margin:10px 0 14px;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,178px),1fr));counter-reset:none}
+.rhflow li{position:relative;min-width:0}
+.rhflow a{display:flex;flex-direction:column;gap:3px;height:100%;padding:11px 12px 12px;border-radius:16px;text-decoration:none;color:var(--ink);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 24%,transparent),color-mix(in srgb,var(--c) 6%,transparent));border:1px solid color-mix(in srgb,var(--c) 55%,transparent);transition:transform .25s,box-shadow .25s}
+.rhflow a:hover,.rhflow a:focus-visible{transform:translateY(-3px);box-shadow:0 10px 24px -12px var(--c)}
+.rhflow .rn{position:absolute;top:8px;right:10px;font-size:11px;font-weight:800;opacity:.7}
+.rhflow .ri{font-size:24px;line-height:1}
+.rhflow b{font-family:var(--serif);font-size:16px}
+.rhflow small{font-size:11.5px;color:var(--mut)}
+.rhflow .rk{font-size:12.5px;line-height:1.55;color:var(--ink2)}
+.rhflow li::after{content:'';position:absolute;left:12px;right:12px;bottom:-1px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--c),transparent);background-size:200% 100%;opacity:.0}
+.rhflow.run li::after{opacity:.9;animation:rhpulse 2.4s linear 3;animation-delay:calc(var(--i)*.18s)}
+@keyframes rhpulse{from{background-position:200% 0}to{background-position:-200% 0}}
+/* chains */
+.lchain{list-style:none;margin:10px 0 12px;padding:0 0 2px;display:grid;overflow:hidden;overflow:clip;gap:8px 22px;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}
+.lchain li{position:relative;min-width:0;padding:9px 11px 9px 46px;border-radius:14px;background:color-mix(in srgb,var(--sky) 9%,var(--card));border:1px solid var(--line)}
+.lchain li .ce{position:absolute;left:10px;top:9px;font-size:22px;line-height:1}
+.lchain li b{display:block;font-size:14.5px}
+.lchain li small{display:block;font-size:12.5px;line-height:1.55;color:var(--ink2);overflow-wrap:anywhere}
+.lchain li:not(:last-child)::after{content:'➜';position:absolute;right:-17px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--gold);opacity:.8}
+@media(max-width:560px){.lchain{gap:14px}.lchain li:not(:last-child)::after{content:'⬇';right:auto;left:50%;top:auto;bottom:-15px;transform:translateX(-50%)}}
+.lchain.wide{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))}
+/* 66 cards */
+.lgrid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));margin:8px 0 12px}
+.lcard{position:relative;display:flex;flex-direction:column;gap:3px;min-width:0;padding:9px 11px 10px;border-radius:13px;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--c) 11%,var(--card));border:1px solid color-mix(in srgb,var(--c) 40%,transparent);border-top:3px solid var(--c);transition:transform .2s}
+.lcard:hover,.lcard:focus-visible{transform:translateY(-2px)}
+.lcard b{font-family:var(--serif);font-size:15px;padding-right:38px}
+.lcard .lch{position:absolute;top:7px;right:8px;font-size:11px;font-weight:800;padding:0 6px;border-radius:99px;background:color-mix(in srgb,var(--c) 30%,transparent)}
+.lcard .lch::after{content:'章'}
+.lcard .lt{font-size:13px;line-height:1.55;color:var(--ink2);overflow-wrap:anywhere}
+/* golden chain rings */
+.rings{margin:10px auto 14px;max-width:560px;text-align:center}
+.rings svg{width:100%;height:auto;display:block}
+.rings circle{stroke-dasharray:24 8;stroke-linecap:round}
+.rings.run circle{animation:flow 1.6s linear 3}
+/* v12 note-marking additions */
+.kch{display:inline-block;padding:0 6px;margin:0 1px;border:1.5px solid var(--gold);border-radius:6px;font-weight:700;line-height:1.45;color:var(--gold)}
+.uv{text-decoration:underline dotted var(--vio) 2.5px;text-underline-offset:4px}
+/* v12: TOC level control */
+.toclv{display:flex;align-items:center;gap:4px;margin:0 10px 6px;padding:3px;border-radius:11px;background:color-mix(in srgb,var(--ink) 5%,transparent);border:1px solid var(--line)}
+.toclv span{font-size:11.5px;color:var(--mut);padding:0 4px 0 6px;white-space:nowrap}
+.toclv button{flex:1 1 0;min-width:0;font:inherit;font-size:12px;padding:3px 4px;border-radius:8px;border:0;background:transparent;color:var(--ink2);cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
+.toclv button:hover{background:color-mix(in srgb,var(--gold) 14%,transparent)}
+.toclv button[aria-pressed="true"]{background:var(--gold);color:#1a1300;font-weight:700}
+.toclv button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.liu .lps{grid-template-columns:1fr}
+/* v12: refined floating nav */
+.fab .fb svg{display:block;width:18px;height:18px}
+.fab .fb{color:var(--ink2);position:relative;transition:color .2s,background .2s,transform .2s}
+.fab .fb:hover,.fab .fb:focus-visible{color:var(--gold);background:color-mix(in srgb,var(--gold) 16%,color-mix(in srgb,var(--bg) 78%,transparent));transform:scale(1.06)}
+.fab .fb:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.fab .fb:disabled{opacity:.35;cursor:default;transform:none}
+.fab .fsep{display:block;width:16px;height:1px;margin:0 auto;background:var(--line2);opacity:.7;flex:none}
+.fab .fabt{position:relative}
+.fab .fring{position:absolute;inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);transform:rotate(-90deg);pointer-events:none;overflow:visible}
+.fab .fring circle{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:113.1;stroke-dashoffset:113.1;opacity:0}
+.fab .fring circle{opacity:.85;transition:stroke-dashoffset .5s var(--ease,ease)}
+@keyframes fring{to{stroke-dashoffset:0}}
+@media (hover:hover) and (pointer:fine){
+ .fab [data-tip]::after{content:attr(data-tip);position:absolute;right:calc(100% + 9px);top:50%;transform:translate(6px,-50%);white-space:nowrap;font:500 12px/1.2 system-ui,sans-serif;padding:5px 9px;border-radius:8px;background:color-mix(in srgb,var(--bg) 88%,transparent);color:var(--ink);border:1px solid var(--line2);box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s}
+ .fab [data-tip]:hover::after,.fab [data-tip]:focus-visible::after{opacity:1;transform:translate(0,-50%)}
+}
+@media print{.fab{display:none!important}}
+.fab .fabm{padding:8px 10px;margin:-8px -10px}
+.fab .fb{box-shadow:0 2px 8px rgba(0,0,0,.16)}
+.fab .fb{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 90%,var(--ink) 4%)}
+/* v12: one-line mini legend */
+.lgmini{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;margin:8px 0;padding:6px 10px;border-radius:12px;background:color-mix(in srgb,var(--ink) 4%,transparent);border:1px solid var(--line);font-size:13px;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.lgmini::-webkit-scrollbar{display:none}
+.lgmini>b{flex:none}
+.lgmini>span{flex:none;display:inline-flex;align-items:baseline;gap:3px;white-space:nowrap;padding:1px 4px}
+.lgmini small{font-size:11px;color:var(--mut)}
+@media(min-width:1200px){.lgmini{flex-wrap:wrap;-webkit-mask-image:none;mask-image:none}}
+/* v12: exile map + gospel split bars */
+.xmap{margin:10px 0 14px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.xmap svg{display:block;width:100%;height:auto;color:var(--ink)}
+.xmap figcaption{padding:8px 12px 10px}
+.xleg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px}
+.xleg span{display:inline-flex;align-items:center;gap:6px}
+.xleg i{width:18px;height:4px;border-radius:3px;display:inline-block}
+.spbars{display:grid;gap:7px;margin:8px 0 12px}
+.spb{display:grid;grid-template-columns:3.2em 1fr 3em;align-items:center;gap:8px;font-size:13px}
+.spb b{font-family:var(--serif)}
+.spb small{color:var(--mut);text-align:right}
+.spb .bar{height:auto;display:flex;align-items:stretch;min-width:0;border-radius:9px;overflow:hidden;border:1px solid color-mix(in srgb,var(--c) 55%,transparent)}
+.spb .bar>span{height:auto;min-width:0;padding:3px 8px;line-height:1.55;display:block;vertical-align:top;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
+.spb .a{background:color-mix(in srgb,var(--c) 30%,transparent)}
+.spb .z{background:color-mix(in srgb,var(--red) 14%,transparent);text-align:right}
+.spb .bar i{flex:none;font-style:normal;font-size:11.5px;font-weight:800;padding:3px 6px;line-height:1.55;display:flex;align-items:center;background:var(--c);color:#111;white-space:nowrap}
+/* v12: livelier — section icon chips cycle through the canon palette */
+section.blk:nth-of-type(5n+2)>h2.h .ic{background:linear-gradient(135deg,color-mix(in srgb,var(--sky) 38%,transparent),color-mix(in srgb,var(--teal) 24%,transparent))}
+section.blk:nth-of-type(5n+3)>h2.h .ic{background:linear-gradient(135deg,color-mix(in srgb,var(--emer) 36%,transparent),color-mix(in srgb,var(--gold) 22%,transparent))}
+section.blk:nth-of-type(5n+4)>h2.h .ic{background:linear-gradient(135deg,color-mix(in srgb,var(--vio) 36%,transparent),color-mix(in srgb,var(--rose) 22%,transparent))}
+section.blk:nth-of-type(5n)>h2.h .ic{background:linear-gradient(135deg,color-mix(in srgb,var(--orange,var(--amb)) 36%,transparent),color-mix(in srgb,var(--red) 20%,transparent))}
+
+/* v12 S5: Liu block marks */
+.liu i.arw{font-style:normal;font-weight:800;color:var(--c,var(--gold));padding:0 2px}
+.liu .lq{margin:2px 0 6px!important;font-size:13.5px;font-family:var(--serif);padding:4px 10px;border-left:3px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);border-radius:0 8px 8px 0}
