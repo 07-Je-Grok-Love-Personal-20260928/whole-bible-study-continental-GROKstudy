@@ -9,7 +9,7 @@ Perf baseline: /workspace/wb/perf/base12 (copy of main v11.2), log perf/v12_befo
 - [x] S5 marks: mini legend strip on all content pages (+harmony), Liu block auto-marks (term **k**, contrast uo/hg, → arrows, Christ ++ug++, q line ud), keychapter kch; section icon hue cycle
 - [x] S6 visuals: eraflow, exile/return map, gospel split bars, golden rings, Acts 1:8 gospel-spread map (panorama #nt-acts)
 - [x] S7 perf: progress ring on scroll-settle; after numbers perf/v12_after.log (all p95 16.7–16.8, 0 scroll long tasks)
-- [ ] S8 checks (check.py, check_ix, check_overlap + webkit)
+- [x] S8 checks: check.py 26pg x 320,390,768,1024,1440,1920 = 0; check_ix 390+1440 826 checks 0; check_overlap chromium 7 widths {} + webkit 390 {} (logs perf/chk12). NB box rebooted 14:09 — webkit reinstalled to ~/.cache, wkdeps libs copied into minibrowser-wpe/lib
 - [ ] S9 shots, README, tag/release, deploy
 
 baseline (v11.2, m390x4, gesture/script p95): forms 16.7/16.7, creeds 16.7/16.7, kc 16.7/16.8, index 16.7/16.7 (loadLt ~420ms), ot 16.7/16.7; 0 long tasks during scroll

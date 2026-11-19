@@ -104,7 +104,7 @@ WIDTHS=390 ENGINE=webkit python3 _build/check_overlap.py all   # v11.1 排版质
 - **🖍️ 标注**：新增「钥章」标记 `<<…>>`；各页顶部单行迷你图例（桌面换行、手机横滑）；「全景要义」块统一自动标注——要点术语金粗、正误对比橙线/绿底、链条箭头、「见证基督」绿线、刘牧师短语金双线。
 - **🎨 视觉**：救赎史十二段流动动画、黄金五环、被掳/归回路线示意图、**使徒行传 1:8 福音扩展地图**（耶路撒冷→罗马，三圈涟漪）、四福音分割点比例条、章节图标色彩轮换。
 - **⚡ 性能**（m390 · 4× CPU 降速，3 次中位数）：forms / creeds / kings-chronicles / index / ot / panorama 滚动 p95 16.7–16.8 ms（v11.2 基线同为 16.7–16.8）、滚动期间长任务 0；阅读进度环改为滚动停止后更新（避免逐帧重绘）。
-- 检查：CHECKS
+- 检查：构建逐字引文 184 处 ✔ · 内部链接 4983 处 0 断链；check.py 26 页 × 6 宽（320–1920）0 溢出 0 控制台错误；check_ix（展开/切换/目录层级/主题）826 项 0 问题；check_overlap Chromium 7 宽 + WebKit 390：0 重叠/裁切/空框。
 
 ### v11.2 — 2026-11-14（tag `v11.2-20261114`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v11.2-20261114)）
 - 在线：Surge https://whole-bible-study-20261114-v11-2-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261114-v11-2-grokstudy.netlify.app/ · GitHub Pages（main）
