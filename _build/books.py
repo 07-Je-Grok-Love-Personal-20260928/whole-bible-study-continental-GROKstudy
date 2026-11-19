@@ -138,11 +138,17 @@ def liubox(b):
     st=''.join(f'<span>{qmark(x.strip(),False)}</span>' for x in L['s'].split('｜'))
     KC=lambda t:re.sub(r'((?:核心|中心)章\s?(?:是)?第?\s?\d+(?:[–-]\d+)?章|钥节\s?\d+:\d+(?:-\d+)?)',r'<<\1>>',t)
     Q=lambda t:re.sub(r'「([^」]{2,24})」',r';;「\1」;;',t,count=1)
-    ps=''.join(f'<li>{qmark(KC(Q(p)))}</li>' for p in L['p'])
+    # v12 S5: consistent marks — term before ： bold-gold, chains get arrow glyphs, x: A＝B → B green (恩典/基督), q gold-double
+    T=lambda t:re.sub(r'^([^：「」（）]{2,12})：',r'**\1**：',t,count=1)
+    AR=lambda h:h.replace('→','<i class="arw">→</i>')
+    CT=lambda t:re.sub(r'(不(?:在|因|是|靠)[^，；——（「」]{1,14})([，；]|——)(而|乃|是)([^，；（「」]{2,20})',r'__\1__\2\3%%\4%%',t,count=1)
+    ps=''.join(f'<li>{AR(qmark(KC(Q(CT(T(p))))))}</li>' for p in L['p'])
+    xx=re.sub(r'([^；，、＝]{1,16})＝([^；（＝]{1,24})',r'\1＝++\2++',L['x'])
+    q=f'<p class="lq">💬 <span class="ud">{E(L["q"])}</span></p>' if L.get('q') else ''
     r=co('info','<p>'+qmark(L['r'],False)+'</p>','🧭 改革宗校准') if L.get('r') else ''
     return (f'<div class="box span2 liu"><h4 class="h" id="b-{i}-liu">📜 全景要义 · 刘道顺</h4>'
             f'<p class="lth"><mark class="hy">{qmark(L["t"],False)}</mark></p><div class="lst">{st}</div><ol class="lps">{ps}</ol>'
-            f'{co("xc","<p>"+qmark(L["x"],False)+"</p>","见证基督")}{r}'
+            f'{q}{co("xc","<p>"+AR(qmark(xx,False))+"</p>","见证基督")}{r}'
             f'<p class="srcline">要义转述自 刘道顺《新旧约圣经全景》 · <a href="panorama.html">全景页 →</a></p></div>')
 def card(b):
     import xref as _XF

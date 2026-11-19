@@ -1298,3 +1298,7 @@ section.blk:nth-of-type(5n+2)>h2.h .ic{background:linear-gradient(135deg,color-m
 section.blk:nth-of-type(5n+3)>h2.h .ic{background:linear-gradient(135deg,color-mix(in srgb,var(--emer) 36%,transparent),color-mix(in srgb,var(--gold) 22%,transparent))}
 section.blk:nth-of-type(5n+4)>h2.h .ic{background:linear-gradient(135deg,color-mix(in srgb,var(--vio) 36%,transparent),color-mix(in srgb,var(--rose) 22%,transparent))}
 section.blk:nth-of-type(5n)>h2.h .ic{background:linear-gradient(135deg,color-mix(in srgb,var(--orange,var(--amb)) 36%,transparent),color-mix(in srgb,var(--red) 20%,transparent))}
+
+/* v12 S5: Liu block marks */
+.liu i.arw{font-style:normal;font-weight:800;color:var(--c,var(--gold));padding:0 2px}
+.liu .lq{margin:2px 0 6px!important;font-size:13.5px;font-family:var(--serif);padding:4px 10px;border-left:3px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);border-radius:0 8px 8px 0}
