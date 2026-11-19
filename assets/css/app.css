@@ -1270,3 +1270,10 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .fab .fabm{padding:8px 10px;margin:-8px -10px}
 .fab .fb{box-shadow:0 2px 8px rgba(0,0,0,.16)}
 .fab .fb{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 90%,var(--ink) 4%)}
+/* v12: one-line mini legend */
+.lgmini{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;margin:8px 0;padding:6px 10px;border-radius:12px;background:color-mix(in srgb,var(--ink) 4%,transparent);border:1px solid var(--line);font-size:13px;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.lgmini::-webkit-scrollbar{display:none}
+.lgmini>b{flex:none}
+.lgmini>span{flex:none;display:inline-flex;align-items:baseline;gap:3px;white-space:nowrap;padding:1px 4px}
+.lgmini small{font-size:11px;color:var(--mut)}
+@media(min-width:1200px){.lgmini{flex-wrap:wrap;-webkit-mask-image:none;mask-image:none}}

@@ -167,8 +167,12 @@ _LG=[('🔴','必背层','先背这些：背诵模式下会被遮住',[('<span c
 LEGEND_EM=('<div class="legend-em">'+''.join(f'<div class="lgrp"><b class="lgh">{ic} {t}<small>{d}</small></b><div class="lgi">'+''.join(f'<span class="it">{a} {b}</span>' for a,b in items)+'</div></div>' for ic,t,d,items in _LG)
  +'<div class="lgrp lgco"><b class="lgh">🗂️ 框<small>整段的性质</small></b><div class="lgi pills">'+''.join(f'<span class="pill co {k}">{v[0]}{v[1]}框</span>' for k,v in CO.items())+'</div></div>'
  +'<p class="lgtip">🙈 <b>背诵模式</b>（顶栏 🙈 或 🎨 面板）：遮住「必背层」与关键词，点一下揭开、再点遮回；左下角显示本页已揭开进度。先遮着自测，再揭开核对。</p></div>')
+_MINI=[('<b class="k">粗体金</b>','关键词'),('<mark class="hy">黄底</mark>','核心句'),('<span class="cx">紫粗</span>','术语'),('<span class="ud">金双线</span>','定义'),('<span class="kch">核心章</span>','钥节'),('<span class="ub">蓝虚线</span>','年代'),('<mark class="hb">蓝底</mark>','人地'),('<span class="uo">橙粗线</span>','对比'),('<span class="uw">红波浪</span>','易错'),('<span class="ug">绿实线</span>','恩典'),('<mark class="hg">绿底</mark>','应用')]
+def legend_mini():
+    """v12: always-visible one-line marking legend (scrolls sideways on narrow screens)"""
+    return '<div class="lgmini" role="note" aria-label="标注图例速览"><b>🎨</b>'+''.join(f'<span>{a}<small>{b}</small></span>' for a,b in _MINI)+'</div>'
 def legend_box(open_=False):
-    return f'<details class="dx legendbox"{" open" if open_ else ""}><summary>🎨 笔记式标注图例（颜色编码说明）</summary><div class="in">{LEGEND_EM}</div></details>'
+    return legend_mini()+f'<details class="dx legendbox"{" open" if open_ else ""}><summary>🎨 笔记式标注图例（颜色编码说明）</summary><div class="in">{LEGEND_EM}</div></details>'
 def wrap_sections(c):
     parts=re.split(r'(?=<h2 class="h)',c)
     def bal(p): return all(p.count('<'+t)==p.count('</'+t+'>') for t in ('div','section','details','article','figure','table'))

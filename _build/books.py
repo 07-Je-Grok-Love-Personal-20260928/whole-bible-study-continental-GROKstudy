@@ -137,7 +137,8 @@ def liubox(b):
     L=LIU[b['id']]; i=b['id']
     st=''.join(f'<span>{qmark(x.strip(),False)}</span>' for x in L['s'].split('｜'))
     KC=lambda t:re.sub(r'((?:核心|中心)章\s?(?:是)?第?\s?\d+(?:[–-]\d+)?章|钥节\s?\d+:\d+(?:-\d+)?)',r'<<\1>>',t)
-    ps=''.join(f'<li>{qmark(KC(p))}</li>' for p in L['p'])
+    Q=lambda t:re.sub(r'「([^」]{2,24})」',r';;「\1」;;',t,count=1)
+    ps=''.join(f'<li>{qmark(KC(Q(p)))}</li>' for p in L['p'])
     r=co('info','<p>'+qmark(L['r'],False)+'</p>','🧭 改革宗校准') if L.get('r') else ''
     return (f'<div class="box span2 liu"><h4 class="h" id="b-{i}-liu">📜 全景要义 · 刘道顺</h4>'
             f'<p class="lth"><mark class="hy">{qmark(L["t"],False)}</mark></p><div class="lst">{st}</div><ol class="lps">{ps}</ol>'

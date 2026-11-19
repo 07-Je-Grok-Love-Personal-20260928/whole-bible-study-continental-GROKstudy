@@ -2,7 +2,7 @@ from lib import *
 from books import *
 def filters(keys,target):
     return f'<div class="filters" data-target="{target}"><button class="on" data-cat="all">全部</button><button data-cat="ot">📜 旧约</button><button data-cat="nt">✝️ 新约</button>'+''.join(f'<button data-cat="{k}">{CATS[k][2]} {CATS[k][0]}</button>' for k in keys)+'<input placeholder="🔍 搜索书卷/主题/经文…" aria-label="搜索书卷"><button data-expand=".bk details" data-state="closed">全部展开</button></div>'
-HOW='<div class="grid g3">'+co('core','<p>每卷先看<b class="k">前因后果</b>与<b class="k">结构图</b>（彩色条按章数比例绘制），再读背景、目的与基督中心；卷末用<b class="k">核心三要点 · 口诀</b>收束。</p>','先抓骨架')+co('trap','<p>每卷都有<span class="uw">易错点</span>：常见误读、异端或断章取义——这是改革宗正统与其他读法分歧最多的地方。</p>','再避陷阱')+co('conf','<p>卷末<span class="cx">认信连接</span>展开三项联合信条原文（逐字引自 ccifellowship.org），把经文与教义连在一起。</p>','后连信条')+'</div>'+legend_box()
+HOW='<div class="grid g3">'+co('core','<p>每卷先看<b class="k">前因后果</b>与<b class="k">结构图</b>（彩色条按章数比例绘制），再读<b class="k">📜 全景要义</b>（刘道顺《新旧约圣经全景》一卷一句）、背景、目的与基督中心；卷末用<b class="k">核心三要点 · 口诀</b>收束。</p>','先抓骨架')+co('trap','<p>每卷都有<span class="uw">易错点</span>：常见误读、异端或断章取义——这是改革宗正统与其他读法分歧最多的地方。</p>','再避陷阱')+co('conf','<p>卷末<span class="cx">认信连接</span>展开三项联合信条原文（逐字引自 ccifellowship.org），把经文与教义连在一起。</p>','后连信条')+'</div>'+legend_box()
 GI={'law-h':'**摩西五经**是全本圣经的根基：==创造—堕落—应许—救赎—立约—律法==。主前^^1446^^年出埃及是旧约年代的锚点；五经教导[[圣约]]的基本语法：神先施恩，再赐律法作为感恩生活的规则。',
 'hist-h':'从^^1406 BC^^进迦南到^^430 BC^^尼希米：**得地—士师—王国—分裂—被掳—归回**。前先知书以申命记为标准评判历史；历代志从被掳归回者的角度重述，焦点是**大卫之约与圣殿**。',
 'poet-h':'不是按年代，而是**约民如何在日常中与神相交**：受苦（伯）、敬拜（诗）、智慧（箴）、虚空中的敬畏（传）、婚姻之爱（歌）。共同钥句：==敬畏耶和华是智慧的开端==。',
@@ -67,6 +67,7 @@ def books():
     c.append(h2('shelf-h','🗄️','书架：66 卷一眼看全'))
     c.append(filters(list(CATS.keys()),'.bk,.shelf a'))
     c.append(shelf())
+    c.append(legend_mini())
     tail=[]
     tail.append(h3('cat10','十类速览'))
     tail.append(legend(list(CATS.keys()))+table(['分类','书卷','核心','口诀'],[['⚖️ 律法书','创—申（5）','根基：创造、拣选、救赎、立约、律法','起·出·圣·数·重'],['🏛️ 历史书','书—斯（12）','得地、王国、分裂、被掳、归回','书士得 撒撒王王代代 拉尼斯'],['🎼 诗歌智慧书','伯—歌（5）','在约中受苦、敬拜、生活、相爱','苦·赞·智·虚·爱'],['🔥 大先知书','赛—但（5）','审判与安慰、新约、神的国','赛耶哀结但'],['📯 小先知书','何—玛（12）','背约控诉、耶和华的日子、余民','何珥摩俄拿弥，鸿哈番该亚玛'],['✝️ 福音书','太—约（4）','基督是谁、做了什么','君王·仆人·人子·神子'],['🕊️ 使徒行传','徒（1）','升天基督藉圣灵建立教会','耶路撒冷→犹太撒玛利亚→地极'],['✉️ 保罗书信','罗—门（13）','福音的教义与生活','罗林林加，弗腓西，帖帖提提多门'],['📨 普通书信','来—犹（8）','持守信心、真道与爱','来雅彼彼，约约约犹'],['👑 启示录','启（1）','羔羊得胜，万有更新','七教会·七印·七号·七碗']]))
