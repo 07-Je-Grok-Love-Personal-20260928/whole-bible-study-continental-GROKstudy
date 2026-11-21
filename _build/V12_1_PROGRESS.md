@@ -13,4 +13,4 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - README drafted for v12.1 (R6 links prefilled; R5 results line to fill)
 - check.py 320/390/768: 103 pages each, 0 problems (logs /workspace/wb/logs/v121/check_W.jsonl[.done]; runner run_check.sh skips done widths)
 - check.py 1024/1440/1920: 103 pages each, 0 problems (all 6 widths done)
-- check_ix 390: 103 pages, 1478 checks, 0 BAD/ERR (logs v121/ix_390.log); runner run_r5b.sh (ix 1440 → overlap chromium 320,390,600,768,1024,1440,1920 → webkit 390), .done markers
+- check_ix 390: 1478 checks 0; check_ix 1440: 1581 checks 0 BAD/ERR (logs v121/ix_390.log); runner run_r5b.sh (ix 1440 → overlap chromium 320,390,600,768,1024,1440,1920 → webkit 390), .done markers
