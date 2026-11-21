@@ -18,3 +18,4 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - 02:05 early deploy of 519331b: surge whole-bible-study-20261121-v12-1-grokstudy.surge.sh OK; netlify site created id 8a251d7c-5da0-4be2-8631-2ed833bc1751, deploy --prod OK (stage dir /workspace/wb/stage121 = git ls-files minus _build, no CNAME). overlap runner still going (chromium 768). Tag/release held until overlap done.
 - 02:12 merged main 1b33ea5 pushed (Pages); verify: 103/103 html 200 on Pages, surge, netlify (script /workspace/wb/verify121.sh)
 - R5 overlap partial: liu.html 768 ltoc multicol overlap -> grid groups (.ltocg); legendbox clip-x 670>665 at 1024 on 24 pages -> .lgi .it wraps <=1100px. Rebuilt OK. Need recheck 768+1024 after runner.
+- R5 overlap chromium 7w done: overlap 4 (liu 768) + clip-x 24 (1024) -> fixed; webkit 390: page-hscroll 57 liu pages (WebKit hanging-punctuation) -> fixed; recheck running (logs ov_wk_recheck.log, ov_ch_recheck.log, recheck.done)
