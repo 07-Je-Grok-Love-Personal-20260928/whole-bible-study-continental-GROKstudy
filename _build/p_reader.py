@@ -225,7 +225,7 @@ def toc_block():
     o=''
     for p in BLK['toc']:
         t=p['t']
-        if p['role']=='h1': o+=f'<h4 class="h nonum ltoch"{segattr([p])}>{E(t)}</h4>'; continue
+        if p['role']=='h1': o+=('</div>' if o else '')+f'<div class="ltocg"><h4 class="h nonum ltoch"{segattr([p])}>{E(t)}</h4>'; continue
         ents=re.findall(r'(.+?)\.{5,}\s?(\d+)\s?',t)
         rest=re.sub(r'(.+?)\.{5,}\s?(\d+)\s?','',t).strip()
         lis=''
@@ -235,7 +235,7 @@ def toc_block():
             lis+=f'<li><a href="{href}"><span>{E(nm)}</span><i aria-hidden="true"></i><b>{pg}</b></a></li>'
         if rest: lis+=f'<li class="lrest">{E(rest)}</li>'
         o+=f'<ol class="ltoc"{segattr([p])}>{lis}</ol>'
-    return o
+    return o+('</div>' if '<div class="ltocg">' in o else '')
 def index_page():
     cv=BLK['cover']; tot=sum(c['chars'] for c in CH)
     o=(f'<section class="hero lhero reveal"><div class="chips"><span class="chip g">📖 全文阅读版</span><span class="chip">{len(CH)} 篇</span><span class="chip">✍️ 约 {round(len(REF)/10000)} 万字</span><span class="chip">📄 原书 339 页</span><span class="chip">🔒 逐字核对 100%</span></div>'
