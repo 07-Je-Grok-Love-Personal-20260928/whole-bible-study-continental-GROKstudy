@@ -1248,6 +1248,7 @@ h4.h,h3.h{column-gap:7px}h4.h>.sn,h3.h>.sn{margin-right:1px}
 .toclv button{flex:1 1 0;min-width:0;font:inherit;font-size:12px;padding:3px 4px;border-radius:8px;border:0;background:transparent;color:var(--ink2);cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
 .toclv button:hover{background:color-mix(in srgb,var(--gold) 14%,transparent)}
 .toclv button[aria-pressed="true"]{background:var(--gold);color:#1a1300;font-weight:700}
+html.light .toclv button[aria-pressed="true"]{color:#fff}
 .toclv button:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
 .liu .lps{grid-template-columns:1fr}
 /* v12: refined floating nav */
@@ -1357,6 +1358,7 @@ html[data-theme=contrast] .lsq{color:var(--sky)}
 .lnc{display:flex;flex-wrap:wrap;gap:6px}
 .lnc a{font-size:13px;padding:4px 9px;border-radius:9px;border:1px solid var(--line);background:var(--card2);color:var(--ink2);white-space:nowrap}
 .lnc a.on{border-color:var(--gold);color:var(--gold);font-weight:700}
+html.light .lnc a.on{color:var(--ink)}
 /* index */
 .lcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px;margin:8px 0 14px}
 .lccard{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s;min-width:0}
