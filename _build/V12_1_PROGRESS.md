@@ -14,3 +14,5 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - check.py 320/390/768: 103 pages each, 0 problems (logs /workspace/wb/logs/v121/check_W.jsonl[.done]; runner run_check.sh skips done widths)
 - check.py 1024/1440/1920: 103 pages each, 0 problems (all 6 widths done)
 - check_ix 390: 1478 checks 0; check_ix 1440: 1581 checks 0 BAD/ERR (logs v121/ix_390.log); runner run_r5b.sh (ix 1440 → overlap chromium 320,390,600,768,1024,1440,1920 → webkit 390), .done markers
+## R6 log
+- 02:05 early deploy of 519331b: surge whole-bible-study-20261121-v12-1-grokstudy.surge.sh OK; netlify site created id 8a251d7c-5da0-4be2-8631-2ed833bc1751, deploy --prod OK (stage dir /workspace/wb/stage121 = git ls-files minus _build, no CNAME). overlap runner still going (chromium 768). Tag/release held until overlap done.
