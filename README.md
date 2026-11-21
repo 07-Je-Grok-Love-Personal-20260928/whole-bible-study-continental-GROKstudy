@@ -101,7 +101,8 @@ WIDTHS=390 ENGINE=webkit python3 _build/check_overlap.py all   # v11.1 排版质
   - 构建时逐篇比对：全文与 PDF 文本层逐字一致（规范化去空白后 200000 字 = 200000 字，覆盖率 100%，76 篇 0 差异），否则构建失败；PDF 第 224 页 1 个无法提取的杂散字形（U+06E8）不计入。
   - 66 卷卡片「全景要义」块与 `panorama.html` 均链接到对应全文篇章；页面注明「经授权转载」。
 - 主题对比度微调（目录层级按钮、篇章列表）；长经文引用在 320/390 宽自动换行。
-- 检查：见下方 R5 结果（构建逐字 + 链接 · check.py 6 宽 · check_ix · check_overlap Chromium 7 宽 + WebKit 390 · 性能）。
+- 检查（103 页）：构建逐字 76 篇 100% · 引文 184 处 · 链接 18089 个 0 失效；check.py 320/390/768/1024/1440/1920 全部 0 问题；check_ix 390（1478 项）/ 1440（1581 项）0 问题；check_overlap Chromium 7 宽 + WebKit 390 修复后 0 问题（修复：原书目录多栏→网格分组、图例 1024 宽自动换行、WebKit 标点悬挂仅 ≥900px 启用）；性能（m390 · 4× CPU 降速）最长篇 liu-ot29 与总目录 liu.html 滚动 p95 16.8 ms、0 卡顿帧、滚动中 0 长任务。
+- Netlify 新站点 ID：8a251d7c-5da0-4be2-8631-2ed833bc1751。
 
 ### v12 — 2026-11-19（tag `v12-20261119`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v12-20261119)）
 - 在线：Surge https://whole-bible-study-20261119-v12-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261119-v12-grokstudy.netlify.app/ · GitHub Pages（main）

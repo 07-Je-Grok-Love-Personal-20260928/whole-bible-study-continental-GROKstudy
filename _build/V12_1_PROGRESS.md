@@ -19,3 +19,7 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - 02:12 merged main 1b33ea5 pushed (Pages); verify: 103/103 html 200 on Pages, surge, netlify (script /workspace/wb/verify121.sh)
 - R5 overlap partial: liu.html 768 ltoc multicol overlap -> grid groups (.ltocg); legendbox clip-x 670>665 at 1024 on 24 pages -> .lgi .it wraps <=1100px. Rebuilt OK. Need recheck 768+1024 after runner.
 - R5 overlap chromium 7w done: overlap 4 (liu 768) + clip-x 24 (1024) -> fixed; webkit 390: page-hscroll 57 liu pages (WebKit hanging-punctuation) -> fixed; recheck running (logs ov_wk_recheck.log, ov_ch_recheck.log, recheck.done)
+- rechecks: webkit 390 (57 pages) 0; chromium 768/1024 (25 pages) 0; check.py spot 390/1024 0
+- perf9 m390x4: liu-ot29 p95 16.8 jank 0 lt 0; liu.html p95 16.8 jank 0 (load lt 105ms)
+- shots /workspace/wb/shots/v12_1/{liu,liu-ot02}_{webkit_390,chromium_1440}_*.png
+- [x] R5 done. Next: merge main, redeploy surge+netlify, tag+release, verify
