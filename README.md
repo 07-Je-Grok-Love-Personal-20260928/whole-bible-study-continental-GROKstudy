@@ -1,20 +1,20 @@
-# 整本圣经研读-20261119-v12-GROKstudy
+# 整本圣经研读-20261121-v12.1-GROKstudy
 
-> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-19｜**版本号**：v12｜GROKstudy
+> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-21｜**版本号**：v12.1｜GROKstudy
 
-66 卷书架与逐卷解读 · 全景总览 · **新旧约全景（刘道顺《新旧约圣经全景》要义整合）** · 救赎故事 · 圣约神学 · 时间线 · **地理（19 幅地图：概念图＋讲解动画＋24 个全球实景源）· 历史文化 · 考古** · 基督生平 · 四福音对照 · 四福音合参（202 段，和合本）· 使徒行传与初代教会 · 五组文体对照 · 列王纪×历代志 · 跨卷连接网络 · 统计 · 三大信经与三项联合信条全文 · 记忆测验。
+66 卷书架与逐卷解读 · 全景总览 · **新旧约全景（刘道顺《新旧约圣经全景》要义整合 ＋ v12.1 经授权全文逐字阅读版 76 篇）** · 救赎故事 · 圣约神学 · 时间线 · **地理（19 幅地图：概念图＋讲解动画＋24 个全球实景源）· 历史文化 · 考古** · 基督生平 · 四福音对照 · 四福音合参（202 段，和合本）· 使徒行传与初代教会 · 五组文体对照 · 列王纪×历代志 · 跨卷连接网络 · 统计 · 三大信经与三项联合信条全文 · 记忆测验。
 信经与信条引文全部**逐字**取自 [ccifellowship.org](https://ccifellowship.org)（中国改革宗教会），构建时自动校验（184 处）；经文采用和合本；威斯敏斯特标准仅作补充参照。
 
-## 🔗 在线访问（当前版本 v12）
+## 🔗 在线访问（当前版本 v12.1）
 
 | 平台 | 链接 |
 |---|---|
 | GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/whole-bible-study-continental-GROKstudy/ |
-| Surge | https://whole-bible-study-20261119-v12-grokstudy.surge.sh/ |
-| Netlify | https://whole-bible-study-20261119-v12-grokstudy.netlify.app/ |
+| Surge | https://whole-bible-study-20261121-v12-1-grokstudy.surge.sh/ |
+| Netlify | https://whole-bible-study-20261121-v12-1-grokstudy.netlify.app/ |
 | 源码仓库 | https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy |
 
-## 📑 页面结构（24 页 · 7 组）
+## 📑 页面结构（25 个主页面 · 7 组 ＋ 76 篇刘道顺全文章节页）
 
 导航栏与目录“全站页面”区按同一套编号分组（①–⑦）；`ot.html` / `nt.html` 保留为跳转页（→ `index.html#ot` / `#nt`），旧链接继续可用。
 
@@ -30,11 +30,12 @@
 |---|---|---|---|
 | 2.1 | `overview.html` | 🏠 全景总览 | 学习路线·66卷色图·一页纸 |
 | 2.2 | `panorama.html` | 📜 新旧约全景 | 刘道顺·救赎史十二段·以马内利轨迹·圣约更新·两种后裔·66卷一卷一句·十把钥匙·改革宗校准 |
-| 2.3 | `story.html` | 🧭 救赎大故事 | 四幕剧·红线·圣经神学 |
-| 2.4 | `covenant.html` | 🤝 圣约神学 | 三约·六约·两种施行 |
-| 2.5 | `timeline.html` | ⏳ 时间线·诸王 | 11时代·8钉子·42王 |
-| 2.6 | `geography.html` | 🗺️ 地理文化 | 19 幅地图 · 概念图＋讲解动画＋实景（24 源）· 地理弧线 · 历史与文化札记 |
-| 2.7 | `culture.html` | 🏺 文化与生活 | 历法转盘·会幕/圣殿·派别·罗马统治·度量衡·婚俗·考古与古代文献·世界观对照·帝国×以色列 |
+| 2.3 | `liu.html` + `liu-*.html` | 📖 全景·原文全书 | 刘道顺《新旧约圣经全景》经授权全文逐字（推荐辞＋旧约序言＋41 卷/篇＋新约序言＋28 篇＋附录 4 篇＝76 篇）· 每篇「重点导读」· 只加样式标记不改字 |
+| 2.4 | `story.html` | 🧭 救赎大故事 | 四幕剧·红线·圣经神学 |
+| 2.5 | `covenant.html` | 🤝 圣约神学 | 三约·六约·两种施行 |
+| 2.6 | `timeline.html` | ⏳ 时间线·诸王 | 11时代·8钉子·42王 |
+| 2.7 | `geography.html` | 🗺️ 地理文化 | 19 幅地图 · 概念图＋讲解动画＋实景（24 源）· 地理弧线 · 历史与文化札记 |
+| 2.8 | `culture.html` | 🏺 文化与生活 | 历法转盘·会幕/圣殿·派别·罗马统治·度量衡·婚俗·考古与古代文献·世界观对照·帝国×以色列 |
 
 ### ③ ✝️ 基督与福音
 
@@ -92,6 +93,15 @@ WIDTHS=390 ENGINE=webkit python3 _build/check_overlap.py all   # v11.1 排版质
 - 信条数据：`_build/data/cci/*.json`。正文短引用以 `{{HC27|…}}` 标记，构建时必须是原文子串，否则构建失败。
 
 ## 📝 版本历史
+
+### v12.1 — 2026-11-21（tag `v12.1-20261121`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v12.1-20261121)）
+- 在线：Surge https://whole-bible-study-20261121-v12-1-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261121-v12-1-grokstudy.netlify.app/ · GitHub Pages（main）
+- **📖 刘道顺《新旧约圣经全景》经授权全文阅读版**（2.3 `liu.html` 总目录 + 76 篇 `liu-*.html`）：按原书目录分篇（推荐辞 · 旧约序言 · 旧约各卷 · 新约序言 · 新约各卷 · 附录），原文**一字不差**；只清理 PDF 断行/页眉/页码。
+  - 每篇开头「重点导读」：一句话主题 · 结构 · 三要点 · 见证基督 · 记忆口诀 · 链回本卷 13 项解读与全景整合页；正文关键句只加样式标记（黄/蓝/绿底、下划线），不改文字；页内目录、上下篇导航。
+  - 构建时逐篇比对：全文与 PDF 文本层逐字一致（规范化去空白后 200000 字 = 200000 字，覆盖率 100%，76 篇 0 差异），否则构建失败；PDF 第 224 页 1 个无法提取的杂散字形（U+06E8）不计入。
+  - 66 卷卡片「全景要义」块与 `panorama.html` 均链接到对应全文篇章；页面注明「经授权转载」。
+- 主题对比度微调（目录层级按钮、篇章列表）；长经文引用在 320/390 宽自动换行。
+- 检查：见下方 R5 结果（构建逐字 + 链接 · check.py 6 宽 · check_ix · check_overlap Chromium 7 宽 + WebKit 390 · 性能）。
 
 ### v12 — 2026-11-19（tag `v12-20261119`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v12-20261119)）
 - 在线：Surge https://whole-bible-study-20261119-v12-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261119-v12-grokstudy.netlify.app/ · GitHub Pages（main）
