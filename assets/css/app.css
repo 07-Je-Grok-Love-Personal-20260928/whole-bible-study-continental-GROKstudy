@@ -1385,3 +1385,4 @@ html.light .lnc a.on{color:var(--ink)}
 @media (max-width:600px){.lbody{text-align:left;line-height:1.95}.lguide{padding:14px 13px 12px}.lgi{width:40px;height:40px;font-size:22px}.lki{width:40px;height:40px;font-size:22px}}
 @media print{.lguide,.lall,.lpnx{display:none}.lbody{max-width:none}}
 .lgp li>span:last-child{flex:1;min-width:0;text-align:left}
+.lbody .rf,.lguide .rf{white-space:normal;overflow-wrap:anywhere}
