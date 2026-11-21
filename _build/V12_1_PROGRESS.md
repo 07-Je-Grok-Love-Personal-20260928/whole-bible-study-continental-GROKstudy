@@ -3,7 +3,7 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - [x] R1 extractor _build/liu_extract.py -> _build/data/liu/book.json; verify vs pdftotext raw
 - [x] R2 reader pages liu.html + liu-*.html (p_reader.py), 重点导读, marks, icons
 - [x] R3 build assert (verbatim per chapter), cross-links (66 cards, panorama, nav)
-- [ ] R4 CSS typography, themes
+- [x] R4 CSS typography, themes (reviewed night/paper/sepia/contrast 390+1440 ok)
 - [ ] R5 checks (check.py 6 widths, check_ix, check_overlap chromium 7 + webkit 390), perf
 - [ ] R6 deploy (tag v12.1-20261121, surge, netlify), README, shots
   R1 note: 1175 paras; norm(paras)==pdftotext -raw norm (200000 chars) except 1 stray glyph U+06E8 p.224 (ARTIFACTS)
