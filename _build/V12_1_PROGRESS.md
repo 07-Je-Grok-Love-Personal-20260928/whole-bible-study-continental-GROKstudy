@@ -12,3 +12,4 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - build OK (00:25): quotes 184, mermaid 12, links 18089/0 broken, Liu verbatim 76 ch / 1162 segs / 200000=200000 chars / 100% / 0 mismatches; 103 html pages
 - README drafted for v12.1 (R6 links prefilled; R5 results line to fill)
 - check.py 320/390/768: 103 pages each, 0 problems (logs /workspace/wb/logs/v121/check_W.jsonl[.done]; runner run_check.sh skips done widths)
+- check.py 1024: 103 pages 0 problems
