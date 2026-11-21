@@ -8,3 +8,5 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - [ ] R6 deploy (tag v12.1-20261121, surge, netlify), README, shots
   R1 note: 1175 paras; norm(paras)==pdftotext -raw norm (200000 chars) except 1 stray glyph U+06E8 p.224 (ARTIFACTS)
   R2/R3 verified (resume): build OK, 77 liu pages, verbatim coverage 100% 76 ch, 0 mismatches; 66 cards+panorama link; 经授权转载 present
+## R5 log
+- build OK (00:25): quotes 184, mermaid 12, links 18089/0 broken, Liu verbatim 76 ch / 1162 segs / 200000=200000 chars / 100% / 0 mismatches; 103 html pages
