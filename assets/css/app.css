@@ -1332,7 +1332,8 @@ html:not(.light) .lgn{color:#111}
 .lgx b,.lgm b{margin-right:6px}
 .lgl{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 /* reading body */
-.lbody{max-width:44em;margin:8px auto 0;font-size:clamp(16.5px,1.15vw + 11px,18.5px);line-height:2;letter-spacing:.02em;color:var(--ink);text-align:justify;text-justify:inter-ideograph;hanging-punctuation:allow-end;font-feature-settings:"palt" 0}
+.lbody{max-width:44em;margin:8px auto 0;font-size:clamp(16.5px,1.15vw + 11px,18.5px);line-height:2;letter-spacing:.02em;color:var(--ink);text-align:justify;text-justify:inter-ideograph;font-feature-settings:"palt" 0}
+@media(min-width:900px){.lbody{hanging-punctuation:allow-end}}
 .lbody p.lp{margin:0 0 1.05em;text-indent:2em;overflow-wrap:anywhere}
 .lbody p.lqp{text-indent:0;padding:6px 14px;border-left:3px solid color-mix(in srgb,var(--sky) 70%,transparent);background:color-mix(in srgb,var(--sky) 7%,transparent);border-radius:0 12px 12px 0}
 .lbody p.lsig{text-indent:0;text-align:right;color:var(--ink2);font-weight:600;margin-bottom:.3em}
