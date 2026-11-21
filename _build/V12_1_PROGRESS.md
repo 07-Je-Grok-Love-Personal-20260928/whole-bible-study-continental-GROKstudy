@@ -4,8 +4,8 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - [x] R2 reader pages liu.html + liu-*.html (p_reader.py), 重点导读, marks, icons
 - [x] R3 build assert (verbatim per chapter), cross-links (66 cards, panorama, nav)
 - [x] R4 CSS typography, themes (reviewed night/paper/sepia/contrast 390+1440 ok)
-- [ ] R5 checks (check.py 6 widths, check_ix, check_overlap chromium 7 + webkit 390), perf
-- [ ] R6 deploy (tag v12.1-20261121, surge, netlify), README, shots
+- [x] R5 checks (check.py 6 widths, check_ix, check_overlap chromium 7 + webkit 390), perf
+- [x] R6 deploy (tag v12.1-20261121, surge, netlify), README, shots
   R1 note: 1175 paras; norm(paras)==pdftotext -raw norm (200000 chars) except 1 stray glyph U+06E8 p.224 (ARTIFACTS)
   R2/R3 verified (resume): build OK, 77 liu pages, verbatim coverage 100% 76 ch, 0 mismatches; 66 cards+panorama link; 经授权转载 present
 ## R5 log
@@ -23,3 +23,4 @@ Goal: full verbatim web reading edition of 刘道顺《新旧约圣经全景》 
 - perf9 m390x4: liu-ot29 p95 16.8 jank 0 lt 0; liu.html p95 16.8 jank 0 (load lt 105ms)
 - shots /workspace/wb/shots/v12_1/{liu,liu-ot02}_{webkit_390,chromium_1440}_*.png
 - [x] R5 done. Next: merge main, redeploy surge+netlify, tag+release, verify
+- R6 DONE: main 8525f3b, tag v12.1-20261121 + release, surge+netlify redeployed, 103/103 pages 200 on 3 hosts, new CSS live on all 3
