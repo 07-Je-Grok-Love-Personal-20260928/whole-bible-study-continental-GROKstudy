@@ -134,8 +134,8 @@ def render(t,R):
 def mk(t,M): return render(t,M.ranges(t))
 # ------------------------------------------------------------ body rendering
 ORDM=re.compile(r'^(第[一二三四五六七八九十]+[，、]|首先|其次|最后|总之|那么|结论)')
-def label(t,n=18):
-    c=re.split(r'[，。？！：；]',t,1)[0]
+def label(t,n=20):
+    c=re.split(r'(?<=[。？！])',t,1)[0]
     return (c[:n]+'…') if len(c)>n else c
 def body(ch):
     ps=ch['ps'][1:]; M=Marker(); o=[]; i=0; nsec=0
