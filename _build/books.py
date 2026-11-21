@@ -149,7 +149,14 @@ def liubox(b):
     return (f'<div class="box span2 liu"><h4 class="h" id="b-{i}-liu">📜 全景要义 · 刘道顺</h4>'
             f'<p class="lth"><mark class="hy">{qmark(L["t"],False)}</mark></p><div class="lst">{st}</div><ol class="lps">{ps}</ol>'
             f'{q}{co("xc","<p>"+AR(qmark(xx,False))+"</p>","见证基督")}{r}'
-            f'<p class="srcline">要义转述自 刘道顺《新旧约圣经全景》 · <a href="panorama.html">全景页 →</a></p></div>')
+            f'<p class="srcline lread">要义转述自 刘道顺《新旧约圣经全景》（{"经授权转载"}） · <a class="lrd" href="{liufile(b)}">📖 读本卷全景原文（逐字全文）→</a> · <a href="panorama.html">全景页 →</a></p></div>')
+def liufile(b):
+    """v12.1: 66 books -> 刘道顺全文阅读页 (ot02–ot23, [ot24 先知书序论], ot25–ot41; nt01–nt05, [nt06 书信序论], nt07–nt28)"""
+    n=b['n']
+    if n<=22: return f'liu-ot{n+1:02d}.html'
+    if n<=39: return f'liu-ot{n+2:02d}.html'
+    if n<=44: return f'liu-nt{n-39:02d}.html'
+    return f'liu-nt{n-38:02d}.html'
 def card(b):
     import xref as _XF
     cl,col,ic=CATS[b['cat']]; x=V2[b['id']]; i=b['id']

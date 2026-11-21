@@ -19,6 +19,8 @@ import p_culture
 out['culture.html']=p_culture.build()
 import p_liu
 out['panorama.html']=p_liu.build()
+import p_reader
+out.update(p_reader.build())
 out['sources.html']=p_misc.sources()  # last: counts every verified quote (harmony/acts add some)
 import re as _re
 def _fix(v):
@@ -34,3 +36,4 @@ merpre.run(list(out.keys()))
 import subprocess,sys
 r=subprocess.run([sys.executable,__import__('os').path.join(__import__('os').path.dirname(__file__),'links.py')],capture_output=True,text=True);print(r.stdout.strip().splitlines()[-1] if r.stdout else r.stderr)
 if r.returncode: print(r.stdout); sys.exit(1)
+p_reader.verify(S)

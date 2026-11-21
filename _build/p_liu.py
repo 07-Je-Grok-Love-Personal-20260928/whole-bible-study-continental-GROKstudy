@@ -39,7 +39,8 @@ def build():
     I=LIU_INTRO
     c=[f'''<section class="hero reveal"><div class="chips"><span class="chip g">📜 新旧约全景</span><span class="chip">刘道顺 牧师</span><span class="chip">救赎史观点</span><span class="chip">66卷一卷一句</span></div>
 <h1>登高远望：<em>先见森林，再看树木</em></h1><p class="lead">{qmark(I["one"],False)}</p>
-<p class="srcline">本页为 {SRC_LIU} 全书（序言、序论、66卷全景、先知书序论、书信序论、附录）的要义转述与可视化；引号内短语为原书用语。凡与三项联合信条需要校准之处，均以 🧭 标出。</p></section>''']
+<p class="srcline">本页为 {SRC_LIU} 全书（序言、序论、66卷全景、先知书序论、书信序论、附录）的要义转述与可视化；引号内短语为原书用语。凡与三项联合信条需要校准之处，均以 🧭 标出。</p>
+<p class="lcta"><a class="btn pri" href="liu.html">📖 阅读全书原文 · 76篇逐字全文（经授权转载）</a><a class="btn" href="liu-ot00.html">🏔️ 从旧约序言读起</a><a class="btn" href="liu-nt00.html">🪨 从新约序言读起</a></p></section>''']
     c.append(legend_box())
     c.append(h2('method','🔭','读经法：远观→微观'))
     c.append(h3('far','登高远望：从整体到部分'))
@@ -103,7 +104,7 @@ style C fill:#5a4614,stroke:#f5c76b''','刘牧师：申命记的主题是「约�
     c.append(chain([('🐣','用福音生','先「用福音生了你们」（林前4:15）——每周至少一次见证福音本身'),('🍼','要成长','爱慕纯净的灵奶（彼前2:2）；约一2:12-14 小子·父老·少年人'),('🛡️','成为精兵','穿戴全副军装（弗6:10-13）：教会不是住院部，而是练兵场'),('📯','耶和华的军队','出埃及的乌合之众被称为「耶和华的军队」（出12:41）')]))
     c.append('<div class="grid g2 rv">'+note('⚠️ 今天讲道的三病','<ol><li>'+qmark('**无骨架**：没有脊椎——内部装修有瑕疵可修，架构有问题须重建',False)+'</li><li>'+qmark('**无视历史性**：断章取义 → ~~没有家谱的信仰~~',False)+'</li><li>'+qmark('**使圣经难解**：在基督与众人之间竖墙；圣经的核心是基督',False)+'</li></ol>','hardc')+note('✅ 好讲道的三性','<ol><li>'+qmark('**历史性**：每篇讲道是救赎史中的一个章回',False)+'</li><li>'+qmark('**统一性**：只有一个主题、一个主人公、一位计划和完成者',False)+'</li><li>'+qmark('**渐进性**：从影儿到实体，层层展开',False)+'</li></ol>')+'</div>')
     c.append(co('app','<ul>'+''.join(f'<li>{qmark(x,False)}</li>' for x in ['讲道＝传讲神 ==全备的旨意==（徒20:27）——不是讨人喜欢的话，而是于人有益的话','跪着把经文读 **30遍**，先默想后参考','浓缩成一句：「通过今天的经文，神要说的话就是……」','必须有应用：没有应用的讲道如同流产'])+'</ul>','讲道前的准备'))
-    c.append(f'<p class="srcline">资料：{SRC_LIU}；1995 年旧约序言、新约序言（羊圈教会）。本页为要义转述，非原文全文；书卷要义亦见每卷书卡片中的「📜 全景要义」。</p>')
+    c.append(f'<p class="srcline">资料：{SRC_LIU}；1995 年旧约序言、新约序言（羊圈教会）。本页为要义转述；<b>原文全文</b>（逐字、经授权转载）见 <a href="liu.html">📖 全景·原文全书</a>，每卷书卡片的「📜 全景要义」也可直达对应篇章。</p>')
     return page('panorama.html','新旧约全景 · 刘道顺 — 救赎史一卷一句','\n'.join(c))
 def P(lon,lat): return (round((lon-33)*50,1),round((38-lat)*55,1))
 def pl(pts): return ' '.join(f'{x},{y}' for x,y in (P(a,b) for a,b in pts))
