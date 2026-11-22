@@ -8,3 +8,4 @@
 - [ ] run #2 full (/tmp/cl2) ; perf; deploy
 - 15:10 run#2 first attempt (14:50) hung at 0 CPU after load spike (liu-nt07 goto timeouts) -> killed; checker now logs per-page progress to .err + 20s default timeout; rerun 4 procs x3 profiles, timeout 2700, logs /tmp/cl2
 - 15:15 EARLY DEPLOY of eecf183-build: stage /workspace/wb/stage122; surge whole-bible-study-20261122-v12-2-grokstudy.surge.sh OK; netlify site id 84faa794-3da6-446d-8fbf-b52355e331d8 created + deploy --prod OK. Pending: run#2 results, merge main, tag/release, verify.
+- check_overlap chromium 390,1440 all 103 pages: TOTAL {} (0)
