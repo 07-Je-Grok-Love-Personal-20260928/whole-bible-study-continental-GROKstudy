@@ -89,7 +89,7 @@ if(cards.length){
     ric(step,{timeout:2000})};
   addEventListener('load',()=>setTimeout(()=>ric(step,{timeout:2000}),400))}
 function goTo(id){let el=document.getElementById(id);if(!el&&document.getElementById('b-'+id))el=document.getElementById(id='b-'+id);if(!el){const lb=findLazy(id);if(lb){hydrate(lb,1);el=document.getElementById(id)}}if(!el)return;{const c=el.closest('.bk');if(c){c.__pin=1;const b=c.querySelector(':scope>.body');b&&hydrate(b,1)}}let dd=el.closest('details');while(dd){dd.open=true;dd=dd.parentElement.closest('details')}
-  const off=()=>(parseInt(getComputedStyle(root).getPropertyValue('--top'))||56)+10+(el.closest('.bk')&&$('.filters')&&innerWidth>1000?$('.filters').offsetHeight+10:0);
+  const off=()=>(parseFloat(getComputedStyle(root).scrollPaddingTop)||68)-2+(el.closest('.bk')&&$('.filters')&&innerWidth>1000?$('.filters').offsetHeight+10:0);
   const far=Math.abs(el.getBoundingClientRect().top)>innerHeight*2.5;
   const tgt=()=>Math.max(0,scrollY+el.getBoundingClientRect().top-off());const jump=y=>lenis?lenis.scrollTo(y,{immediate:true,force:true}):scrollTo({top:y,behavior:'instant'});
   if(far)jump(tgt());else if(lenis)lenis.scrollTo(tgt(),{duration:.9});else el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
@@ -287,3 +287,32 @@ if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>{for(c
 /* v11.1 fit labels in proportional bars: hide text that can't fit (tooltip/click keeps details) */
 (()=>{const SEL='.kt .kb,.dk,.dm,.obar>span,.cbar>a';let t=0;const run=()=>{const els=[...document.querySelectorAll(SEL)];els.forEach(e=>e.classList.remove('tx0'));const bad=els.filter(e=>e.clientWidth>0&&e.clientWidth<26&&e.scrollWidth>e.clientWidth+1);bad.forEach(e=>e.classList.add('tx0'))};
 const go=()=>{clearTimeout(t);t=setTimeout(()=>requestAnimationFrame(run),150)};if(document.readyState!=='loading')go();else addEventListener('DOMContentLoaded',go);addEventListener('load',go);addEventListener('resize',go,{passive:true});window.__fitBars=run})();
+
+/* v12.2 hideable top bar — modes (localStorage wb-nav): auto = hide on scroll down / reveal on scroll up; pin = always shown; hide = stays hidden until the pull-tab, the ✦ menu or 🎨 panel brings it back.
+   Only transform moves (no layout shift); --topv drives sticky offsets / scroll-padding. */
+(()=>{const R=document.documentElement,B=document.body,top=document.getElementById('topbar');if(!top)return;
+const tab=document.getElementById('navTab'),hb=document.getElementById('navHide'),tp=document.getElementById('tpanel');
+const LS={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+let mode=/^(auto|pin|hide)$/.test(R.dataset.nav||'')?R.dataset.nav:'auto',hid=R.classList.contains('navhid'),lock=0,ly=scrollY,acc=0,raf=0;
+const busy=()=>B.classList.contains('tocopen')||!!document.querySelector('.nav .ng.open')||(tp&&!tp.hidden);
+function sync(){R.dataset.nav=mode;tab&&tab.setAttribute('aria-expanded',String(!hid));hb&&hb.setAttribute('aria-expanded',String(!hid));
+  document.querySelectorAll('.nvseg [data-nav]').forEach(b=>b.setAttribute('aria-checked',String(b.dataset.nav===mode)));
+  document.querySelectorAll('.fb[data-a=nav]').forEach(b=>{b.dataset.tip=hid?'显示顶栏':'收起顶栏';b.setAttribute('aria-label',b.dataset.tip)})}
+function setHid(h,force){if(h&&!force&&busy())return;if(h&&tp&&!tp.hidden){tp.hidden=true;const b=document.getElementById('tpBtn');b&&b.setAttribute('aria-expanded','false')}if(h!==hid){hid=h;R.classList.toggle('navhid',h)}sync()}
+function setMode(m){if(m!=='hide'&&mode!=='hide')LS.s('wb-navp',m);mode=m;LS.s('wb-nav',m);setHid(m==='hide',true);lock=performance.now()+500}
+const restore=()=>{const p=LS.g('wb-navp');setMode(p==='pin'?'pin':'auto')};
+const toggle=()=>{if(hid){if(mode==='hide')restore();else setHid(false)}else setMode('hide')};
+hb&&hb.addEventListener('click',e=>{e.stopPropagation();setMode('hide');tab&&tab.focus({preventScroll:true})});
+tab&&tab.addEventListener('click',()=>{if(mode==='hide')restore();else{setHid(false);lock=performance.now()+500}const f=document.getElementById('tocBtn');f&&document.activeElement===tab&&f.focus({preventScroll:true})});
+document.addEventListener('click',e=>{const b=e.target.closest('.fb[data-a=nav]');if(b){toggle();return}const s=e.target.closest('.nvseg [data-nav]');if(s){setMode(s.dataset.nav);return}
+  if(e.target.closest('a[href^="#"],.toc a,#tocBtn'))lock=performance.now()+1100});
+top.addEventListener('focusin',()=>{if(hid)setHid(false)});
+document.getElementById('tocBtn')&&document.getElementById('tocBtn').addEventListener('click',()=>setHid(false,true));
+addEventListener('scroll',()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;const y=scrollY,d=y-ly;ly=y;if(performance.now()<lock){acc=0;return}
+  if(y<70){if(mode!=='hide'&&hid)setHid(false);acc=0;return}
+  if(mode==='pin'){if(hid)setHid(false);return}
+  const mx=R.scrollHeight-innerHeight;if(y>=mx-2)return; /* iOS bottom bounce */
+  if((d>0)!==(acc>0))acc=0;acc+=d;
+  if(acc>28&&!hid)setHid(true);else if(acc<-40&&hid&&mode==='auto')setHid(false)})},{passive:true});
+document.addEventListener('keydown',e=>{if(e.altKey&&!e.ctrlKey&&!e.metaKey&&(e.key==='n'||e.key==='N'||e.code==='KeyN')){e.preventDefault();toggle()}});
+sync();window.__nav={hide:()=>setHid(true,true),show:()=>setHid(false,true),mode:setMode,get state(){return{mode,hid}}}})();
