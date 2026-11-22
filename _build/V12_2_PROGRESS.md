@@ -12,3 +12,4 @@
 - check.py 390,1440 all: 206/206 rows over=[] errs=[] tocOverlap=false (0). check_ix 390 started /tmp/q2/ix.log. run#2: wk375,wk430,a412,c1280 DONE 0 issues (1 flaky exc wk430 liu-nt19 scroll stable timeout -> rerun)
 - run#2: wk390,c768,c1440,a360 DONE 0 issues; 3rd batch (wk390s,a390,c1024,c1920) running
 - 15:57 committed check_ix/check_layout click-retry; rerun wk390s,a390,c1024,c1920 -> /tmp/cl3 (4 procs, timeout 2400); ix2 (liu-ot12..) running /tmp/q2/ix2.log
+- 16:00 check_ix 390: ix.log 59 pages 0 BAD (crashed on ngb click at liu-ot12, checker fix committed) + ix2 liu-ot12..end 616 checks 0 BAD => 0. cl3 progressing 0 bad so far
