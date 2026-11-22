@@ -1317,19 +1317,19 @@ html.light h1.ltitle,html[data-theme=contrast] h1.ltitle{background:none;color:v
 /* guide card */
 .lguide{position:relative;border-radius:18px;padding:16px 18px 14px;background:var(--card);border:1px solid color-mix(in srgb,var(--c) 34%,var(--line));box-shadow:0 14px 40px -24px var(--c);margin:10px 0 6px;overflow:hidden}
 .lguide::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:linear-gradient(var(--c),color-mix(in srgb,var(--c) 30%,transparent))}
-.lgh{display:flex;gap:12px;align-items:flex-start}
-.lgi{flex:none;font-size:26px;width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:color-mix(in srgb,var(--c) 16%,transparent)}
-.lgh small{display:block;font-size:12px;color:var(--mut);letter-spacing:.08em}
-.lgt{margin:2px 0 0;font-size:clamp(17px,2.2vw,20px);font-weight:800;line-height:1.5}
-.lgs{margin:10px 0 4px;font-size:14px;color:var(--ink2);padding:6px 10px;border-radius:10px;background:var(--card2)}
-.lgp{list-style:none;margin:10px 0 6px;padding:0;display:grid;gap:8px}
-.lgp li{display:flex;gap:10px;align-items:flex-start;line-height:1.7}
-.lgn{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--on,#fff);background:var(--c);margin-top:3px}
-html:not(.light) .lgn{color:#111}
-.lgx,.lgm{margin:8px 0 0;line-height:1.7;padding:7px 11px;border-radius:12px}
-.lgx{background:color-mix(in srgb,var(--emer) 10%,transparent);border-left:3px solid var(--emer)}
-.lgm{background:color-mix(in srgb,var(--gold) 10%,transparent);border-left:3px solid var(--gold)}
-.lgx b,.lgm b{margin-right:6px}
+.lguide .lgdh{display:flex;gap:12px;align-items:flex-start}
+.lguide .lgdi{flex:none;font-size:26px;width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:color-mix(in srgb,var(--c) 16%,transparent)}
+.lguide .lgdh small{display:block;font-size:12px;color:var(--mut);letter-spacing:.08em}
+.lgdt{margin:2px 0 0;font-size:clamp(17px,2.2vw,20px);font-weight:800;line-height:1.5}
+.lgds{margin:10px 0 4px;font-size:14px;color:var(--ink2);padding:6px 10px;border-radius:10px;background:var(--card2)}
+.lgdp{list-style:none;margin:10px 0 6px;padding:0;display:grid;gap:8px}
+.lgdp li{display:flex;gap:10px;align-items:flex-start;line-height:1.7}
+.lgdn{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--on,#fff);background:var(--c);margin-top:3px}
+html:not(.light) .lgdn{color:#111}
+.lgdx,.lgdm{margin:8px 0 0;line-height:1.7;padding:7px 11px;border-radius:12px}
+.lgdx{background:color-mix(in srgb,var(--emer) 10%,transparent);border-left:3px solid var(--emer)}
+.lgdm{background:color-mix(in srgb,var(--gold) 10%,transparent);border-left:3px solid var(--gold)}
+.lgdx b,.lgdm b{margin-right:6px}
 .lgl{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 /* reading body */
 .lbody{max-width:44em;margin:8px auto 0;font-size:clamp(16.5px,1.15vw + 11px,18.5px);line-height:2;letter-spacing:.02em;color:var(--ink);text-align:justify;text-justify:inter-ideograph;font-feature-settings:"palt" 0}
@@ -1383,7 +1383,19 @@ html.light .lnc a.on{color:var(--ink)}
 .ltoc a b{flex:none;font-variant-numeric:tabular-nums;color:var(--mut);font-weight:600}
 .ltoc .lrest{font-size:14px;color:var(--gold);font-weight:700;padding:6px 2px 2px}
 .box.liu .lrd{font-weight:700;color:var(--gold)}
-@media (max-width:600px){.lbody{text-align:left;line-height:1.95}.lguide{padding:14px 13px 12px}.lgi{width:40px;height:40px;font-size:22px}.lki{width:40px;height:40px;font-size:22px}}
+@media (max-width:600px){.lbody{text-align:left;line-height:1.95}.lguide{padding:14px 13px 12px}.lguide .lgdi{width:40px;height:40px;font-size:22px}.lki{width:40px;height:40px;font-size:22px}}
 @media print{.lguide,.lall,.lpnx{display:none}.lbody{max-width:none}}
-.lgp li>span:last-child{flex:1;min-width:0;text-align:left}
+.lgdp li>span:last-child{flex:1;min-width:0;text-align:left}
 .lbody .rf,.lguide .rf{white-space:normal;overflow-wrap:anywhere}
+
+/* v12.2 legend: robust, compact; explicit tracks; no inherited widths */
+.legend-em{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:8px;font-size:13.5px;align-items:stretch}
+.legend-em>*{min-width:0}
+.legend-em .lgrp{padding:8px 11px 9px;border-left:3px solid var(--lgc,var(--line2))}
+.legend-em .lgrp:nth-child(1){--lgc:#ff5d73}.legend-em .lgrp:nth-child(2){--lgc:var(--gold)}.legend-em .lgrp:nth-child(3){--lgc:#4fb3ff}.legend-em .lgrp:nth-child(4){--lgc:#ff9a3d}.legend-em .lgrp:nth-child(5){--lgc:#2fd59b}.legend-em .lgrp:nth-child(6){--lgc:var(--vio,#a78bfa)}
+.legend-em .lgh{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;white-space:normal;width:auto;height:auto}
+.legend-em .lgh small{white-space:nowrap}
+.legend-em .lgi{display:flex;flex-wrap:wrap;gap:6px 14px;width:auto;height:auto;flex:initial;font-size:inherit;place-items:initial;border-radius:0;background:none;min-width:0}
+.legend-em .lgi .it{white-space:nowrap;display:inline-flex;align-items:baseline;gap:5px;color:var(--ink2);font-size:13px}
+.legend-em .lgi .it>*{font-size:13.5px}
+@media(max-width:640px){.legend-em{grid-template-columns:minmax(0,1fr);gap:7px}.legend-em .lgi{gap:5px 12px}.legend-em .lgi .it{font-size:12.5px}}

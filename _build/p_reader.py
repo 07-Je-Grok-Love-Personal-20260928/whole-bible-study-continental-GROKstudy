@@ -197,11 +197,11 @@ def guide(c):
     lk=''
     if c['bid']: lk=f'<a class="btn" href="index.html#b-{c["bid"]}">📚 本卷13项解读</a><a class="btn" href="panorama.html">📜 全景整合页</a>'
     else: lk='<a class="btn" href="panorama.html">📜 全景整合页</a><a class="btn" href="liu.html">📖 全书目录</a>'
-    return (f'<div class="lguide rv" style="--c:{c["col"]}"><div class="lgh"><span class="lgi" aria-hidden="true">{c["ic"]}</span><div><small>一句话主题</small><p class="lgt">{qmark(g["t"],False)}</p></div></div>'
-        +(f'<p class="lgs">🧩 {qmark(g["s"],False)}</p>' if g.get('s') else '')
-        +'<ol class="lgp">'+''.join(f'<li><span class="lgn">{k+1}</span><span>{qmark(p,False)}</span></li>' for k,p in enumerate(ps))+'</ol>'
-        +(f'<p class="lgx">✝️ <b>见证基督</b> {qmark(x,False)}</p>' if x else '')
-        +(f'<p class="lgm">🧠 <b>记忆口诀</b> <span class="must">{E(re.sub(r"^[“\"]|[”\"]$","",c["mn"].split("（")[0]))}</span></p>' if c['mn'] else '')
+    return (f'<div class="lguide rv" style="--c:{c["col"]}"><div class="lgdh"><span class="lgdi" aria-hidden="true">{c["ic"]}</span><div><small>一句话主题</small><p class="lgdt">{qmark(g["t"],False)}</p></div></div>'
+        +(f'<p class="lgds">🧩 {qmark(g["s"],False)}</p>' if g.get('s') else '')
+        +'<ol class="lgdp">'+''.join(f'<li><span class="lgdn">{k+1}</span><span>{qmark(p,False)}</span></li>' for k,p in enumerate(ps))+'</ol>'
+        +(f'<p class="lgdx">✝️ <b>见证基督</b> {qmark(x,False)}</p>' if x else '')
+        +(f'<p class="lgdm">🧠 <b>记忆口诀</b> <span class="must">{E(re.sub(r"^[“\"]|[”\"]$","",c["mn"].split("（")[0]))}</span></p>' if c['mn'] else '')
         +f'<div class="lgl">{lk}</div></div>')
 def chapter_page(k,c):
     pv=CH[k-1] if k>0 else None; nx=CH[k+1] if k+1<len(CH) else None
