@@ -34,7 +34,8 @@ for(const R0 of roots){const rs0=getComputedStyle(R0);if(!vis(R0,rs0))continue;
   if(e.closest('.tw,.tblw,.spines,pre')&&!o.panel)continue;
   const a=e.getBoundingClientRect(),b=p.getBoundingClientRect();const dx=Math.max(b.left-a.left,a.right-b.right),dy=a.bottom-b.bottom;
   if(dx>4||dy>4)out.push(['escape',nm(e)+' in '+nm(p)+' dx'+Math.round(dx)+' dy'+Math.round(dy)])}
- if(o.panel){// sibling overlap inside panels (any display incl. inline-block/flex items)
+ if(o.panel){for(const e of [R0,...all]){const s=S.get(e)||rs0;if(!vis(e,s))continue;if(/hidden|clip/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+3&&e.clientHeight>0)out.push(['panel-clip',nm(e)+' '+e.scrollHeight+'>'+e.clientHeight])}
+  // sibling overlap inside panels (any display incl. inline-block/flex items)
   const par=new Set(all.map(e=>e.parentElement));for(const p of par){if(!p)continue;const kids=[...p.children].filter(k=>{const s=S.get(k);return s&&vis(k,s)&&!/^(absolute|fixed)$/.test(s.position)&&s.display!=='inline'&&(k.textContent||'').trim()});
    const R=kids.map(k=>k.getBoundingClientRect());for(let i=0;i<kids.length;i++)for(let j=i+1;j<Math.min(kids.length,i+8);j++){const a=R[i],b=R[j];const w=Math.min(a.right,b.right)-Math.max(a.left,b.left),h=Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top);if(w>2&&h>2)out.push(['panel-overlap',nm(kids[i])+' × '+nm(kids[j])+' '+Math.round(w)+'x'+Math.round(h)])}}}
 }

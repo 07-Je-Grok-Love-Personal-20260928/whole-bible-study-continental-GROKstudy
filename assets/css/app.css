@@ -1430,3 +1430,8 @@ html.navhid .fb[data-a=nav] svg{transform:scaleY(-1)}
 .tw:not(.sm) table:has(tr>:nth-child(8)){min-width:880px}
 .tw:not(.sm) table:has(tr>:nth-child(10)){min-width:1040px}
 td>.chip:only-child,td>.gt:only-child{white-space:nowrap}
+/* v12.2 fab: 9 actions (added 顶栏) — never clip; compact on short viewports (Edge iOS bottom toolbar ≈ 664px) */
+.fab.open .fabm,.fab:focus-within .fabm{max-height:min(480px,calc(100dvh - 90px))}
+@media(hover:hover) and (pointer:fine){.fab:hover .fabm{max-height:min(480px,calc(100dvh - 90px))}}
+@media(max-height:760px){.fab .fabm{gap:4px}.fab .fabt,.fab .fb{width:34px;height:34px}.fab .fb svg{width:17px;height:17px}}
+@media(max-height:560px){.fab .fabm{flex-wrap:wrap-reverse;flex-direction:row;width:84px;justify-content:center}.fab .fsep{display:none}}
