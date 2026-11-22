@@ -1423,3 +1423,4 @@ html.navhid .navtab{opacity:.92;visibility:visible;transform:none;transition:tra
 html.navhid .fb[data-a=nav] svg{transform:scaleY(-1)}
 @media (prefers-reduced-motion:reduce){.top,.navtab,.prog{transition:none!important}}
 @media print{.navtab{display:none}html.navhid .top{transform:none}}
+.tw:not(.sm) :is(td,th){min-width:3.4em}

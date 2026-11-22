@@ -24,7 +24,7 @@ for(const R0 of roots){const rs0=getComputedStyle(R0);if(!vis(R0,rs0))continue;
    if(r.bottom>innerHeight+1&&!/auto|scroll/.test(rs0.overflowY)&&rs0.position==='fixed')out.push(['panel-offscreen-y',nm(R0)+' bottom '+Math.round(r.bottom)])}
  const all=[...R0.querySelectorAll('*')].filter(e=>!skip(e));const S=new Map();for(const e of all)S.set(e,getComputedStyle(e));
  // 7 narrow-stack: own text run >4 chars squeezed into <2.2em width over >=3 lines
- for(const e of all){const s=S.get(e);if(!vis(e,s))continue;const fs=parseFloat(s.fontSize)||14;
+ for(const e of all){const s=S.get(e);if(!vis(e,s)||/^vertical/.test(s.writingMode))continue;const fs=parseFloat(s.fontSize)||14;
   for(const n of e.childNodes){if(n.nodeType!==3)continue;const t=n.textContent.trim();if([...t].length<=4)continue;const rg=document.createRange();rg.selectNodeContents(n);const r=rg.getBoundingClientRect();
    if(r.width>0&&r.width<fs*2.2&&r.height>fs*3.2){out.push(['narrow-stack',nm(e)+' w'+Math.round(r.width)+' h'+Math.round(r.height)]);break}}}
  // 8 escape: text-bearing in-flow element spilling outside a visible (bordered/filled) overflow-visible parent box
@@ -46,7 +46,7 @@ const sp=parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)
 const toc=document.getElementById('toc');if(toc&&innerWidth>1000&&!document.body.classList.contains('tochide')){const tr=toc.getBoundingClientRect();if(tr.top>2)o.push(['toc-not-adapted','top '+tr.top])}
 const d=document.documentElement;if(d.scrollWidth>d.clientWidth+1)o.push(['page-hscroll',d.scrollWidth+'>'+d.clientWidth]);return o}"""
 PREP="()=>{window.__hydrateAll&&window.__hydrateAll();window.__merAll&&window.__merAll();document.querySelectorAll('.rv,.sbar').forEach(e=>e.classList.add('in','go'));document.querySelectorAll('details').forEach(d=>d.open=true)}"
-NOANIM='section.blk,.bk{content-visibility:visible!important}*{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}'
+NOANIM='*{content-visibility:visible!important}*{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}'
 TH=os.environ.get('THEMES','night').split(',');N=int(os.environ.get('N','3'))
 tot=collections.Counter()
 def report(prof,pg,tag,res):
