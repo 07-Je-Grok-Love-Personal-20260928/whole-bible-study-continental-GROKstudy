@@ -72,7 +72,7 @@ with sync_playwright() as p:
             ctx=B[eng].new_context(**kw);ctx.add_init_script(f"localStorage.setItem('wb-theme','{th}');localStorage.removeItem('wb-nav')")
             t0=time.time()
             for pg in pages:
-                page=ctx.new_page();errs=[];page.on('pageerror',lambda e,errs=errs:errs.append(str(e)))
+                print('..',prof,pg,file=sys.stderr,flush=True);page=ctx.new_page();page.set_default_timeout(20000);errs=[];page.on('pageerror',lambda e,errs=errs:errs.append(str(e)))
                 try:
                     page.goto('file://'+SITE+'/'+pg);page.wait_for_timeout(600);page.add_style_tag(content=NOANIM);page.evaluate(PREP);page.wait_for_timeout(1200 if pg!='index.html' else 2200)
                     report(prof,pg,'main1',page.evaluate(JS1));report(prof,pg,'main2',page.evaluate(JS2,{}))

@@ -6,3 +6,4 @@
 - [x] check_layout.py written; full run #1 (old css) logs /tmp/cl/*.log — found: gospels/kings table cells narrow-stack (fix: .tw td/th min-width:3.4em), vertical writing-mode false positives (excluded), .lev content-visibility escape false positives (checker forces cv visible), flaky .fabt click liu-nt02 c1440
 - [x] README v12.2 written
 - [ ] run #2 full (/tmp/cl2) ; perf; deploy
+- 15:10 run#2 first attempt (14:50) hung at 0 CPU after load spike (liu-nt07 goto timeouts) -> killed; checker now logs per-page progress to .err + 20s default timeout; rerun 4 procs x3 profiles, timeout 2700, logs /tmp/cl2
