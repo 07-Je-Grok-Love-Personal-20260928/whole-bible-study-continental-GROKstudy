@@ -1423,4 +1423,10 @@ html.navhid .navtab{opacity:.92;visibility:visible;transform:none;transition:tra
 html.navhid .fb[data-a=nav] svg{transform:scaleY(-1)}
 @media (prefers-reduced-motion:reduce){.top,.navtab,.prog{transition:none!important}}
 @media print{.navtab{display:none}html.navhid .top{transform:none}}
-.tw:not(.sm) :is(td,th){min-width:3.4em}
+/* v12.2 tables: CJK min-content is one glyph, so squeezed columns collapsed into 2-char stacks. Give cells a floor and let wide tables scroll inside .tw */
+.tw:not(.sm) :is(td,th){min-width:4.6em}
+.tw:not(.sm) td a[href*="#b-"]{white-space:nowrap}
+.tw:not(.sm) table:has(tr>:nth-child(6)){min-width:720px}
+.tw:not(.sm) table:has(tr>:nth-child(8)){min-width:880px}
+.tw:not(.sm) table:has(tr>:nth-child(10)){min-width:1040px}
+td>.chip:only-child,td>.gt:only-child{white-space:nowrap}

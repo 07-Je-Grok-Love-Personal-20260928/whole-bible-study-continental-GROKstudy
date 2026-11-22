@@ -55,6 +55,9 @@ def report(prof,pg,tag,res):
     for t,m in res:
         seen[t]+=1
         if seen[t]<=N: print('   ',t,m,flush=True)
+def clk(page,sel):
+    try: page.click(sel,timeout=6000)
+    except Exception: page.click(sel,timeout=6000,force=True)
 with sync_playwright() as p:
     B={}
     for prof in os.environ.get('PROFILES','wk390').split(','):
@@ -74,25 +77,25 @@ with sync_playwright() as p:
                     report(prof,pg,'main1',page.evaluate(JS1));report(prof,pg,'main2',page.evaluate(JS2,{}))
                     for rep in range(2):
                         page.evaluate("()=>scrollTo(0,0)");page.wait_for_timeout(100)
-                        page.click('#tpBtn');page.wait_for_timeout(150);report(prof,pg,f'tpanel{rep}',page.evaluate(JS2,{'root':'#tpanel','panel':1}));page.click('#tpBtn');page.wait_for_timeout(100)
+                        clk(page,'#tpBtn');page.wait_for_timeout(150);report(prof,pg,f'tpanel{rep}',page.evaluate(JS2,{'root':'#tpanel','panel':1}));clk(page,'#tpBtn');page.wait_for_timeout(100)
                     n=page.locator('.ngb').count()
                     for i in range(n):
                         b=page.locator('.ngb').nth(i)
                         if not b.is_visible(): continue
                         b.scroll_into_view_if_needed();b.click();page.wait_for_timeout(150);report(prof,pg,f'ndd{i}',page.evaluate(JS2,{'root':'.ng.open .ndd','panel':1}));page.evaluate("()=>document.body.click()");page.wait_for_timeout(80)
-                    page.click('#tocBtn');page.wait_for_timeout(250);page.evaluate("()=>{const a=document.getElementById('tocAll');a&&a.click()}");page.wait_for_timeout(200)
+                    clk(page,'#tocBtn');page.wait_for_timeout(250);page.evaluate("()=>{const a=document.getElementById('tocAll');a&&a.click()}");page.wait_for_timeout(200)
                     if w<=1000: report(prof,pg,'toc',page.evaluate(JS2,{'root':'#toc','panel':1}));page.evaluate("()=>document.body.classList.remove('tocopen')")
-                    else: page.click('#tocBtn');page.wait_for_timeout(200);report(prof,pg,'toc',page.evaluate(JS2,{'root':'#toc','panel':1}))
+                    else: clk(page,'#tocBtn');page.wait_for_timeout(200);report(prof,pg,'toc',page.evaluate(JS2,{'root':'#toc','panel':1}))
                     page.evaluate("()=>scrollTo(0,1400)");page.wait_for_timeout(300)
                     for rep in range(2):
                         if page.locator('.fabt').is_visible():
-                            page.click('.fabt');page.wait_for_timeout(200);report(prof,pg,f'fab{rep}',page.evaluate(JS2,{'root':'.fab','panel':1}));page.evaluate("()=>document.body.click()");page.wait_for_timeout(120)
+                            clk(page,'.fabt');page.wait_for_timeout(200);report(prof,pg,f'fab{rep}',page.evaluate(JS2,{'root':'.fab','panel':1}));page.evaluate("()=>document.body.click()");page.wait_for_timeout(120)
                     if page.locator('.legend-em').count():
                         page.evaluate("()=>document.documentElement.classList.add('recall')");page.wait_for_timeout(100);report(prof,pg,'legend-recall',page.evaluate(JS2,{'root':'.legend-em','panel':1}));page.evaluate("()=>document.documentElement.classList.remove('recall')")
                     page.evaluate("()=>window.__nav.hide()");page.wait_for_timeout(250);report(prof,pg,'navhidden',page.evaluate(NAVJS));report(prof,pg,'navhidden-main',[x for x in page.evaluate(JS1) if x[0] in('overlap','page-hscroll')])
                     page.evaluate("()=>window.__nav.show()");page.wait_for_timeout(150)
                     if errs: report(prof,pg,'js',[('pageerror',e[:160]) for e in errs])
-                except Exception as ex: report(prof,pg,'exc',[('exception',str(ex)[:200])])
+                except Exception as ex: report(prof,pg,'exc',[('exception',str(ex)[:600])])
                 page.close()
             print(f'DONE {prof} {th} {len(pages)}p {time.time()-t0:.0f}s',flush=True);ctx.close()
     for b in B.values(): b.close()
