@@ -13,6 +13,11 @@ return {tag,sw:d.scrollWidth,cw:d.clientWidth,over:over.slice(0,6),esc:esc.slice
 out=[]
 import time
 T0=[time.time()]
+def _ngbclick(page,i):
+    L=page.locator('.ngb').nth(i)
+    try: L.click(timeout=8000)
+    except Exception:
+        print('RETRY ngb',i,flush=True); page.evaluate("()=>{scrollTo(0,0);window.__nav&&window.__nav.show()}"); page.wait_for_timeout(400); L.click(timeout=8000,force=True)
 def chk(page,tag,pg,w):
     t=time.time()
     r=page.evaluate(OV,tag); r.update(page=pg,w=w)
@@ -54,7 +59,7 @@ with sync_playwright() as p:
             # nav dropdowns (desktop)
             for i in range(page.locator('.ngb').count()):
                 if page.locator('.ngb').nth(i).is_visible():
-                    page.locator('.ngb').nth(i).click(); page.wait_for_timeout(200); chk(page,f'ngb{i}',pg,w)
+                    _ngbclick(page,i); page.wait_for_timeout(200); chk(page,f'ngb{i}',pg,w)
             page.mouse.click(5,innerh:=300) if False else page.evaluate("()=>document.body.click()")
             # fab cluster
             page.evaluate("()=>scrollTo(0,1500)"); page.wait_for_timeout(500)

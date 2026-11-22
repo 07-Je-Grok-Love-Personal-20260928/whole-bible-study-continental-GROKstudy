@@ -1,0 +1,16 @@
+# v12.2 progress
+- [x] branch v12.2-wip from main (v12.1)
+- ROOT CAUSE found: v12.1 reader CSS (app.css ~1320) added GLOBAL .lgh/.lgi (guide card icon: .lgi{width:48px;height:48px;flex:none;font-size:26px}) colliding with legend .legend-em .lgi -> legend item column forced to 48px(40px <600) => vertical char stacks + overflow over pills/tip.
+- [x] before shots  - [x] fix: reader classes renamed lgd* (lgh,lgi,lgt,lgs,lgp,lgn,lgx,lgm; lgt/lgn ALSO collided with concept-map legend .cmleg) + robust legend CSS (v12.2 block end of app.css)  - [ ] checkers  - [ ] top nav  - [ ] deploy
+- [x] top nav: lib.py (navHide chevron in HDR, navTab pull-tab, nvseg in tpanel, fab 'nav' btn, init script wb-nav), css v12.2 block (--topv), app.js IIFE at end (window.__nav)
+- [x] check_layout.py written; full run #1 (old css) logs /tmp/cl/*.log — found: gospels/kings table cells narrow-stack (fix: .tw td/th min-width:3.4em), vertical writing-mode false positives (excluded), .lev content-visibility escape false positives (checker forces cv visible), flaky .fabt click liu-nt02 c1440
+- [x] README v12.2 written
+- [ ] run #2 full (/tmp/cl2) ; perf; deploy
+- 15:10 run#2 first attempt (14:50) hung at 0 CPU after load spike (liu-nt07 goto timeouts) -> killed; checker now logs per-page progress to .err + 20s default timeout; rerun 4 procs x3 profiles, timeout 2700, logs /tmp/cl2
+- 15:15 EARLY DEPLOY of eecf183-build: stage /workspace/wb/stage122; surge whole-bible-study-20261122-v12-2-grokstudy.surge.sh OK; netlify site id 84faa794-3da6-446d-8fbf-b52355e331d8 created + deploy --prod OK. Pending: run#2 results, merge main, tag/release, verify.
+- check_overlap chromium 390,1440 all 103 pages: TOTAL {} (0)
+- check.py 390,1440 all: 206/206 rows over=[] errs=[] tocOverlap=false (0). check_ix 390 started /tmp/q2/ix.log. run#2: wk375,wk430,a412,c1280 DONE 0 issues (1 flaky exc wk430 liu-nt19 scroll stable timeout -> rerun)
+- run#2: wk390,c768,c1440,a360 DONE 0 issues; 3rd batch (wk390s,a390,c1024,c1920) running
+- 15:57 committed check_ix/check_layout click-retry; rerun wk390s,a390,c1024,c1920 -> /tmp/cl3 (4 procs, timeout 2400); ix2 (liu-ot12..) running /tmp/q2/ix2.log
+- 16:00 check_ix 390: ix.log 59 pages 0 BAD (crashed on ngb click at liu-ot12, checker fix committed) + ix2 liu-ot12..end 616 checks 0 BAD => 0. cl3 progressing 0 bad so far
+- 16:17 check_layout cl3 wk390s,a390,c1024,c1920 DONE 0; wk430 liu-nt19 rerun 0 => ALL 12 profiles 0. No site code change since eecf183 (repo==stage122) => no redeploy. surge+netlify 103/103 200, served css/js ?v=v12.2 with lgd*/.navtab/--topv/__nav. README checks+netlify id added. Next: merge main, tag, release.

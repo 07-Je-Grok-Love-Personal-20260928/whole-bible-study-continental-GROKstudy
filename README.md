@@ -1,17 +1,17 @@
-# 整本圣经研读-20261121-v12.1-GROKstudy
+# 整本圣经研读-20261122-v12.2-GROKstudy
 
-> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-21｜**版本号**：v12.1｜GROKstudy
+> **主题**：整本《圣经》解读（欧陆改革宗 · 正统神学）｜**时间**：2026-11-22｜**版本号**：v12.2｜GROKstudy
 
 66 卷书架与逐卷解读 · 全景总览 · **新旧约全景（刘道顺《新旧约圣经全景》要义整合 ＋ v12.1 经授权全文逐字阅读版 76 篇）** · 救赎故事 · 圣约神学 · 时间线 · **地理（19 幅地图：概念图＋讲解动画＋24 个全球实景源）· 历史文化 · 考古** · 基督生平 · 四福音对照 · 四福音合参（202 段，和合本）· 使徒行传与初代教会 · 五组文体对照 · 列王纪×历代志 · 跨卷连接网络 · 统计 · 三大信经与三项联合信条全文 · 记忆测验。
 信经与信条引文全部**逐字**取自 [ccifellowship.org](https://ccifellowship.org)（中国改革宗教会），构建时自动校验（184 处）；经文采用和合本；威斯敏斯特标准仅作补充参照。
 
-## 🔗 在线访问（当前版本 v12.1）
+## 🔗 在线访问（当前版本 v12.2）
 
 | 平台 | 链接 |
 |---|---|
 | GitHub Pages | https://07-je-grok-love-personal-20260928.github.io/whole-bible-study-continental-GROKstudy/ |
-| Surge | https://whole-bible-study-20261121-v12-1-grokstudy.surge.sh/ |
-| Netlify | https://whole-bible-study-20261121-v12-1-grokstudy.netlify.app/ |
+| Surge | https://whole-bible-study-20261122-v12-2-grokstudy.surge.sh/ |
+| Netlify | https://whole-bible-study-20261122-v12-2-grokstudy.netlify.app/ |
 | 源码仓库 | https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy |
 
 ## 📑 页面结构（25 个主页面 · 7 组 ＋ 76 篇刘道顺全文章节页）
@@ -85,6 +85,7 @@ python3 _build/build.py      # 生成全部 HTML；逐字引文校验；Mermaid 
 WIDTHS=320,360,390,414,768,1024,1280,1440,1920 python3 _build/check.py all   # 无头 Chromium：溢出、控制台错误、Mermaid、地图（THEMES=… 可指定主题）
 WIDTHS=390 python3 _build/check_ix.py all        # 展开/标签页/目录/主题/地图源等交互后再查溢出
 WIDTHS=390 ENGINE=webkit python3 _build/check_overlap.py all   # v11.1 排版质量：兄弟元素重叠、空框、文字被裁切、行内装饰碎片重叠、标签行乱换行
+PROFILES=wk375,wk390,wk390s,wk430,a360,a390,a412,c768,c1024,c1280,c1440,c1920 python3 _build/check_layout.py all  # v12.2 真机配置（WebKit iPhone + Edge iOS UA/工具栏高度、Edge Android UA、桌面）：窄列竖排塌陷、内容溢出卡片、打开全部面板（主题/下拉/目录/快捷导航/图例背诵）后重叠与裁切、顶栏隐藏态
 ```
 
 - 纯静态站点；第三方库已本地化：`assets/vendor/`（Leaflet 1.9.4、Mermaid 11 仅构建期使用、Lenis 1.3.27）。
@@ -93,6 +94,14 @@ WIDTHS=390 ENGINE=webkit python3 _build/check_overlap.py all   # v11.1 排版质
 - 信条数据：`_build/data/cci/*.json`。正文短引用以 `{{HC27|…}}` 标记，构建时必须是原文子串，否则构建失败。
 
 ## 📝 版本历史
+
+### v12.2 — 2026-11-22（tag `v12.2-20261122`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v12.2-20261122)）
+- 在线：Surge https://whole-bible-study-20261122-v12-2-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261122-v12-2-grokstudy.netlify.app/ · GitHub Pages（main）
+- **修复：笔记式标注图例在手机上叠成一列竖字**（全景总览「四、笔记式标注系统 → 1. 颜色编码图例」与各页「🎨 笔记式标注图例」面板）。根因：v12.1 全文阅读版的导读卡样式用了全局类名 `.lgi/.lgh/.lgt/.lgn`，与图例的 `.lgi` 撞名，把图例条目列强制成 48×48px（≤600px 时 40px），文字被挤成单字竖排并溢出压住下方卡片与说明。阅读版类名改为独立前缀 `lgd*`（同时解除与概念地图图例 `.lgt/.lgn` 的冲突）；图例改为显式网格（窄屏单列 `minmax(0,1fr)`）、每层左侧色条、条目紧凑横排。
+- **顶栏可显示/隐藏**：默认「自动隐藏」——向下滑收起、向上滑出现（只移动 transform，无版面跳动）；顶栏右侧 ⌃ 一键收起（记住状态），收起后顶部中间留一枚细小把手，点一下即恢复；右下角 ✦ 快捷导航新增「显示/收起顶栏」；🎨 面板可选「自动隐藏 / 始终显示 / 收起」；Alt+N 切换；键盘 Tab 进入顶栏自动显示；目录、吸顶条、锚点跳转偏移随顶栏高度自适应；遵守「减少动态效果」与 iOS 安全区。
+- 新检查器 `check_layout.py`：WebKit iPhone（Edge iOS UA，390×664 工具栏高度；375/430；Safari 390×844）+ Chromium（Edge Android UA 360/390/412；桌面 768/1024/1280/1440/1920）；新增「窄列竖排塌陷」「内容溢出可见卡片」检测，逐页打开主题面板、导航下拉、目录抽屉、快捷导航（各两次开关）、图例背诵模式，以及顶栏隐藏态。新检查顺带发现并修复：多列表格（时间线诸王表、救赎故事表、统计、四福音对照、列王×历代、记忆表等）在手机上被挤成两字一行 → 单元格最小宽度＋多列表格最小宽度（表内横滑）；表内阶段标签不再折成竖字；快捷导航 9 个按钮在矮屏不再被裁切。
+- 检查（103 页，0 问题）：check_overlap Chromium 390/1440 全部 0；check.py 390/1440 206/206 行 0 溢出、0 控制台错误、目录不重叠；check_layout 12 个配置（WebKit iPhone 375/390/390×844/430 含 Edge iOS UA 与工具栏高度，Chromium Edge Android 360/390/412，桌面 768/1024/1280/1440/1920）× 101 页全部 0 问题（2 处偶发点击超时复测通过）；check_ix 390 逐页展开/点击 0 问题。
+- Netlify 新站点 ID：84faa794-3da6-446d-8fbf-b52355e331d8。
 
 ### v12.1 — 2026-11-21（tag `v12.1-20261121`，[Release](https://github.com/07-Je-Grok-Love-Personal-20260928/whole-bible-study-continental-GROKstudy/releases/tag/v12.1-20261121)）
 - 在线：Surge https://whole-bible-study-20261121-v12-1-grokstudy.surge.sh/ · Netlify https://whole-bible-study-20261121-v12-1-grokstudy.netlify.app/ · GitHub Pages（main）

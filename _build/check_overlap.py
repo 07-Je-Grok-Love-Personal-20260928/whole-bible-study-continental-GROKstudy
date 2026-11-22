@@ -35,24 +35,25 @@ if(innerWidth>=390)for(const e of document.querySelectorAll('main .chips')){if(s
 // 6 page horizontal overflow
 const d=document.documentElement;if(d.scrollWidth>d.clientWidth+1)out.push(['page-hscroll',d.scrollWidth+'>'+d.clientWidth]);
 return out}"""
-tot=collections.Counter(); rows=[]
-with sync_playwright() as p:
-    if ENG=='webkit': b=p.webkit.launch()
-    else: b=p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
-    for w in widths:
-        ctx=b.new_context(viewport={'width':w,'height':800 if w<800 else 900},device_scale_factor=1); ctx.add_init_script(f"localStorage.setItem('wb-theme','{TH}')")
-        for pg in pages:
-            page=ctx.new_page(); page.goto('file://'+SITE+'/'+pg); page.wait_for_timeout(700)
-            page.add_style_tag(content='section.blk,.bk{content-visibility:visible!important}*{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}')
-            page.evaluate("()=>{window.__hydrateAll&&window.__hydrateAll();window.__merAll&&window.__merAll();document.querySelectorAll('.rv,.sbar').forEach(e=>e.classList.add('in','go'));document.querySelectorAll('details').forEach(d=>d.open=true)}")
-            page.wait_for_timeout(1500 if pg!='index.html' else 2500)
-            page.evaluate('()=>{window.__DBG=%s}'%('true' if os.environ.get('DBG') else 'false'));res=page.evaluate(JS); page.close()
-            c=collections.Counter(t for t,_ in res); tot.update(c)
-            print(f'PG {pg} {w} '+json.dumps(dict(c)),flush=True)
-            seen=collections.Counter()
-            for t,m in res:
-                seen[t]+=1
-                if seen[t]<=int(os.environ.get('N','4')): print('  ',t,m,flush=True)
-        ctx.close()
-    b.close()
-print('TOTAL',ENG,widths,json.dumps(dict(tot)))
+if __name__=='__main__':
+    tot=collections.Counter(); rows=[]
+    with sync_playwright() as p:
+        if ENG=='webkit': b=p.webkit.launch()
+        else: b=p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
+        for w in widths:
+            ctx=b.new_context(viewport={'width':w,'height':800 if w<800 else 900},device_scale_factor=1); ctx.add_init_script(f"localStorage.setItem('wb-theme','{TH}')")
+            for pg in pages:
+                page=ctx.new_page(); page.goto('file://'+SITE+'/'+pg); page.wait_for_timeout(700)
+                page.add_style_tag(content='section.blk,.bk{content-visibility:visible!important}*{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important;transition-delay:0s!important}')
+                page.evaluate("()=>{window.__hydrateAll&&window.__hydrateAll();window.__merAll&&window.__merAll();document.querySelectorAll('.rv,.sbar').forEach(e=>e.classList.add('in','go'));document.querySelectorAll('details').forEach(d=>d.open=true)}")
+                page.wait_for_timeout(1500 if pg!='index.html' else 2500)
+                page.evaluate('()=>{window.__DBG=%s}'%('true' if os.environ.get('DBG') else 'false'));res=page.evaluate(JS); page.close()
+                c=collections.Counter(t for t,_ in res); tot.update(c)
+                print(f'PG {pg} {w} '+json.dumps(dict(c)),flush=True)
+                seen=collections.Counter()
+                for t,m in res:
+                    seen[t]+=1
+                    if seen[t]<=int(os.environ.get('N','4')): print('  ',t,m,flush=True)
+            ctx.close()
+        b.close()
+    print('TOTAL',ENG,widths,json.dumps(dict(tot)))
