@@ -59,6 +59,10 @@ def report(prof,pg,tag,res):
 def clk(page,sel):
     try: page.click(sel,timeout=6000)
     except Exception: page.click(sel,timeout=6000,force=True)
+def _safeclick(page,L):
+    try: L.scroll_into_view_if_needed(timeout=8000);L.click(timeout=8000)
+    except Exception:
+        print('RETRY click',file=sys.stderr,flush=True);page.evaluate("()=>{window.__nav&&window.__nav.show()}");page.wait_for_timeout(400);L.click(timeout=10000,force=True)
 with sync_playwright() as p:
     B={}
     for prof in os.environ.get('PROFILES','wk390').split(','):
@@ -83,7 +87,7 @@ with sync_playwright() as p:
                     for i in range(n):
                         b=page.locator('.ngb').nth(i)
                         if not b.is_visible(): continue
-                        b.scroll_into_view_if_needed();b.click();page.wait_for_timeout(150);report(prof,pg,f'ndd{i}',page.evaluate(JS2,{'root':'.ng.open .ndd','panel':1}));page.evaluate("()=>document.body.click()");page.wait_for_timeout(80)
+                        _safeclick(page,b);page.wait_for_timeout(150);report(prof,pg,f'ndd{i}',page.evaluate(JS2,{'root':'.ng.open .ndd','panel':1}));page.evaluate("()=>document.body.click()");page.wait_for_timeout(80)
                     clk(page,'#tocBtn');page.wait_for_timeout(250);page.evaluate("()=>{const a=document.getElementById('tocAll');a&&a.click()}");page.wait_for_timeout(200)
                     if w<=1000: report(prof,pg,'toc',page.evaluate(JS2,{'root':'#toc','panel':1}));page.evaluate("()=>document.body.classList.remove('tocopen')")
                     else: clk(page,'#tocBtn');page.wait_for_timeout(200);report(prof,pg,'toc',page.evaluate(JS2,{'root':'#toc','panel':1}))
