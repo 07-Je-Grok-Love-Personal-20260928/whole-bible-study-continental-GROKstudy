@@ -10,3 +10,4 @@
 - 15:15 EARLY DEPLOY of eecf183-build: stage /workspace/wb/stage122; surge whole-bible-study-20261122-v12-2-grokstudy.surge.sh OK; netlify site id 84faa794-3da6-446d-8fbf-b52355e331d8 created + deploy --prod OK. Pending: run#2 results, merge main, tag/release, verify.
 - check_overlap chromium 390,1440 all 103 pages: TOTAL {} (0)
 - check.py 390,1440 all: 206/206 rows over=[] errs=[] tocOverlap=false (0). check_ix 390 started /tmp/q2/ix.log. run#2: wk375,wk430,a412,c1280 DONE 0 issues (1 flaky exc wk430 liu-nt19 scroll stable timeout -> rerun)
+- run#2: wk390,c768,c1440,a360 DONE 0 issues; 3rd batch (wk390s,a390,c1024,c1920) running
