@@ -13,3 +13,4 @@
 - run#2: wk390,c768,c1440,a360 DONE 0 issues; 3rd batch (wk390s,a390,c1024,c1920) running
 - 15:57 committed check_ix/check_layout click-retry; rerun wk390s,a390,c1024,c1920 -> /tmp/cl3 (4 procs, timeout 2400); ix2 (liu-ot12..) running /tmp/q2/ix2.log
 - 16:00 check_ix 390: ix.log 59 pages 0 BAD (crashed on ngb click at liu-ot12, checker fix committed) + ix2 liu-ot12..end 616 checks 0 BAD => 0. cl3 progressing 0 bad so far
+- 16:17 check_layout cl3 wk390s,a390,c1024,c1920 DONE 0; wk430 liu-nt19 rerun 0 => ALL 12 profiles 0. No site code change since eecf183 (repo==stage122) => no redeploy. surge+netlify 103/103 200, served css/js ?v=v12.2 with lgd*/.navtab/--topv/__nav. README checks+netlify id added. Next: merge main, tag, release.
